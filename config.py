@@ -99,16 +99,16 @@ OPTIMIZER_CONFIG = {
 MODEL_CONFIG = {
     "input_size": 299,
     "texture_embedding_dims": {
-        "exp0_baseline": 96,  # Original: 96 dims (texture) + 96 dims (minutiae) = 192 total
-        "exp1_representacao_aumentada": 1024,
-        "exp2_atencao_espacial": 512,
-        "exp3_reranking": 512,
+        "exp0_baseline": 96,  # Baseline: 96 (texture) + 96 (minutiae) = 192 total
+        "exp1_representacao_aumentada": 512,  # Exp1: 512 (texture) + 512 (minutiae) = 1024 total
+        "exp2_atencao_espacial": 96,  # Exp2: 96 (texture) + 96 (minutiae) = 192 total + SpatialAttention
+        "exp3_reranking": 96,  # Exp3: 96 (texture) + 96 (minutiae) = 192 total + Reranking
     },
     "minutia_embedding_dims": {
-        "exp0_baseline": 96,  # Original: 96 dims (minutiae)
-        "exp1_representacao_aumentada": 0,  # Não usa minutiae
-        "exp2_atencao_espacial": 0,  # Não usa minutiae
-        "exp3_reranking": 0,  # Não usa minutiae
+        "exp0_baseline": 96,  # Baseline: 96 dims (minutiae)
+        "exp1_representacao_aumentada": 512,  # Exp1: 512 dims (minutiae) - dimensão aumentada
+        "exp2_atencao_espacial": 96,  # Exp2: 96 dims (minutiae) - mantém baseline
+        "exp3_reranking": 96,  # Exp3: 96 dims (minutiae) - mantém baseline
     },
     "dropout_rate": 0.2,  # Original usa 0.2
     "use_localization": True,

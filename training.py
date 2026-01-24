@@ -165,17 +165,33 @@ class DeepPrintTrainer:
         # Criar diretórios
         self._create_directories()
         
-        # Modelo
+        # Modelo - todos baseados no baseline (STN + 2 branches)
         if model_type == "baseline":
-            # DeepPrint original completo (LocTexMinu)
             from models_base import DeepPrintBaseline
             self.model = DeepPrintBaseline(
                 texture_embedding_dims=texture_embedding_dims,
                 minutia_embedding_dims=minutia_embedding_dims
             ).to(self.device)
+        elif model_type == "enhanced_representation":
+            from models_base import DeepPrintEnhancedRepresentation
+            self.model = DeepPrintEnhancedRepresentation(
+                texture_embedding_dims=texture_embedding_dims,
+                minutia_embedding_dims=minutia_embedding_dims
+            ).to(self.device)
+        elif model_type == "spatial_attention":
+            from models_base import DeepPrintSpatialAttention
+            self.model = DeepPrintSpatialAttention(
+                texture_embedding_dims=texture_embedding_dims,
+                minutia_embedding_dims=minutia_embedding_dims
+            ).to(self.device)
+        elif model_type == "reranking":
+            from models_base import DeepPrintWithReranking
+            self.model = DeepPrintWithReranking(
+                texture_embedding_dims=texture_embedding_dims,
+                minutia_embedding_dims=minutia_embedding_dims
+            ).to(self.device)
         else:
-            # Outros experimentos (texture-only)
-            self.model = create_model(model_type, texture_embedding_dims).to(self.device)
+            raise ValueError(f"Model type {model_type} not supported")
         
         # Otimizador
         self.optimizer = optim.Adam(
@@ -549,7 +565,7 @@ class DeepPrintTrainer:
         self._save_history()
     
     def _save_checkpoint(self, epoch: int, val_loss: float, is_best: bool = False):
-        """Salvar checkpoint eficiente: latest + best + periódicos a cada 10 épocas"""
+        """Salvar checkpoint: apenas latest (retomada) e best (melhor modelo)"""
         checkpoint = {
             "epoch": epoch,
             "model_state_dict": self.model.state_dict(),
@@ -565,57 +581,11 @@ class DeepPrintTrainer:
         latest_path = self.experiment_dir / "checkpoints" / "checkpoint_latest.pt"
         torch.save(checkpoint, latest_path)
         
-        # Salvar best_model
+        # Salvar best_model se for o melhor
         if is_best:
             best_path = self.experiment_dir / "models" / "best_model.pt"
             torch.save(checkpoint, best_path)
-            self.logger.info(f"Melhor modelo salvo em {best_path}")
-        
-        # Salvar checkpoint periódico a cada 10 épocas
-        if epoch % 10 == 0:
-            periodic_path = self.experiment_dir / "checkpoints" / f"checkpoint_epoch_{epoch}.pt"
-            torch.save(checkpoint, periodic_path)
-            self.logger.info(f"Checkpoint periódico salvo: época {epoch}")
-            
-            # Limpar checkpoints antigos (manter apenas últimos 3 periódicos)
-            self._cleanup_old_checkpoints(keep_last=3)
-    
-    def _cleanup_old_checkpoints(self, keep_last: int = 3):
-        """Limpar checkpoints antigos, mantendo apenas os últimos N periódicos
-        
-        Mantém sempre:
-        - checkpoint_latest.pt (retomada)
-        - Últimos N checkpoints periódicos (checkpoint_epoch_*.pt)
-        
-        Args:
-            keep_last: Número de checkpoints periódicos a manter
-        """
-        checkpoints_dir = self.experiment_dir / "checkpoints"
-        if not checkpoints_dir.exists():
-            return
-        
-        # Listar todos os checkpoints periódicos (checkpoint_epoch_*.pt)
-        checkpoints = list(checkpoints_dir.glob("checkpoint_epoch_*.pt"))
-        
-        if len(checkpoints) <= keep_last:
-            return  # Nada a limpar
-        
-        # Ordenar por época (extrair número do nome)
-        def get_epoch(p):
-            try:
-                return int(p.stem.split("_")[-1])
-            except:
-                return 0
-        
-        checkpoints.sort(key=get_epoch, reverse=True)
-        
-        # Deletar checkpoints antigos (além dos últimos keep_last)
-        for checkpoint_path in checkpoints[keep_last:]:
-            try:
-                checkpoint_path.unlink()
-                self.logger.info(f"Checkpoint antigo removido: {checkpoint_path.name}")
-            except Exception as e:
-                self.logger.warning(f"Erro ao remover checkpoint {checkpoint_path.name}: {e}")
+            self.logger.info(f"Melhor modelo salvo: época {epoch}, val_loss={val_loss:.4f}")
     
     def _save_history(self):
         """Salvar histórico de treinamento"""

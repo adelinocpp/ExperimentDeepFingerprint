@@ -341,128 +341,254 @@ class DeepPrintBaseline(nn.Module):
 
 class DeepPrintEnhancedRepresentation(nn.Module):
     """
-    DeepPrint com Representação Aumentada (1024 dimensões)
+    Exp1: DeepPrint Baseline + Representação Aumentada (1024 dimensões)
     
-    Derivação do baseline com embedding de maior dimensão e
-    camada de refinamento adicional.
+    Variação do baseline (LocTexMinu) com embeddings maiores:
+    - Mantém: STN + 2 branches (texture + minutiae)
+    - Aumenta: texture 512 dims + minutiae 512 dims = 1024 total
+    - Adiciona: camada de refinamento
     """
     
-    def __init__(self, texture_embedding_dims: int = 1024, num_classes: int = None):
+    def __init__(self, texture_embedding_dims: int = 512, minutia_embedding_dims: int = 512, num_classes: int = None):
         super().__init__()
+        
+        # Localization network (STN) - mantido do baseline
+        self.localization = LocalizationNetwork()
+        
+        # Stem compartilhado - mantido do baseline
         self.stem = _InceptionV4_Stem()
+        
+        # Texture branch - DIMENSÃO AUMENTADA
         self.texture_branch = _Branch_TextureEmbedding(texture_embedding_dims)
         self.texture_embedding_dims = texture_embedding_dims
         
-        # Camada adicional de refinamento (diferencial deste experimento)
-        self.refinement = nn.Sequential(
+        # Camada de refinamento (DIFERENCIAL do exp1)
+        self.texture_refinement = nn.Sequential(
             nn.Linear(texture_embedding_dims, texture_embedding_dims),
             nn.ReLU(inplace=True),
             nn.Dropout(p=0.1),
             nn.Linear(texture_embedding_dims, texture_embedding_dims),
         )
         
+        # Minutiae branch - DIMENSÃO AUMENTADA
+        self.minutia_stem = _Branch_MinutiaStem()
+        self.minutia_map = _Branch_MinutiaMap()
+        self.minutia_embedding = _Branch_MinutiaEmbedding(minutia_embedding_dims)
+        self.minutia_embedding_dims = minutia_embedding_dims
+        
+        # Camada de refinamento para minutiae (DIFERENCIAL do exp1)
+        self.minutia_refinement = nn.Sequential(
+            nn.Linear(minutia_embedding_dims, minutia_embedding_dims),
+            nn.ReLU(inplace=True),
+            nn.Dropout(p=0.1),
+            nn.Linear(minutia_embedding_dims, minutia_embedding_dims),
+        )
+        
+        # Embedding total
+        self.total_embedding_dims = texture_embedding_dims + minutia_embedding_dims
+        
+        # Classificadores para treinamento
         self.num_classes = num_classes
-        self.classifier = None
+        self.texture_classifier = None
+        self.minutia_classifier = None
+        
         if num_classes is not None:
-            self.classifier = nn.Sequential(
+            self.texture_classifier = nn.Sequential(
                 nn.Linear(texture_embedding_dims, num_classes),
+                nn.Dropout(p=0.2)
+            )
+            self.minutia_classifier = nn.Sequential(
+                nn.Linear(minutia_embedding_dims, num_classes),
                 nn.Dropout(p=0.2)
             )
     
     def set_num_classes(self, num_classes: int):
         if self.num_classes != num_classes:
             self.num_classes = num_classes
-            self.classifier = nn.Sequential(
+            self.texture_classifier = nn.Sequential(
                 nn.Linear(self.texture_embedding_dims, num_classes),
                 nn.Dropout(p=0.2)
             )
+            self.minutia_classifier = nn.Sequential(
+                nn.Linear(self.minutia_embedding_dims, num_classes),
+                nn.Dropout(p=0.2)
+            )
             if next(self.parameters()).is_cuda:
-                self.classifier = self.classifier.cuda()
+                self.texture_classifier = self.texture_classifier.cuda()
+                self.minutia_classifier = self.minutia_classifier.cuda()
         
     def forward(self, x):
-        features = self.stem(x)
+        # 1. Alinhamento automático (STN) - mantido
+        x_aligned = self.localization(x)
+        
+        # 2. Stem compartilhado - mantido
+        features = self.stem(x_aligned)
+        
+        # 3. Texture branch + refinamento (DIFERENCIAL)
         texture_embedding = self.texture_branch(features)
+        texture_embedding = self.texture_refinement(texture_embedding)
         
-        # Refinamento da representação (diferencial)
-        texture_embedding = self.refinement(texture_embedding)
-        texture_embedding = F.normalize(texture_embedding, p=2, dim=1)
+        # 4. Minutiae branch + refinamento (DIFERENCIAL)
+        minutia_features = self.minutia_stem(features)
+        minutia_embedding = self.minutia_embedding(minutia_features)
+        minutia_embedding = self.minutia_refinement(minutia_embedding)
+        minutia_map = self.minutia_map(minutia_features)
         
-        result = {"embedding": texture_embedding}
+        # 5. Concatenar embeddings (texture + minutiae = 1024 dims)
+        combined_embedding = torch.cat([texture_embedding, minutia_embedding], dim=1)
         
-        if self.classifier is not None:
-            result["logits"] = self.classifier(texture_embedding)
+        result = {
+            "embedding": combined_embedding,
+            "texture_embedding": texture_embedding,
+            "minutia_embedding": minutia_embedding,
+            "minutia_map": minutia_map,
+        }
+        
+        # Logits para treinamento
+        if self.texture_classifier is not None:
+            result["texture_logits"] = self.texture_classifier(texture_embedding)
+            result["minutia_logits"] = self.minutia_classifier(minutia_embedding)
         
         return result
 
 
 class DeepPrintSpatialAttention(nn.Module):
     """
-    DeepPrint com Atenção Espacial
+    Exp2: DeepPrint Baseline + Atenção Espacial
     
-    Derivação do baseline com módulo de atenção espacial
-    após o branch de textura para focar em regiões importantes.
+    Variação do baseline (LocTexMinu) com spatial attention:
+    - Mantém: STN + 2 branches (texture + minutiae)
+    - Mantém: texture 96 dims + minutiae 96 dims = 192 total
+    - Adiciona: SpatialAttention no texture branch (DIFERENCIAL)
     """
     
-    def __init__(self, texture_embedding_dims: int = 512, num_classes: int = None):
+    def __init__(self, texture_embedding_dims: int = 96, minutia_embedding_dims: int = 96, num_classes: int = None):
         super().__init__()
+        
+        # Localization network (STN) - mantido do baseline
+        self.localization = LocalizationNetwork()
+        
+        # Stem compartilhado - mantido do baseline
         self.stem = _InceptionV4_Stem()
+        
+        # Spatial attention (DIFERENCIAL do exp2) - aplicado após stem
+        self.spatial_attention = SpatialAttention(384)  # 384 = output do stem
+        
+        # Texture branch - mantido
         self.texture_branch = _Branch_TextureEmbedding(texture_embedding_dims)
         self.texture_embedding_dims = texture_embedding_dims
         
-        # Atenção espacial aplicada nas features (diferencial)
-        self.spatial_attention = SpatialAttention(384)  # 384 = output do stem
+        # Minutiae branch - mantido
+        self.minutia_stem = _Branch_MinutiaStem()
+        self.minutia_map = _Branch_MinutiaMap()
+        self.minutia_embedding = _Branch_MinutiaEmbedding(minutia_embedding_dims)
+        self.minutia_embedding_dims = minutia_embedding_dims
         
+        # Embedding total
+        self.total_embedding_dims = texture_embedding_dims + minutia_embedding_dims
+        
+        # Classificadores para treinamento
         self.num_classes = num_classes
-        self.classifier = None
+        self.texture_classifier = None
+        self.minutia_classifier = None
+        
         if num_classes is not None:
-            self.classifier = nn.Sequential(
+            self.texture_classifier = nn.Sequential(
                 nn.Linear(texture_embedding_dims, num_classes),
+                nn.Dropout(p=0.2)
+            )
+            self.minutia_classifier = nn.Sequential(
+                nn.Linear(minutia_embedding_dims, num_classes),
                 nn.Dropout(p=0.2)
             )
     
     def set_num_classes(self, num_classes: int):
         if self.num_classes != num_classes:
             self.num_classes = num_classes
-            self.classifier = nn.Sequential(
+            self.texture_classifier = nn.Sequential(
                 nn.Linear(self.texture_embedding_dims, num_classes),
                 nn.Dropout(p=0.2)
             )
+            self.minutia_classifier = nn.Sequential(
+                nn.Linear(self.minutia_embedding_dims, num_classes),
+                nn.Dropout(p=0.2)
+            )
             if next(self.parameters()).is_cuda:
-                self.classifier = self.classifier.cuda()
+                self.texture_classifier = self.texture_classifier.cuda()
+                self.minutia_classifier = self.minutia_classifier.cuda()
         
     def forward(self, x):
-        features = self.stem(x)
+        # 1. Alinhamento automático (STN) - mantido
+        x_aligned = self.localization(x)
         
-        # Aplicar atenção espacial nas features (diferencial)
+        # 2. Stem compartilhado - mantido
+        features = self.stem(x_aligned)
+        
+        # 3. Spatial attention (DIFERENCIAL) - foca em regiões importantes
         features = self.spatial_attention(features)
         
+        # 4. Texture branch
         texture_embedding = self.texture_branch(features)
         
-        result = {"embedding": texture_embedding}
+        # 5. Minutiae branch
+        minutia_features = self.minutia_stem(features)
+        minutia_embedding = self.minutia_embedding(minutia_features)
+        minutia_map = self.minutia_map(minutia_features)
         
-        if self.classifier is not None:
-            result["logits"] = self.classifier(texture_embedding)
+        # 6. Concatenar embeddings (texture + minutiae = 192 dims)
+        combined_embedding = torch.cat([texture_embedding, minutia_embedding], dim=1)
+        
+        result = {
+            "embedding": combined_embedding,
+            "texture_embedding": texture_embedding,
+            "minutia_embedding": minutia_embedding,
+            "minutia_map": minutia_map,
+        }
+        
+        # Logits para treinamento
+        if self.texture_classifier is not None:
+            result["texture_logits"] = self.texture_classifier(texture_embedding)
+            result["minutia_logits"] = self.minutia_classifier(minutia_embedding)
         
         return result
 
 
 class DeepPrintWithReranking(nn.Module):
     """
-    DeepPrint com Re-ranking
+    Exp3: DeepPrint Baseline + Re-ranking
     
-    Derivação do baseline com módulo de re-ranking para
-    refinar scores de comparação entre pares.
+    Variação do baseline (LocTexMinu) com rede de re-ranking:
+    - Mantém: STN + 2 branches (texture + minutiae)
+    - Mantém: texture 96 dims + minutiae 96 dims = 192 total
+    - Adiciona: reranking network (DIFERENCIAL)
     """
     
-    def __init__(self, texture_embedding_dims: int = 512, num_classes: int = None):
+    def __init__(self, texture_embedding_dims: int = 96, minutia_embedding_dims: int = 96, num_classes: int = None):
         super().__init__()
+        
+        # Localization network (STN) - mantido do baseline
+        self.localization = LocalizationNetwork()
+        
+        # Stem compartilhado - mantido do baseline
         self.stem = _InceptionV4_Stem()
+        
+        # Texture branch - mantido
         self.texture_branch = _Branch_TextureEmbedding(texture_embedding_dims)
         self.texture_embedding_dims = texture_embedding_dims
         
-        # Módulo de re-ranking (diferencial)
+        # Minutiae branch - mantido
+        self.minutia_stem = _Branch_MinutiaStem()
+        self.minutia_map = _Branch_MinutiaMap()
+        self.minutia_embedding = _Branch_MinutiaEmbedding(minutia_embedding_dims)
+        self.minutia_embedding_dims = minutia_embedding_dims
+        
+        # Embedding total
+        self.total_embedding_dims = texture_embedding_dims + minutia_embedding_dims
+        
+        # Módulo de re-ranking (DIFERENCIAL do exp3)
+        # Opera sobre embedding combinado (192 dims)
         self.reranking_network = nn.Sequential(
-            nn.Linear(texture_embedding_dims * 2, 256),
+            nn.Linear(self.total_embedding_dims * 2, 256),  # 192*2 = 384
             nn.ReLU(inplace=True),
             nn.Dropout(p=0.2),
             nn.Linear(256, 128),
@@ -472,32 +598,65 @@ class DeepPrintWithReranking(nn.Module):
             nn.Sigmoid(),
         )
         
+        # Classificadores para treinamento
         self.num_classes = num_classes
-        self.classifier = None
+        self.texture_classifier = None
+        self.minutia_classifier = None
+        
         if num_classes is not None:
-            self.classifier = nn.Sequential(
+            self.texture_classifier = nn.Sequential(
                 nn.Linear(texture_embedding_dims, num_classes),
+                nn.Dropout(p=0.2)
+            )
+            self.minutia_classifier = nn.Sequential(
+                nn.Linear(minutia_embedding_dims, num_classes),
                 nn.Dropout(p=0.2)
             )
     
     def set_num_classes(self, num_classes: int):
         if self.num_classes != num_classes:
             self.num_classes = num_classes
-            self.classifier = nn.Sequential(
+            self.texture_classifier = nn.Sequential(
                 nn.Linear(self.texture_embedding_dims, num_classes),
                 nn.Dropout(p=0.2)
             )
+            self.minutia_classifier = nn.Sequential(
+                nn.Linear(self.minutia_embedding_dims, num_classes),
+                nn.Dropout(p=0.2)
+            )
             if next(self.parameters()).is_cuda:
-                self.classifier = self.classifier.cuda()
+                self.texture_classifier = self.texture_classifier.cuda()
+                self.minutia_classifier = self.minutia_classifier.cuda()
         
     def forward(self, x):
-        features = self.stem(x)
+        # 1. Alinhamento automático (STN) - mantido
+        x_aligned = self.localization(x)
+        
+        # 2. Stem compartilhado - mantido
+        features = self.stem(x_aligned)
+        
+        # 3. Texture branch
         texture_embedding = self.texture_branch(features)
         
-        result = {"embedding": texture_embedding}
+        # 4. Minutiae branch
+        minutia_features = self.minutia_stem(features)
+        minutia_embedding = self.minutia_embedding(minutia_features)
+        minutia_map = self.minutia_map(minutia_features)
         
-        if self.classifier is not None:
-            result["logits"] = self.classifier(texture_embedding)
+        # 5. Concatenar embeddings (texture + minutiae = 192 dims)
+        combined_embedding = torch.cat([texture_embedding, minutia_embedding], dim=1)
+        
+        result = {
+            "embedding": combined_embedding,
+            "texture_embedding": texture_embedding,
+            "minutia_embedding": minutia_embedding,
+            "minutia_map": minutia_map,
+        }
+        
+        # Logits para treinamento
+        if self.texture_classifier is not None:
+            result["texture_logits"] = self.texture_classifier(texture_embedding)
+            result["minutia_logits"] = self.minutia_classifier(minutia_embedding)
         
         return result
     
