@@ -1,0 +1,18 @@
+{
+  "total_comparisons": 2401336,
+  "num_samples": 2191,
+  "num_genuine_pairs": 6563,
+  "num_impostor_pairs": 2392582,
+  "num_same_file": 2191,
+  "output_file": "/media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp2_atencao_espacial/results/pairwise_comparisons_prod.csv",
+  "total_time_seconds": 180.6361927986145,
+  "memory_peak_mb": 1956.12109375,
+  "memory_avg_mb": 1912.2954727564102,
+  "cpu_avg_percent": 101.9482905982906,
+  "gpu_memory_peak_mb": 696.39501953125,
+  "num_measurements": 234,
+  "genuine_score_mean": 1.0000001192092896,
+  "genuine_score_std": 0.0,
+  "impostor_score_mean": 1.0000001192092896,
+  "impostor_score_std": 0.0
+}

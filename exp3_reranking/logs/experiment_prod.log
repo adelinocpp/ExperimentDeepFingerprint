@@ -1,0 +1,20 @@
+2026-01-17 07:20:51,962 - Experiment_exp3_reranking - INFO - Iniciando experimento: DeepPrint com Re-ranking Aprimorado
+2026-01-17 07:20:51,962 - Experiment_exp3_reranking - INFO - Modo: prod
+2026-01-17 07:20:51,963 - Experiment_exp3_reranking - INFO - ================================================================================
+2026-01-17 07:20:51,963 - Experiment_exp3_reranking - INFO - Experimento: DeepPrint com Re-ranking Aprimorado
+2026-01-17 07:20:51,963 - Experiment_exp3_reranking - INFO - Descrição: Implementar re-ranking scheme com learning-to-rank
+2026-01-17 07:20:51,963 - Experiment_exp3_reranking - INFO - ================================================================================
+2026-01-17 07:20:51,963 - Experiment_exp3_reranking - INFO - Carregando bases de dados...
+2026-01-17 07:20:52,084 - Experiment_exp3_reranking - INFO - === FVC ===
+2026-01-17 07:20:52,084 - Experiment_exp3_reranking - INFO - Total de imagens: 960
+2026-01-17 07:20:52,084 - Experiment_exp3_reranking - INFO - Total de origens únicas: 120
+2026-01-17 07:20:52,084 - Experiment_exp3_reranking - INFO - Imagens por dataset: {'FVC2000': 320, 'FVC2002': 320, 'FVC2004': 320}
+2026-01-17 07:20:52,084 - Experiment_exp3_reranking - INFO - Versões por origem: min=8, max=8, média=8.0
+2026-01-17 07:20:52,109 - Experiment_exp3_reranking - INFO - === SD302 ===
+2026-01-17 07:20:52,109 - Experiment_exp3_reranking - INFO - Total de imagens: 13630
+2026-01-17 07:20:52,110 - Experiment_exp3_reranking - INFO - Total de origens únicas: 2000
+2026-01-17 07:20:52,110 - Experiment_exp3_reranking - INFO - Imagens por device: {'A': 1960, 'B': 1956, 'C': 1998, 'D': 1987, 'E': 1887, 'F': 2000, 'G': 700, 'H': 1142}
+2026-01-17 07:20:52,110 - Experiment_exp3_reranking - INFO - Versões por origem: min=4, max=8, média=6.8
+2026-01-17 07:20:52,110 - Experiment_exp3_reranking - INFO - Dataset dividido: train=10210, val=2189, test=2191
+2026-01-17 07:20:52,110 - Experiment_exp3_reranking - INFO - Criando modelo: reranking com 512 dimensões
+2026-01-17 07:20:53,659 - Experiment_exp3_reranking - INFO - Iniciando treinamento...

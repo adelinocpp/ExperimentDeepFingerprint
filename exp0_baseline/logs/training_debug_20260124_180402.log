@@ -1,0 +1,19 @@
+2026-01-24 18:04:02,292 - DeepPrint_debug - INFO - Iniciando treinamento em modo debug
+2026-01-24 18:04:02,377 - DeepPrint_debug - INFO - GPU disponível: NVIDIA GeForce RTX 2070
+2026-01-24 18:04:02,377 - DeepPrint_debug - INFO - Dispositivo: cuda:0
+2026-01-24 18:04:03,148 - DeepPrint_debug - INFO - Scheduler ativado: Cosine Annealing com 5 épocas de warmup
+2026-01-24 18:04:03,148 - DeepPrint_debug - INFO - Número total de classes (origens únicas): 40
+2026-01-24 18:04:03,149 - DeepPrint_debug - INFO - Classificador configurado com 40 classes
+2026-01-24 18:04:03,149 - DeepPrint_debug - INFO - Inicializando Center Loss (Texture) com 40 classes e 96 dims
+2026-01-24 18:04:03,150 - DeepPrint_debug - INFO - Inicializando Center Loss (Minutiae) com 40 classes e 96 dims
+2026-01-24 18:04:03,150 - DeepPrint_debug - INFO - Center Loss inicializado com 40 classes
+2026-01-24 18:04:07,477 - DeepPrint_debug - INFO - Epoch 1 Batch 10/28 - Loss: 10.9387 - Mem: 1497.4MB
+2026-01-24 18:04:11,236 - DeepPrint_debug - INFO - Epoch 1 Batch 20/28 - Loss: 10.6732 - Mem: 1497.4MB
+2026-01-24 18:04:24,121 - DeepPrint_debug - INFO - Melhor modelo salvo em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/models/best_model.pt
+2026-01-24 18:04:24,123 - DeepPrint_debug - INFO - Epoch 1 - Train Loss: 10.5763 - Val Loss: 11.2890
+2026-01-24 18:04:28,103 - DeepPrint_debug - INFO - Epoch 2 Batch 10/28 - Loss: 9.9103 - Mem: 1538.2MB
+2026-01-24 18:04:31,971 - DeepPrint_debug - INFO - Epoch 2 Batch 20/28 - Loss: 9.8595 - Mem: 1538.2MB
+2026-01-24 18:04:47,467 - DeepPrint_debug - INFO - Melhor modelo salvo em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/models/best_model.pt
+2026-01-24 18:04:47,468 - DeepPrint_debug - INFO - Epoch 2 - Train Loss: 9.7822 - Val Loss: 11.0271
+2026-01-24 18:04:47,468 - DeepPrint_debug - INFO - Treinamento concluído
+2026-01-24 18:04:47,469 - DeepPrint_debug - INFO - Histórico salvo em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/training_history_debug.json

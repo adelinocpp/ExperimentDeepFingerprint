@@ -1,0 +1,6 @@
+2026-01-17 18:37:34,200 - DeepPrint_debug - INFO - Iniciando treinamento em modo debug
+2026-01-17 18:37:34,305 - DeepPrint_debug - INFO - GPU disponível: NVIDIA GeForce RTX 2070
+2026-01-17 18:37:34,305 - DeepPrint_debug - INFO - Dispositivo: cuda:0
+2026-01-17 18:37:35,529 - DeepPrint_debug - INFO - Número total de classes (origens únicas): 40
+2026-01-17 18:37:35,530 - DeepPrint_debug - INFO - Classificador configurado com 40 classes
+2026-01-17 18:37:35,531 - DeepPrint_debug - INFO - Center Loss inicializado com 40 classes

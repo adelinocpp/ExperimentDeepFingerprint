@@ -1,0 +1,102 @@
+2026-01-17 01:38:09,007 - Experiment_exp1_representacao_aumentada - INFO - Iniciando experimento: DeepPrint com Representação Aumentada
+2026-01-17 01:38:09,007 - Experiment_exp1_representacao_aumentada - INFO - Modo: prod
+2026-01-17 01:38:09,007 - Experiment_exp1_representacao_aumentada - INFO - ================================================================================
+2026-01-17 01:38:09,007 - Experiment_exp1_representacao_aumentada - INFO - Experimento: DeepPrint com Representação Aumentada
+2026-01-17 01:38:09,008 - Experiment_exp1_representacao_aumentada - INFO - Descrição: Aumentar representação de 512 para 1024 dimensões com atenção seletiva
+2026-01-17 01:38:09,008 - Experiment_exp1_representacao_aumentada - INFO - ================================================================================
+2026-01-17 01:38:09,008 - Experiment_exp1_representacao_aumentada - INFO - Carregando bases de dados...
+2026-01-17 01:38:09,140 - Experiment_exp1_representacao_aumentada - INFO - === FVC ===
+2026-01-17 01:38:09,140 - Experiment_exp1_representacao_aumentada - INFO - Total de imagens: 960
+2026-01-17 01:38:09,140 - Experiment_exp1_representacao_aumentada - INFO - Total de origens únicas: 120
+2026-01-17 01:38:09,141 - Experiment_exp1_representacao_aumentada - INFO - Imagens por dataset: {'FVC2000': 320, 'FVC2002': 320, 'FVC2004': 320}
+2026-01-17 01:38:09,141 - Experiment_exp1_representacao_aumentada - INFO - Versões por origem: min=8, max=8, média=8.0
+2026-01-17 01:38:09,169 - Experiment_exp1_representacao_aumentada - INFO - === SD302 ===
+2026-01-17 01:38:09,169 - Experiment_exp1_representacao_aumentada - INFO - Total de imagens: 13630
+2026-01-17 01:38:09,169 - Experiment_exp1_representacao_aumentada - INFO - Total de origens únicas: 2000
+2026-01-17 01:38:09,169 - Experiment_exp1_representacao_aumentada - INFO - Imagens por device: {'A': 1960, 'B': 1956, 'C': 1998, 'D': 1987, 'E': 1887, 'F': 2000, 'G': 700, 'H': 1142}
+2026-01-17 01:38:09,169 - Experiment_exp1_representacao_aumentada - INFO - Versões por origem: min=4, max=8, média=6.8
+2026-01-17 01:38:09,169 - Experiment_exp1_representacao_aumentada - INFO - Dataset dividido: train=10210, val=2189, test=2191
+2026-01-17 01:38:09,169 - Experiment_exp1_representacao_aumentada - INFO - Criando modelo: enhanced_representation com 1024 dimensões
+2026-01-17 01:38:10,749 - Experiment_exp1_representacao_aumentada - INFO - Iniciando treinamento...
+2026-01-17 04:22:55,008 - Experiment_exp1_representacao_aumentada - INFO - ================================================================================
+2026-01-17 04:22:55,008 - Experiment_exp1_representacao_aumentada - INFO - Avaliação no conjunto de teste:
+2026-01-17 04:22:55,009 - Experiment_exp1_representacao_aumentada - INFO - ================================================================================
+2026-01-17 04:23:07,239 - Experiment_exp1_representacao_aumentada - INFO - Embeddings extraídos: (2191, 1024)
+2026-01-17 04:23:11,215 - Experiment_exp1_representacao_aumentada - INFO - Pares genuínos: 6563
+2026-01-17 04:23:11,215 - Experiment_exp1_representacao_aumentada - INFO - Pares impostores: 2392582
+2026-01-17 04:23:11,225 - Experiment_exp1_representacao_aumentada - INFO - EER: 0.5000
+2026-01-17 04:23:11,225 - Experiment_exp1_representacao_aumentada - INFO - FAR@FRR=0.1: 1.0000
+2026-01-17 04:23:11,225 - Experiment_exp1_representacao_aumentada - INFO - FAR@FRR=0.01: 1.0000
+2026-01-17 04:23:11,226 - Experiment_exp1_representacao_aumentada - INFO - Scores genuínos: média=1.0000, std=0.0000
+2026-01-17 04:23:11,230 - Experiment_exp1_representacao_aumentada - INFO - Scores impostores: média=1.0000, std=0.0000
+2026-01-17 04:23:11,231 - Experiment_exp1_representacao_aumentada - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp1_representacao_aumentada/results/test_results_prod.json
+2026-01-17 04:23:11,231 - Experiment_exp1_representacao_aumentada - INFO - Iniciando validação cruzada...
+2026-01-17 04:23:15,022 - Experiment_exp1_representacao_aumentada - WARNING - Reduzindo n_splits de 5 para 4 devido ao tamanho do dataset (2191 amostras, 318 classes, min 4 amostras/classe)
+2026-01-17 04:23:15,027 - Experiment_exp1_representacao_aumentada - INFO - Fold 1/4
+2026-01-17 04:23:27,607 - Experiment_exp1_representacao_aumentada - INFO - Fold 1 - EER: 0.5000
+2026-01-17 04:23:27,607 - Experiment_exp1_representacao_aumentada - INFO - Fold 1 - Rank-1: 0.0146
+2026-01-17 04:23:27,608 - Experiment_exp1_representacao_aumentada - INFO - Fold 2/4
+2026-01-17 04:23:40,148 - Experiment_exp1_representacao_aumentada - INFO - Fold 2 - EER: 0.5000
+2026-01-17 04:23:40,148 - Experiment_exp1_representacao_aumentada - INFO - Fold 2 - Rank-1: 0.0000
+2026-01-17 04:23:40,148 - Experiment_exp1_representacao_aumentada - INFO - Fold 3/4
+2026-01-17 04:23:52,703 - Experiment_exp1_representacao_aumentada - INFO - Fold 3 - EER: 0.5000
+2026-01-17 04:23:52,703 - Experiment_exp1_representacao_aumentada - INFO - Fold 3 - Rank-1: 0.0091
+2026-01-17 04:23:52,703 - Experiment_exp1_representacao_aumentada - INFO - Fold 4/4
+2026-01-17 04:24:05,250 - Experiment_exp1_representacao_aumentada - INFO - Fold 4 - EER: 0.5000
+2026-01-17 04:24:05,250 - Experiment_exp1_representacao_aumentada - INFO - Fold 4 - Rank-1: 0.0018
+2026-01-17 04:24:05,254 - Experiment_exp1_representacao_aumentada - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp1_representacao_aumentada/results/cv_results_prod.json
+2026-01-17 04:24:05,254 - Experiment_exp1_representacao_aumentada - INFO - ================================================================================
+2026-01-17 04:24:05,254 - Experiment_exp1_representacao_aumentada - INFO - Resultados da Validação Cruzada:
+2026-01-17 04:24:05,254 - Experiment_exp1_representacao_aumentada - INFO - ================================================================================
+2026-01-17 04:24:05,254 - Experiment_exp1_representacao_aumentada - INFO - rank_1: 0.0064 (CI: [-0.0029, 0.0157])
+2026-01-17 04:24:05,254 - Experiment_exp1_representacao_aumentada - INFO - rank_5: 0.0178 (CI: [0.0017, 0.0339])
+2026-01-17 04:24:05,255 - Experiment_exp1_representacao_aumentada - INFO - rank_10: 0.0324 (CI: [0.0090, 0.0558])
+2026-01-17 04:24:05,255 - Experiment_exp1_representacao_aumentada - INFO - rank_20: 0.0602 (CI: [0.0330, 0.0875])
+2026-01-17 04:24:05,255 - Experiment_exp1_representacao_aumentada - INFO - eer: 0.5000 (CI: [0.5000, 0.5000])
+2026-01-17 04:24:05,255 - Experiment_exp1_representacao_aumentada - INFO - far_at_frr_0.1: 1.0000 (CI: [1.0000, 1.0000])
+2026-01-17 04:24:05,255 - Experiment_exp1_representacao_aumentada - INFO - far_at_frr_0.01: 1.0000 (CI: [1.0000, 1.0000])
+2026-01-17 04:24:05,255 - Experiment_exp1_representacao_aumentada - INFO - ================================================================================
+2026-01-17 04:24:05,255 - Experiment_exp1_representacao_aumentada - INFO - Avaliação Pairwise (todas-contra-todas):
+2026-01-17 04:24:05,255 - Experiment_exp1_representacao_aumentada - INFO - ================================================================================
+2026-01-17 04:24:05,257 - Experiment_exp1_representacao_aumentada - INFO - Avaliação pairwise com 2191 amostras
+2026-01-17 04:24:05,258 - Experiment_exp1_representacao_aumentada - INFO - Total de comparações: 2401336
+2026-01-17 04:24:05,258 - Experiment_exp1_representacao_aumentada - INFO - Carregando qualidades NFIQ2...
+2026-01-17 04:24:05,313 - Experiment_exp1_representacao_aumentada - INFO - Qualidades carregadas: 240 arquivos
+2026-01-17 04:24:05,313 - Experiment_exp1_representacao_aumentada - INFO - Qualidade média: 44.5
+2026-01-17 04:24:05,323 - Experiment_exp1_representacao_aumentada - INFO - Extraindo embeddings...
+2026-01-17 04:24:17,730 - Experiment_exp1_representacao_aumentada - INFO - Embeddings extraídos: (2191, 1024)
+2026-01-17 04:24:17,731 - Experiment_exp1_representacao_aumentada - INFO - Realizando comparações todas-contra-todas...
+2026-01-17 04:24:17,731 - Experiment_exp1_representacao_aumentada - INFO - Iniciando 2401336 comparações (2191 amostras)
+2026-01-17 04:27:17,673 - Experiment_exp1_representacao_aumentada - INFO - Comparações concluídas em 179.32s
+2026-01-17 04:27:17,673 - Experiment_exp1_representacao_aumentada - INFO - Pares genuínos: 6563, Pares impostores: 2392582
+2026-01-17 04:27:17,673 - Experiment_exp1_representacao_aumentada - INFO - Memória pico: 1911.5 MB
+2026-01-17 04:27:17,673 - Experiment_exp1_representacao_aumentada - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp1_representacao_aumentada/results/pairwise_comparisons_prod.csv
+2026-01-17 04:27:17,698 - Experiment_exp1_representacao_aumentada - INFO - Estatísticas salvas em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp1_representacao_aumentada/results/pairwise_stats_prod.json
+2026-01-17 04:27:17,698 - Experiment_exp1_representacao_aumentada - INFO - Comparações realizadas: 2401336
+2026-01-17 04:27:17,698 - Experiment_exp1_representacao_aumentada - INFO - Pares genuínos: 6563
+2026-01-17 04:27:17,698 - Experiment_exp1_representacao_aumentada - INFO - Pares impostores: 2392582
+2026-01-17 04:27:17,698 - Experiment_exp1_representacao_aumentada - INFO - Tempo total: 179.32s
+2026-01-17 04:27:17,698 - Experiment_exp1_representacao_aumentada - INFO - Memória pico: 1911.5 MB
+2026-01-17 04:27:17,698 - Experiment_exp1_representacao_aumentada - INFO - CSV salvo em: /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp1_representacao_aumentada/results/pairwise_comparisons_prod.csv
+2026-01-17 04:27:17,699 - Experiment_exp1_representacao_aumentada - INFO - ================================================================================
+2026-01-17 04:27:17,699 - Experiment_exp1_representacao_aumentada - INFO - Experimento concluído com sucesso!
+2026-01-17 16:34:03,579 - Experiment_exp1_representacao_aumentada - INFO - Iniciando experimento: DeepPrint com Representação Aumentada
+2026-01-17 16:34:03,579 - Experiment_exp1_representacao_aumentada - INFO - Modo: prod
+2026-01-17 16:34:03,579 - Experiment_exp1_representacao_aumentada - INFO - ================================================================================
+2026-01-17 16:34:03,579 - Experiment_exp1_representacao_aumentada - INFO - Experimento: DeepPrint com Representação Aumentada
+2026-01-17 16:34:03,579 - Experiment_exp1_representacao_aumentada - INFO - Descrição: Aumentar representação de 512 para 1024 dimensões com atenção seletiva
+2026-01-17 16:34:03,579 - Experiment_exp1_representacao_aumentada - INFO - ================================================================================
+2026-01-17 16:34:03,579 - Experiment_exp1_representacao_aumentada - INFO - Carregando bases de dados...
+2026-01-17 16:34:03,696 - Experiment_exp1_representacao_aumentada - INFO - === FVC ===
+2026-01-17 16:34:03,697 - Experiment_exp1_representacao_aumentada - INFO - Total de imagens: 960
+2026-01-17 16:34:03,697 - Experiment_exp1_representacao_aumentada - INFO - Total de origens únicas: 120
+2026-01-17 16:34:03,697 - Experiment_exp1_representacao_aumentada - INFO - Imagens por dataset: {'FVC2000': 320, 'FVC2002': 320, 'FVC2004': 320}
+2026-01-17 16:34:03,697 - Experiment_exp1_representacao_aumentada - INFO - Versões por origem: min=8, max=8, média=8.0
+2026-01-17 16:34:03,721 - Experiment_exp1_representacao_aumentada - INFO - === SD302 ===
+2026-01-17 16:34:03,721 - Experiment_exp1_representacao_aumentada - INFO - Total de imagens: 13630
+2026-01-17 16:34:03,721 - Experiment_exp1_representacao_aumentada - INFO - Total de origens únicas: 2000
+2026-01-17 16:34:03,721 - Experiment_exp1_representacao_aumentada - INFO - Imagens por device: {'A': 1960, 'B': 1956, 'C': 1998, 'D': 1987, 'E': 1887, 'F': 2000, 'G': 700, 'H': 1142}
+2026-01-17 16:34:03,721 - Experiment_exp1_representacao_aumentada - INFO - Versões por origem: min=4, max=8, média=6.8
+2026-01-17 16:34:03,721 - Experiment_exp1_representacao_aumentada - INFO - Dataset dividido: train=10210, val=2189, test=2191
+2026-01-17 16:34:03,722 - Experiment_exp1_representacao_aumentada - INFO - Criando modelo: enhanced_representation com 1024 dimensões
+2026-01-17 16:34:05,191 - Experiment_exp1_representacao_aumentada - INFO - Iniciando treinamento...

@@ -1,0 +1,8 @@
+{
+  "num_samples": 2191,
+  "num_genuine_pairs": 6563,
+  "num_impostor_pairs": 2392582,
+  "eer": 0.5,
+  "far_at_frr_0.1": 1.0,
+  "far_at_frr_0.01": 1.0
+}

@@ -1,0 +1,18 @@
+{
+  "total_comparisons": 1176,
+  "num_samples": 48,
+  "num_genuine_pairs": 168,
+  "num_impostor_pairs": 960,
+  "num_same_file": 48,
+  "output_file": "/media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/pairwise_comparisons_debug.csv",
+  "total_time_seconds": 0.019826889038085938,
+  "memory_peak_mb": 1554.05859375,
+  "memory_avg_mb": 1554.05859375,
+  "cpu_avg_percent": 0.0,
+  "gpu_memory_peak_mb": 1057.40869140625,
+  "num_measurements": 1,
+  "genuine_score_mean": 0.983006412429469,
+  "genuine_score_std": 0.023585382051395872,
+  "impostor_score_mean": 0.7836352381855249,
+  "impostor_score_std": 0.1541373854731087
+}

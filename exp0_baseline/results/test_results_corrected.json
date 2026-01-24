@@ -1,0 +1,17 @@
+{
+  "verification": {
+    "num_genuine_pairs": 12249,
+    "num_impostor_pairs": 24786,
+    "eer": 0.21016945464639475,
+    "far_at_frr_0.1": 0.3086823206648915,
+    "far_at_frr_0.01": 0.7338013394658275
+  },
+  "identification": {
+    "gallery_size": 279,
+    "num_probes": 2475,
+    "rank_1": 0.042828282828282827,
+    "rank_5": 0.1802020202020202,
+    "rank_10": 0.3058585858585859,
+    "rank_20": 0.4690909090909091
+  }
+}

@@ -1,0 +1,9 @@
+2026-01-17 10:28:58,580 - DeepPrint_debug - INFO - Iniciando treinamento em modo debug
+2026-01-17 10:28:58,580 - DeepPrint_debug - INFO - Dispositivo: cpu
+2026-01-17 10:28:59,777 - DeepPrint_debug - INFO - Número total de classes (origens únicas): 40
+2026-01-17 10:28:59,777 - DeepPrint_debug - INFO - Classificador configurado com 40 classes
+2026-01-17 10:28:59,778 - DeepPrint_debug - INFO - Center Loss inicializado com 40 classes
+2026-01-17 10:31:48,225 - DeepPrint_debug - INFO - Epoch 1 Batch 10/28 - Loss: 5.4405 - Mem: 2642.0MB
+2026-01-17 10:35:23,002 - DeepPrint_debug - INFO - Epoch 1 Batch 20/28 - Loss: 5.3515 - Mem: 2695.1MB
+2026-01-17 10:38:54,028 - DeepPrint_debug - INFO - Melhor modelo salvo em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/models/best_model.pt
+2026-01-17 10:38:54,029 - DeepPrint_debug - INFO - Epoch 1 - Train Loss: 5.2774 - Val Loss: 5.9820

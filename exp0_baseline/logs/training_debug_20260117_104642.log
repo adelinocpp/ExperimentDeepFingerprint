@@ -1,0 +1,15 @@
+2026-01-17 10:46:42,821 - DeepPrint_debug - INFO - Iniciando treinamento em modo debug
+2026-01-17 10:46:42,921 - DeepPrint_debug - INFO - GPU disponível: NVIDIA GeForce RTX 2070
+2026-01-17 10:46:42,921 - DeepPrint_debug - INFO - Dispositivo: cuda:0
+2026-01-17 10:46:44,324 - DeepPrint_debug - INFO - Número total de classes (origens únicas): 40
+2026-01-17 10:46:44,326 - DeepPrint_debug - INFO - Classificador configurado com 40 classes
+2026-01-17 10:46:44,327 - DeepPrint_debug - INFO - Center Loss inicializado com 40 classes
+2026-01-17 10:46:48,041 - DeepPrint_debug - INFO - Epoch 1 Batch 10/28 - Loss: 5.4116 - Mem: 1403.7MB
+2026-01-17 10:46:51,323 - DeepPrint_debug - INFO - Epoch 1 Batch 20/28 - Loss: 5.3306 - Mem: 1403.8MB
+2026-01-17 10:46:58,816 - DeepPrint_debug - INFO - Melhor modelo salvo em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/models/best_model.pt
+2026-01-17 10:46:58,817 - DeepPrint_debug - INFO - Epoch 1 - Train Loss: 5.2634 - Val Loss: 6.0294
+2026-01-17 10:47:02,191 - DeepPrint_debug - INFO - Epoch 2 Batch 10/28 - Loss: 4.8797 - Mem: 1415.3MB
+2026-01-17 10:47:05,575 - DeepPrint_debug - INFO - Epoch 2 Batch 20/28 - Loss: 4.8442 - Mem: 1415.3MB
+2026-01-17 10:47:08,795 - DeepPrint_debug - INFO - Epoch 2 - Train Loss: 4.8139 - Val Loss: 6.0992
+2026-01-17 10:47:08,795 - DeepPrint_debug - INFO - Treinamento concluído
+2026-01-17 10:47:08,795 - DeepPrint_debug - INFO - Histórico salvo em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/training_history_debug.json

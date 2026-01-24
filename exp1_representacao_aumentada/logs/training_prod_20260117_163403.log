@@ -1,0 +1,6 @@
+2026-01-17 16:34:03,722 - DeepPrint_prod - INFO - Iniciando treinamento em modo prod
+2026-01-17 16:34:03,800 - DeepPrint_prod - INFO - GPU disponível: NVIDIA GeForce RTX 2070
+2026-01-17 16:34:03,800 - DeepPrint_prod - INFO - Dispositivo: cuda:0
+2026-01-17 16:34:05,191 - DeepPrint_prod - INFO - Número total de classes (origens únicas): 2120
+2026-01-17 16:34:05,206 - DeepPrint_prod - INFO - Classificador configurado com 2120 classes
+2026-01-17 16:34:05,230 - DeepPrint_prod - INFO - Center Loss inicializado com 2120 classes
