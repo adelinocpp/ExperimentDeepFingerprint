@@ -10,15 +10,19 @@ fixed-length-fingerprint-extractors-main
 exp0_baseline/checkpoints/*
 exp0_baseline/models/*
 exp0_baseline/results/*.csv
+exp0_baseline/logs/*
 exp1_representacao_aumentada/checkpoints/*
 exp1_representacao_aumentada/models/*
 exp1_representacao_aumentada/results/*.csv
+exp1_representacao_aumentada/logs/*
 exp2_atencao_espacial/checkpoints/*
 exp2_atencao_espacial/models/*
 exp2_atencao_espacial/results/*.csv
+exp2_atencao_espacial/logs/*
 exp3_reranking/checkpoints/*
 exp3_reranking/models/*
 exp3_reranking/results/*.csv
+exp3_reranking/logs/*
 
 
 
