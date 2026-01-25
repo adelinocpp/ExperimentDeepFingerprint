@@ -381,7 +381,13 @@ class DeepPrintTrainer:
         with torch.no_grad():
             pbar = tqdm(val_loader, desc=f"Epoch {epoch} [Val]", disable=self.mode != "debug")
             
-            for images, labels in pbar:
+            for batch_data in pbar:
+                # Desempacotar batch (pode ter paths se for dataset customizado)
+                if len(batch_data) == 3:
+                    images, labels, image_paths = batch_data
+                else:
+                    images, labels = batch_data
+                
                 images = images.to(self.device)
                 labels = labels.to(self.device)
                 

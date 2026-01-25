@@ -19,6 +19,9 @@ DATA_DIRS = {
 # Usar o diretório correspondente ao host ou fallback para westeros
 DATA_DIR = DATA_DIRS.get(HOSTNAME, DATA_DIRS["westeros"])
 
+# Detectar número de CPUs da máquina
+NUM_CPUS = os.cpu_count() or 4
+
 # Configuração de experimentos
 EXPERIMENTS = {
     "exp0_baseline": {
@@ -52,7 +55,7 @@ TRAINING_CONFIG = {
     "debug": {
         "batch_size": 8,
         "num_epochs": 2,  # Debug rápido
-        "num_workers": 2,
+        "num_workers": min(2, NUM_CPUS),  # Usa mínimo entre 2 e CPUs disponíveis
         "sample_size": 32,  # Mínimo possível para testar
         "use_gpu": True,  # Usar GPU para ser rápido
         "mixed_precision": False,
@@ -60,7 +63,7 @@ TRAINING_CONFIG = {
     "prod": {
         "batch_size": 16,  # Reduzido para 16 - RTX 2070 8GB com 801 classes (~4GB VRAM)
         "num_epochs": 150,  # Reduzido de 256 para 150 (suficiente para 84k imagens)
-        "num_workers": 6,  # Aumentado para 6 workers
+        "num_workers": NUM_CPUS,  # Usa número de CPUs da máquina
         "sample_size": None,  # Usar todas as amostras (84k)
         "use_gpu": True,
         "mixed_precision": False,  # Desabilitado - causa colapso de pesos
