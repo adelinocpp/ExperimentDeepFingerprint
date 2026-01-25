@@ -7,7 +7,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from torch.utils.data import DataLoader, random_split, Subset
-from torch.amp import autocast, GradScaler
+from torch.cuda.amp import autocast, GradScaler
+from minutia_map_generator import batch_load_minutia_maps
 import numpy as np
 from pathlib import Path
 from typing import Dict, List, Tuple, Optional
@@ -294,9 +295,28 @@ class DeepPrintTrainer:
         
         pbar = tqdm(train_loader, desc=f"Epoch {epoch} [Train]", disable=self.mode != "debug")
         
-        for batch_idx, (images, labels) in enumerate(pbar):
+        for batch_idx, batch_data in enumerate(pbar):
+            # Desempacotar batch (pode ter paths se for dataset customizado)
+            if len(batch_data) == 3:
+                images, labels, image_paths = batch_data
+            else:
+                images, labels = batch_data
+                image_paths = None
+            
             images = images.to(self.device)
             labels = labels.to(self.device)
+            
+            # Carregar minutia maps se disponíveis
+            minutia_maps = None
+            minutia_map_weights = None
+            if image_paths is not None:
+                try:
+                    minutia_maps, minutia_map_weights = batch_load_minutia_maps(image_paths)
+                    minutia_maps = minutia_maps.to(self.device)
+                    minutia_map_weights = minutia_map_weights.to(self.device)
+                except Exception as e:
+                    # Se falhar, continuar sem minutia maps
+                    pass
             
             self.optimizer.zero_grad()
             
@@ -304,11 +324,7 @@ class DeepPrintTrainer:
             if self.scaler:
                 with autocast('cuda'):
                     outputs = self.model(images)
-                    embedding = outputs["embedding"]
-                    logits = outputs.get("logits", None)
-                    
-                    # Calcular perda
-                    loss = self._compute_loss(embedding, labels, logits)
+                    loss = self._compute_loss(outputs, labels, minutia_maps, minutia_map_weights)
                 
                 # Backward pass
                 self.scaler.scale(loss).backward()
@@ -317,11 +333,11 @@ class DeepPrintTrainer:
                 self.scaler.step(self.optimizer)
                 self.scaler.update()
             else:
-                # Forward pass simples (igual ao original)
+                # Forward pass simples
                 outputs = self.model(images)
-                loss = self._compute_loss(outputs, labels)
+                loss = self._compute_loss(outputs, labels, minutia_maps, minutia_map_weights)
                 
-                # Backward pass simples (igual ao original - sem gradient clipping)
+                # Backward pass
                 loss.backward()
                 self.optimizer.step()
             
@@ -389,13 +405,19 @@ class DeepPrintTrainer:
         avg_loss = total_loss / num_batches if num_batches > 0 else 0.0
         return {"loss": avg_loss}
     
-    def _compute_loss(self, outputs: Dict, labels: torch.Tensor) -> torch.Tensor:
+    def _compute_loss(
+        self, 
+        outputs: Dict, 
+        labels: torch.Tensor,
+        minutia_maps: torch.Tensor = None,
+        minutia_map_weights: torch.Tensor = None
+    ) -> torch.Tensor:
         """Computar perda total para DeepPrint (LocTexMinu)
         
         Baseado na implementação original do DeepPrint:
         - Texture: CrossEntropy + Center Loss
-        - Minutiae: CrossEntropy + Center Loss
-        - Pesos: W_CROSS_ENTROPY = 1.0, W_CENTER_LOSS = 0.125
+        - Minutiae: CrossEntropy + Center Loss + Minutia Map Loss
+        - Pesos: W_CROSS_ENTROPY = 1.0, W_CENTER_LOSS = 0.125, W_MINUTIA_MAP_LOSS = 0.3
         """
         total_loss = torch.tensor(0.0, device=self.device)
         
@@ -426,6 +448,15 @@ class DeepPrintTrainer:
             if self.criterion_center_minutia is not None:
                 center_loss_minutia = self.criterion_center_minutia(minutia_embedding, labels)
                 total_loss = total_loss + LOSS_CONFIG["center_loss_weight"] * center_loss_minutia
+            
+            # Minutia Map Loss (supervisionado)
+            if "minutia_maps" in outputs and minutia_maps is not None:
+                predicted_maps = outputs["minutia_maps"]
+                # MSE loss entre mapa predito e ground truth, ponderado por amostra
+                mm_squared_diff = (predicted_maps - minutia_maps) ** 2
+                mm_mse = mm_squared_diff.reshape(minutia_map_weights.shape[0], -1).mean(dim=1)
+                mm_loss = (mm_mse * minutia_map_weights).mean()
+                total_loss = total_loss + LOSS_CONFIG["minutia_map_loss_weight"] * mm_loss
         
         # Fallback para modelos texture-only (exp1-exp3)
         if "logits" in outputs and "embedding" in outputs:

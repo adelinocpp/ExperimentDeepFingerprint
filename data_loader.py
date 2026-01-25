@@ -38,24 +38,31 @@ class FingerprintDataset(Dataset):
         labels: List[int],
         image_size: Tuple[int, int] = (299, 299),
         augment: bool = False,
-        aggressive_augment: bool = False,
+        augmentation_config: Dict = None,
+        random_state: int = 42,
+        return_paths: bool = True,
     ):
         """
         Args:
-            image_paths: lista de caminhos para as imagens
-            labels: lista de labels (inteiros)
-            image_size: tamanho da imagem (altura, largura)
-            augment: aplicar augmentation
-            aggressive_augment: aplicar augmentation agressivo (para datasets pequenos)
+            image_paths: lista de caminhos das imagens
+            labels: lista de labels
+            image_size: tamanho da imagem após resize
+            augment: se True, aplica data augmentation
+            augmentation_config: configurações de augmentation
+            random_state: seed para reprodutibilidade
+            return_paths: se True, retorna (image, label, path); caso contrário (image, label)
         """
         self.image_paths = image_paths
         self.labels = labels
         self.image_size = image_size
         self.augment = augment
-        self.aggressive_augment = aggressive_augment
+        self.augmentation_config = augmentation_config or {}
+        self.random_state = random_state
+        self.return_paths = return_paths
+        np.random.seed(random_state)
         
         # Selecionar config de augmentation
-        if aggressive_augment:
+        if self.augmentation_config.get("aggressive", False):
             self.aug_config = AGGRESSIVE_AUGMENTATION_CONFIG
         else:
             self.aug_config = AUGMENTATION_CONFIG
@@ -74,14 +81,14 @@ class FingerprintDataset(Dataset):
         """Retorna lista de labels."""
         return list(self.labels)
     
-    def __getitem__(self, idx: int) -> Tuple[torch.Tensor, int]:
+    def __getitem__(self, idx: int):
         """
         Args:
             idx: índice
         
         Returns:
-            image: tensor de imagem (1, H, W)
-            label: label da imagem
+            Se return_paths=True: (image, label, path)
+            Se return_paths=False: (image, label)
         """
         image_path = self.image_paths[idx]
         label = self.labels[idx]
@@ -106,7 +113,10 @@ class FingerprintDataset(Dataset):
         # Converter para tensor
         image = torch.from_numpy(image).unsqueeze(0)  # (1, H, W)
         
-        return image, label
+        if self.return_paths:
+            return image, label, str(image_path)
+        else:
+            return image, label
     
     def _load_image(self, image_path: Path) -> np.ndarray:
         """Carregar imagem"""
@@ -1117,7 +1127,7 @@ def load_datasets(
         labels=all_train_labels_remapped,
         image_size=image_size,
         augment=augment_train,
-        aggressive_augment=aggressive_augment,
+        augmentation_config={"aggressive": aggressive_augment} if aggressive_augment else None,
     )
     
     val_dataset = FingerprintDataset(

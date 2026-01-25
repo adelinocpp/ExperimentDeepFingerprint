@@ -429,3 +429,11 @@
 2026-01-24 18:04:54,463 - Experiment_exp0_baseline - INFO - CSV salvo em: /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/pairwise_comparisons_debug.csv
 2026-01-24 18:04:54,463 - Experiment_exp0_baseline - INFO - ================================================================================
 2026-01-24 18:04:54,463 - Experiment_exp0_baseline - INFO - Experimento concluído com sucesso!
+2026-01-25 16:21:39,054 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
+2026-01-25 16:21:39,057 - Experiment_exp0_baseline - INFO - Modo: debug
+2026-01-25 16:21:39,057 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-25 16:21:39,057 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
+2026-01-25 16:21:39,057 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
+2026-01-25 16:21:39,057 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-25 16:21:39,057 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
+2026-01-25 16:21:39,063 - Experiment_exp0_baseline - ERROR - Erro ao carregar datasets: FingerprintDataset.__init__() got an unexpected keyword argument 'aggressive_augment'

@@ -117,12 +117,13 @@ MODEL_CONFIG = {
 }
 
 # Configuração de perda (baseado no projeto original DeepPrint)
-# Original deep_print_loss.py: W_CROSS_ENTROPY = 1.0, W_CENTER_LOSS = 0.125
+# Original deep_print_loss.py: W_CROSS_ENTROPY = 1.0, W_CENTER_LOSS = 0.125, W_MINUTIA_MAP_LOSS = 0.3
 # Triplet loss NÃO é usado no DeepPrint original
 LOSS_CONFIG = {
     "center_loss_weight": 0.125,  # Original: W_CENTER_LOSS
     "triplet_loss_weight": 0.0,   # DESABILITADO (não existe no original)
     "softmax_loss_weight": 1.0,   # Original: W_CROSS_ENTROPY
+    "minutia_map_loss_weight": 0.3,  # Original: W_MINUTIA_MAP_LOSS (apenas para minutiae branch)
 }
 
 # Configuração de data augmentation (normal)
@@ -154,7 +155,7 @@ AGGRESSIVE_AUGMENTATION_CONFIG = {
 # Configuração de logging
 LOGGING_CONFIG = {
     "log_level": "INFO",
-    "log_interval": 10,  # Log a cada 10 batches
+    "log_interval": 100,  # Log a cada 10 batches
     "save_checkpoint_interval": 5,  # Salvar checkpoint a cada 5 epochs
 }
 
