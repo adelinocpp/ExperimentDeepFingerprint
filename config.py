@@ -84,18 +84,18 @@ METRICS_CONFIG = {
 }
 
 # Configuração de otimizador
-# Otimizado para SFinge (84k imagens, ~8k classes)
+# Alinhado com paper original DeepPrint (BIOSIG 2023)
 OPTIMIZER_CONFIG = {
     "adam": {
-        "lr": 0.0005,  # Reduzido para 0.0005 (mais estável para 84k imagens)
+        "lr": 0.025,  # IGUAL ao paper original (LR fixo, sem scheduler)
         "betas": (0.9, 0.999),
         "eps": 1e-8,
-        "weight_decay": 1e-4,  # Ajustado para regularização otimizada
+        "weight_decay": 1e-4,
     },
-    "use_lr_scheduler": True,  # Ativar scheduler
-    "scheduler_type": "cosine",  # Cosine annealing (melhor para datasets grandes)
-    "warmup_epochs": 5,  # 5 épocas de warmup
-    "min_lr": 5e-5,  # LR mínimo aumentado (10× maior) para evitar estagnação
+    "use_lr_scheduler": False,  # Paper original NÃO usa scheduler
+    "scheduler_type": "cosine",
+    "warmup_epochs": 5,
+    "min_lr": 5e-5,
 }
 
 # Configuração de modelo
