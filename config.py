@@ -84,7 +84,7 @@ METRICS_CONFIG = {
 }
 
 # Configuração de otimizador
-# Otimizado para SFinge (84k imagens, ~8.4k classes)
+# Otimizado para SFinge (84k imagens, ~8k classes)
 OPTIMIZER_CONFIG = {
     "adam": {
         "lr": 0.0005,  # Reduzido para 0.0005 (mais estável para 84k imagens)
@@ -95,7 +95,7 @@ OPTIMIZER_CONFIG = {
     "use_lr_scheduler": True,  # Ativar scheduler
     "scheduler_type": "cosine",  # Cosine annealing (melhor para datasets grandes)
     "warmup_epochs": 5,  # 5 épocas de warmup
-    "min_lr": 1e-6,  # LR mínimo
+    "min_lr": 5e-5,  # LR mínimo aumentado (10× maior) para evitar estagnação
 }
 
 # Configuração de modelo

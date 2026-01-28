@@ -1,7 +1,0 @@
-2026-01-24 17:45:43,099 - DeepPrint_debug - INFO - Iniciando treinamento em modo debug
-2026-01-24 17:45:43,192 - DeepPrint_debug - INFO - GPU disponível: NVIDIA GeForce RTX 2070
-2026-01-24 17:45:43,192 - DeepPrint_debug - INFO - Dispositivo: cuda:0
-2026-01-24 17:45:44,819 - DeepPrint_debug - INFO - Scheduler ativado: Cosine Annealing com 5 épocas de warmup
-2026-01-24 17:45:44,819 - DeepPrint_debug - INFO - Número total de classes (origens únicas): 40
-2026-01-24 17:45:44,821 - DeepPrint_debug - INFO - Classificador configurado com 40 classes
-2026-01-24 17:45:44,827 - DeepPrint_debug - INFO - Center Loss inicializado com 40 classes

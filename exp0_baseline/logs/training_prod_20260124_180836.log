@@ -1,9 +1,0 @@
-2026-01-24 18:08:36,190 - DeepPrint_prod - INFO - Iniciando treinamento em modo prod
-2026-01-24 18:08:36,273 - DeepPrint_prod - INFO - GPU disponível: NVIDIA GeForce RTX 2070
-2026-01-24 18:08:36,274 - DeepPrint_prod - INFO - Dispositivo: cuda:0
-2026-01-24 18:08:36,959 - DeepPrint_prod - INFO - Scheduler ativado: Cosine Annealing com 5 épocas de warmup
-2026-01-24 18:08:36,959 - DeepPrint_prod - INFO - Número total de classes (origens únicas): 801
-2026-01-24 18:08:36,961 - DeepPrint_prod - INFO - Classificador configurado com 801 classes
-2026-01-24 18:08:36,961 - DeepPrint_prod - INFO - Inicializando Center Loss (Texture) com 801 classes e 96 dims
-2026-01-24 18:08:36,965 - DeepPrint_prod - INFO - Inicializando Center Loss (Minutiae) com 801 classes e 96 dims
-2026-01-24 18:08:36,968 - DeepPrint_prod - INFO - Center Loss inicializado com 801 classes

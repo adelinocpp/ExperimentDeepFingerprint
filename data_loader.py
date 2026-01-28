@@ -600,14 +600,15 @@ class SFingeDatasetLoader:
             filename: nome do arquivo (ex: "fingerprint_0001_v01.png")
         
         Returns:
-            (origem, versão): tupla com origem (0-based) e versão (1-10)
+            (origem, versão): tupla com ID do dedo e versão
+                - origem: ID do dedo (0-5999 para FP_gen_0, 6000-7999 para FP_gen_1)
+                - versão: número da versão (1-10 ou 1-12)
         """
         match = re.match(r"fingerprint_(\d+)_v(\d+)\.png$", filename, re.IGNORECASE)
         if match:
-            file_num = int(match.group(1))
-            version = int(match.group(2))
-            origin = (file_num - 1) // 10
-            return origin, version
+            finger_id = int(match.group(1))  # ID do dedo (NNNN)
+            version = int(match.group(2))     # Versão (XX)
+            return finger_id, version
         return None, None
     
     def _load_dataset(self):
@@ -618,6 +619,9 @@ class SFingeDatasetLoader:
         
         current_label = 0
         total_images = 0
+        
+        # Mapeamento dataset -> origem para split open-set
+        self.dataset_source = []  # Rastrear qual dataset (FP_gen_0 ou FP_gen_1)
         
         for dataset_name in datasets_to_load:
             dataset_dir = DATA_DIR / dataset_name
@@ -645,6 +649,7 @@ class SFingeDatasetLoader:
                 
                 self.image_paths.append(image_path)
                 self.labels.append(self.label_map[label_name])
+                self.dataset_source.append(dataset_name)  # Rastrear origem
                 total_images += 1
         
         self.logger.info(
@@ -657,45 +662,92 @@ class SFingeDatasetLoader:
         train_ratio: float = 0.7,
         val_ratio: float = 0.15,
         test_ratio: float = 0.15,
+        use_openset: bool = True,
     ) -> Tuple[List[int], List[int], List[int]]:
-        """Dividir dataset por origem (não por imagem)."""
-        assert abs(train_ratio + val_ratio + test_ratio - 1.0) < 1e-6
+        """Dividir dataset por origem.
         
-        label_to_indices: Dict[int, List[int]] = {}
-        for idx, label in enumerate(self.labels):
-            if label not in label_to_indices:
-                label_to_indices[label] = []
-            label_to_indices[label].append(idx)
+        Args:
+            train_ratio: Proporção de treino (usado apenas em closed-set)
+            val_ratio: Proporção de validação (usado apenas em closed-set)
+            test_ratio: Proporção de teste (usado apenas em closed-set)
+            use_openset: Se True, usa FP_gen_0 para treino e FP_gen_1 para val/test
+                        (igual ao paper original - OPEN-SET)
+                        Se False, faz split dentro de todas as classes (CLOSED-SET)
         
-        unique_labels = list(label_to_indices.keys())
+        Returns:
+            train_indices, val_indices, test_indices
+        """
+        if use_openset and self.use_both_gen:
+            # OPEN-SET: FP_gen_0 (6000 classes) = treino
+            #           FP_gen_1 (2000 classes) = validação + teste
+            train_indices = []
+            temp_indices = []
+            
+            for idx, source in enumerate(self.dataset_source):
+                if source == "FP_gen_0":
+                    train_indices.append(idx)
+                else:  # FP_gen_1
+                    temp_indices.append(idx)
+            
+            # Split FP_gen_1 em val e test (50/50)
+            val_indices = temp_indices[:len(temp_indices)//2]
+            test_indices = temp_indices[len(temp_indices)//2:]
+            
+            # Contar classes únicas em cada split
+            train_classes = len(set(self.labels[i] for i in train_indices))
+            val_classes = len(set(self.labels[i] for i in val_indices))
+            test_classes = len(set(self.labels[i] for i in test_indices))
+            
+            self.logger.info(
+                f"OPEN-SET Split: train={len(train_indices)} ({train_classes} classes únicas), "
+                f"val={len(val_indices)} ({val_classes} classes únicas), "
+                f"test={len(test_indices)} ({test_classes} classes únicas)"
+            )
+            self.logger.info(
+                f"Treino usa FP_gen_0 (6000 classes), Val/Test usam FP_gen_1 (2000 classes DISJUNTAS)"
+            )
+            
+            return train_indices, val_indices, test_indices
         
-        train_labels, temp_labels = train_test_split(
-            unique_labels, train_size=train_ratio, random_state=self.random_state
-        )
-        
-        val_size_adjusted = val_ratio / (val_ratio + test_ratio)
-        val_labels, test_labels = train_test_split(
-            temp_labels, train_size=val_size_adjusted, random_state=self.random_state
-        )
-        
-        train_indices = []
-        val_indices = []
-        test_indices = []
-        
-        for label in train_labels:
-            train_indices.extend(label_to_indices[label])
-        for label in val_labels:
-            val_indices.extend(label_to_indices[label])
-        for label in test_labels:
-            test_indices.extend(label_to_indices[label])
-        
-        self.logger.info(
-            f"Split SFinge: train={len(train_indices)} ({len(train_labels)} origens), "
-            f"val={len(val_indices)} ({len(val_labels)} origens), "
-            f"test={len(test_indices)} ({len(test_labels)} origens)"
-        )
-        
-        return train_indices, val_indices, test_indices
+        else:
+            # CLOSED-SET: Split tradicional dentro das mesmas classes
+            assert abs(train_ratio + val_ratio + test_ratio - 1.0) < 1e-6
+            
+            label_to_indices: Dict[int, List[int]] = {}
+            for idx, label in enumerate(self.labels):
+                if label not in label_to_indices:
+                    label_to_indices[label] = []
+                label_to_indices[label].append(idx)
+            
+            unique_labels = list(label_to_indices.keys())
+            
+            train_labels, temp_labels = train_test_split(
+                unique_labels, train_size=train_ratio, random_state=self.random_state
+            )
+            
+            val_size_adjusted = val_ratio / (val_ratio + test_ratio)
+            val_labels, test_labels = train_test_split(
+                temp_labels, train_size=val_size_adjusted, random_state=self.random_state
+            )
+            
+            train_indices = []
+            val_indices = []
+            test_indices = []
+            
+            for label in train_labels:
+                train_indices.extend(label_to_indices[label])
+            for label in val_labels:
+                val_indices.extend(label_to_indices[label])
+            for label in test_labels:
+                test_indices.extend(label_to_indices[label])
+            
+            self.logger.info(
+                f"CLOSED-SET Split: train={len(train_indices)} ({len(train_labels)} classes), "
+                f"val={len(val_indices)} ({len(val_labels)} classes), "
+                f"test={len(test_indices)} ({len(test_labels)} classes)"
+            )
+            
+            return train_indices, val_indices, test_indices
     
     def get_statistics(self) -> Dict:
         """Retornar estatísticas do dataset."""
@@ -1087,8 +1139,9 @@ def load_datasets(
             use_both_gen=True,
         )
         
+        # OPEN-SET igual ao paper: FP_gen_0 treino, FP_gen_1 val/test
         train_idx, val_idx, test_idx = sfinge_loader.get_split_indices(
-            train_ratio, val_ratio, test_ratio
+            train_ratio, val_ratio, test_ratio, use_openset=True
         )
         
         all_train_paths.extend([sfinge_loader.image_paths[i] for i in train_idx])

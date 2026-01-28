@@ -314,8 +314,15 @@ class DeepPrintTrainer:
                     minutia_maps, minutia_map_weights = batch_load_minutia_maps(image_paths)
                     minutia_maps = minutia_maps.to(self.device)
                     minutia_map_weights = minutia_map_weights.to(self.device)
+                    
+                    # Log no primeiro batch
+                    if batch_idx == 0 and epoch == 1:
+                        num_with_minutiae = (minutia_map_weights > 0).sum().item()
+                        self.logger.info(f"Minutia maps carregados: {num_with_minutiae}/{len(image_paths)} amostras com minutiae")
                 except Exception as e:
-                    # Se falhar, continuar sem minutia maps
+                    # Log de erro para diagnóstico
+                    if batch_idx == 0:
+                        self.logger.warning(f"Erro ao carregar minutia maps: {e}")
                     pass
             
             self.optimizer.zero_grad()
