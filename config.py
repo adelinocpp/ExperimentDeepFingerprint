@@ -84,15 +84,15 @@ METRICS_CONFIG = {
 }
 
 # Configuração de otimizador
-# Alinhado com paper original DeepPrint (BIOSIG 2023)
+# Alinhado com paper original (Adam com apenas lr customizado)
 OPTIMIZER_CONFIG = {
     "adam": {
-        "lr": 0.025,  # IGUAL ao paper original (LR fixo, sem scheduler)
-        "betas": (0.9, 0.999),
-        "eps": 1e-8,
-        "weight_decay": 1e-4,
+        "lr": 0.001,  # Compromisso entre 0.0005 e 0.025
+        "betas": (0.9, 0.999),  # Default PyTorch
+        "eps": 1e-8,            # Default PyTorch
+        "weight_decay": 0,      # Paper NÃO usa weight decay
     },
-    "use_lr_scheduler": False,  # Paper original NÃO usa scheduler
+    "use_lr_scheduler": False,  # Paper NÃO usa scheduler
     "scheduler_type": "cosine",
     "warmup_epochs": 5,
     "min_lr": 5e-5,
