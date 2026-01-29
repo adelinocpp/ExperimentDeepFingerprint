@@ -581,3 +581,153 @@
 2026-01-29 14:02:59,696 - Experiment_exp0_baseline - INFO - Dataset dividido: train=60000, val=12000, test=12000
 2026-01-29 14:02:59,696 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
 2026-01-29 14:03:00,409 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
+2026-01-29 17:04:05,247 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
+2026-01-29 17:04:05,247 - Experiment_exp0_baseline - INFO - Modo: prod
+2026-01-29 17:04:05,247 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-29 17:04:05,247 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
+2026-01-29 17:04:05,247 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
+2026-01-29 17:04:05,247 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-29 17:04:05,247 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
+2026-01-29 17:04:05,247 - Experiment_exp0_baseline - INFO - Modo SFinge-only: treinando apenas com base SFinge (FP_gen_0 + FP_gen_1)
+2026-01-29 17:04:07,016 - Experiment_exp0_baseline - INFO - === SFinge ===
+2026-01-29 17:04:07,016 - Experiment_exp0_baseline - INFO - Total de imagens: 84000
+2026-01-29 17:04:07,016 - Experiment_exp0_baseline - INFO - Total de origens únicas: 8000
+2026-01-29 17:04:07,017 - Experiment_exp0_baseline - INFO - Versões por origem: min=10, max=12, média=10.5
+2026-01-29 17:04:07,017 - Experiment_exp0_baseline - INFO - Dataset dividido: train=60000, val=12000, test=12000
+2026-01-29 17:04:07,017 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
+2026-01-29 17:04:07,777 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
+2026-01-29 17:04:20,151 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
+2026-01-29 17:04:20,152 - Experiment_exp0_baseline - INFO - Modo: prod
+2026-01-29 17:04:20,152 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-29 17:04:20,152 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
+2026-01-29 17:04:20,152 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
+2026-01-29 17:04:20,152 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-29 17:04:20,152 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
+2026-01-29 17:04:20,152 - Experiment_exp0_baseline - INFO - Modo SFinge-only: treinando apenas com base SFinge (FP_gen_0 + FP_gen_1)
+2026-01-29 17:04:21,564 - Experiment_exp0_baseline - INFO - === SFinge ===
+2026-01-29 17:04:21,565 - Experiment_exp0_baseline - INFO - Total de imagens: 84000
+2026-01-29 17:04:21,565 - Experiment_exp0_baseline - INFO - Total de origens únicas: 8000
+2026-01-29 17:04:21,565 - Experiment_exp0_baseline - INFO - Versões por origem: min=10, max=12, média=10.5
+2026-01-29 17:04:21,565 - Experiment_exp0_baseline - INFO - Dataset dividido: train=60000, val=12000, test=12000
+2026-01-29 17:04:21,565 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
+2026-01-29 17:04:22,293 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
+2026-01-29 17:06:01,322 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
+2026-01-29 17:06:01,323 - Experiment_exp0_baseline - INFO - Modo: prod
+2026-01-29 17:06:01,323 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-29 17:06:01,323 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
+2026-01-29 17:06:01,323 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
+2026-01-29 17:06:01,323 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-29 17:06:01,323 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
+2026-01-29 17:06:01,323 - Experiment_exp0_baseline - INFO - Modo SFinge-only: treinando apenas com base SFinge (FP_gen_0 + FP_gen_1)
+2026-01-29 17:06:02,696 - Experiment_exp0_baseline - INFO - === SFinge ===
+2026-01-29 17:06:02,696 - Experiment_exp0_baseline - INFO - Total de imagens: 84000
+2026-01-29 17:06:02,696 - Experiment_exp0_baseline - INFO - Total de origens únicas: 8000
+2026-01-29 17:06:02,696 - Experiment_exp0_baseline - INFO - Versões por origem: min=10, max=12, média=10.5
+2026-01-29 17:06:02,696 - Experiment_exp0_baseline - INFO - Dataset dividido: train=60000, val=12000, test=12000
+2026-01-29 17:06:02,697 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
+2026-01-29 17:06:03,499 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
+2026-01-29 17:06:38,955 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
+2026-01-29 17:06:38,955 - Experiment_exp0_baseline - INFO - Modo: prod
+2026-01-29 17:06:38,955 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-29 17:06:38,955 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
+2026-01-29 17:06:38,955 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
+2026-01-29 17:06:38,955 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-29 17:06:38,955 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
+2026-01-29 17:06:38,955 - Experiment_exp0_baseline - INFO - Modo SFinge-only: treinando apenas com base SFinge (FP_gen_0 + FP_gen_1)
+2026-01-29 17:06:40,289 - Experiment_exp0_baseline - INFO - === SFinge ===
+2026-01-29 17:06:40,289 - Experiment_exp0_baseline - INFO - Total de imagens: 84000
+2026-01-29 17:06:40,289 - Experiment_exp0_baseline - INFO - Total de origens únicas: 8000
+2026-01-29 17:06:40,289 - Experiment_exp0_baseline - INFO - Versões por origem: min=10, max=12, média=10.5
+2026-01-29 17:06:40,289 - Experiment_exp0_baseline - INFO - Dataset dividido: train=60000, val=12000, test=12000
+2026-01-29 17:06:40,289 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
+2026-01-29 17:06:41,049 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
+2026-01-29 17:07:37,041 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
+2026-01-29 17:07:37,041 - Experiment_exp0_baseline - INFO - Modo: prod
+2026-01-29 17:07:37,041 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-29 17:07:37,041 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
+2026-01-29 17:07:37,041 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
+2026-01-29 17:07:37,041 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-29 17:07:37,041 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
+2026-01-29 17:07:37,041 - Experiment_exp0_baseline - INFO - Modo SFinge-only: treinando apenas com base SFinge (FP_gen_0 + FP_gen_1)
+2026-01-29 17:07:38,481 - Experiment_exp0_baseline - INFO - === SFinge ===
+2026-01-29 17:07:38,481 - Experiment_exp0_baseline - INFO - Total de imagens: 84000
+2026-01-29 17:07:38,481 - Experiment_exp0_baseline - INFO - Total de origens únicas: 8000
+2026-01-29 17:07:38,481 - Experiment_exp0_baseline - INFO - Versões por origem: min=10, max=12, média=10.5
+2026-01-29 17:07:38,481 - Experiment_exp0_baseline - INFO - Dataset dividido: train=60000, val=12000, test=12000
+2026-01-29 17:07:38,481 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
+2026-01-29 17:07:39,410 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
+2026-01-29 17:11:31,961 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
+2026-01-29 17:11:31,961 - Experiment_exp0_baseline - INFO - Modo: prod
+2026-01-29 17:11:31,961 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-29 17:11:31,961 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
+2026-01-29 17:11:31,961 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
+2026-01-29 17:11:31,961 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-29 17:11:31,961 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
+2026-01-29 17:11:31,961 - Experiment_exp0_baseline - INFO - Modo SFinge-only: treinando apenas com base SFinge (FP_gen_0 + FP_gen_1)
+2026-01-29 17:11:33,399 - Experiment_exp0_baseline - INFO - === SFinge ===
+2026-01-29 17:11:33,399 - Experiment_exp0_baseline - INFO - Total de imagens: 84000
+2026-01-29 17:11:33,399 - Experiment_exp0_baseline - INFO - Total de origens únicas: 8000
+2026-01-29 17:11:33,399 - Experiment_exp0_baseline - INFO - Versões por origem: min=10, max=12, média=10.5
+2026-01-29 17:11:33,399 - Experiment_exp0_baseline - INFO - Dataset dividido: train=60000, val=12000, test=12000
+2026-01-29 17:11:33,399 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
+2026-01-29 17:11:34,262 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
+2026-01-29 17:13:26,267 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
+2026-01-29 17:13:26,267 - Experiment_exp0_baseline - INFO - Modo: prod
+2026-01-29 17:13:26,267 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-29 17:13:26,267 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
+2026-01-29 17:13:26,267 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
+2026-01-29 17:13:26,267 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-29 17:13:26,268 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
+2026-01-29 17:13:26,268 - Experiment_exp0_baseline - INFO - Modo SFinge-only: treinando apenas com base SFinge (FP_gen_0 + FP_gen_1)
+2026-01-29 17:13:27,617 - Experiment_exp0_baseline - INFO - === SFinge ===
+2026-01-29 17:13:27,617 - Experiment_exp0_baseline - INFO - Total de imagens: 84000
+2026-01-29 17:13:27,617 - Experiment_exp0_baseline - INFO - Total de origens únicas: 8000
+2026-01-29 17:13:27,617 - Experiment_exp0_baseline - INFO - Versões por origem: min=10, max=12, média=10.5
+2026-01-29 17:13:27,617 - Experiment_exp0_baseline - INFO - Dataset dividido: train=60000, val=12000, test=12000
+2026-01-29 17:13:27,617 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
+2026-01-29 17:13:28,410 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
+2026-01-29 17:13:42,324 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
+2026-01-29 17:13:42,324 - Experiment_exp0_baseline - INFO - Modo: prod
+2026-01-29 17:13:42,326 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-29 17:13:42,326 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
+2026-01-29 17:13:42,326 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
+2026-01-29 17:13:42,326 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-29 17:13:42,326 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
+2026-01-29 17:13:42,326 - Experiment_exp0_baseline - INFO - Modo SFinge-only: treinando apenas com base SFinge (FP_gen_0 + FP_gen_1)
+2026-01-29 17:13:43,771 - Experiment_exp0_baseline - INFO - === SFinge ===
+2026-01-29 17:13:43,772 - Experiment_exp0_baseline - INFO - Total de imagens: 84000
+2026-01-29 17:13:43,772 - Experiment_exp0_baseline - INFO - Total de origens únicas: 8000
+2026-01-29 17:13:43,772 - Experiment_exp0_baseline - INFO - Versões por origem: min=10, max=12, média=10.5
+2026-01-29 17:13:43,772 - Experiment_exp0_baseline - INFO - Dataset dividido: train=60000, val=12000, test=12000
+2026-01-29 17:13:43,772 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
+2026-01-29 17:13:44,604 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
+2026-01-29 17:13:56,016 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
+2026-01-29 17:13:56,016 - Experiment_exp0_baseline - INFO - Modo: prod
+2026-01-29 17:13:56,016 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-29 17:13:56,016 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
+2026-01-29 17:13:56,016 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
+2026-01-29 17:13:56,016 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-29 17:13:56,016 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
+2026-01-29 17:13:56,016 - Experiment_exp0_baseline - INFO - Modo SFinge-only: treinando apenas com base SFinge (FP_gen_0 + FP_gen_1)
+2026-01-29 17:13:57,408 - Experiment_exp0_baseline - INFO - === SFinge ===
+2026-01-29 17:13:57,409 - Experiment_exp0_baseline - INFO - Total de imagens: 84000
+2026-01-29 17:13:57,409 - Experiment_exp0_baseline - INFO - Total de origens únicas: 8000
+2026-01-29 17:13:57,409 - Experiment_exp0_baseline - INFO - Versões por origem: min=10, max=12, média=10.5
+2026-01-29 17:13:57,409 - Experiment_exp0_baseline - INFO - Dataset dividido: train=60000, val=12000, test=12000
+2026-01-29 17:13:57,409 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
+2026-01-29 17:13:58,129 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
+2026-01-29 17:14:53,509 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
+2026-01-29 17:14:53,509 - Experiment_exp0_baseline - INFO - Modo: prod
+2026-01-29 17:14:53,509 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-29 17:14:53,509 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
+2026-01-29 17:14:53,509 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
+2026-01-29 17:14:53,509 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-29 17:14:53,509 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
+2026-01-29 17:14:53,510 - Experiment_exp0_baseline - INFO - Modo SFinge-only: treinando apenas com base SFinge (FP_gen_0 + FP_gen_1)
+2026-01-29 17:14:54,962 - Experiment_exp0_baseline - INFO - === SFinge ===
+2026-01-29 17:14:54,963 - Experiment_exp0_baseline - INFO - Total de imagens: 84000
+2026-01-29 17:14:54,963 - Experiment_exp0_baseline - INFO - Total de origens únicas: 8000
+2026-01-29 17:14:54,963 - Experiment_exp0_baseline - INFO - Versões por origem: min=10, max=12, média=10.5
+2026-01-29 17:14:54,963 - Experiment_exp0_baseline - INFO - Dataset dividido: train=60000, val=12000, test=12000
+2026-01-29 17:14:54,963 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
+2026-01-29 17:14:55,988 - Experiment_exp0_baseline - INFO - Iniciando treinamento...

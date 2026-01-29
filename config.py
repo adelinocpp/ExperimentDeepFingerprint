@@ -58,10 +58,10 @@ TRAINING_CONFIG = {
         "num_workers": min(2, NUM_CPUS),  # Usa mínimo entre 2 e CPUs disponíveis
         "sample_size": 32,  # Mínimo possível para testar
         "use_gpu": True,  # Usar GPU para ser rápido
-        "mixed_precision": False,
+        "mixed_precision": True, # APS, era False
     },
     "prod": {
-        "batch_size": 30,  # Igual ao paper original DeepPrint
+        "batch_size": 20,  # Ajustado para RTX 2070 8GB (paper usa 30)
         "num_epochs": 150,  # Reduzido de 256 para 150 (suficiente para 84k imagens)
         "num_workers": NUM_CPUS,  # Usa número de CPUs da máquina
         "sample_size": None,  # Usar todas as amostras (84k)
@@ -87,7 +87,7 @@ METRICS_CONFIG = {
 # Alinhado com paper original (Adam com apenas lr customizado)
 OPTIMIZER_CONFIG = {
     "adam": {
-        "lr": 0.025,  # Igual ao paper original DeepPrint (batch_size=30)
+        "lr": 0.016,  # Ajustado para batch_size=24 (paper: 0.025 com batch=30)
         "betas": (0.9, 0.999),  # Default PyTorch
         "eps": 1e-8,            # Default PyTorch
         "weight_decay": 0,      # Paper NÃO usa weight decay
