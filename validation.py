@@ -341,7 +341,13 @@ class CrossValidator:
         labels = []
         
         with torch.no_grad():
-            for images, batch_labels in dataloader:
+            for batch_data in dataloader:
+                # Desempacotar batch (pode ter paths se for dataset customizado)
+                if len(batch_data) == 3:
+                    images, batch_labels, image_paths = batch_data
+                else:
+                    images, batch_labels = batch_data
+                
                 images = images.to(device)
                 
                 outputs = self.model(images)

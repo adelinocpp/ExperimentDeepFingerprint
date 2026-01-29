@@ -61,7 +61,7 @@ TRAINING_CONFIG = {
         "mixed_precision": False,
     },
     "prod": {
-        "batch_size": 16,  # Reduzido para 16 - RTX 2070 8GB com 801 classes (~4GB VRAM)
+        "batch_size": 30,  # Igual ao paper original DeepPrint
         "num_epochs": 150,  # Reduzido de 256 para 150 (suficiente para 84k imagens)
         "num_workers": NUM_CPUS,  # Usa número de CPUs da máquina
         "sample_size": None,  # Usar todas as amostras (84k)
@@ -87,7 +87,7 @@ METRICS_CONFIG = {
 # Alinhado com paper original (Adam com apenas lr customizado)
 OPTIMIZER_CONFIG = {
     "adam": {
-        "lr": 0.001,  # Compromisso entre 0.0005 e 0.025
+        "lr": 0.025,  # Igual ao paper original DeepPrint (batch_size=30)
         "betas": (0.9, 0.999),  # Default PyTorch
         "eps": 1e-8,            # Default PyTorch
         "weight_decay": 0,      # Paper NÃO usa weight decay

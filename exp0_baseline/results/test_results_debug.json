@@ -1,9 +1,0 @@
-{
-  "num_samples": 48,
-  "num_classes": 6,
-  "num_genuine_pairs": 168,
-  "num_impostor_pairs": 240,
-  "eer": 0.17886904761904762,
-  "far_at_frr_0.1": 0.23333333333333334,
-  "far_at_frr_0.01": 0.35
-}

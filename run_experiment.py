@@ -88,7 +88,13 @@ class ExperimentRunner:
         
         # Extrair embeddings
         with torch.no_grad():
-            for images, batch_labels in test_loader:
+            for batch_data in test_loader:
+                # Desempacotar batch (pode ter paths se for dataset customizado)
+                if len(batch_data) == 3:
+                    images, batch_labels, image_paths = batch_data
+                else:
+                    images, batch_labels = batch_data
+                
                 images = images.to(device)
                 outputs = model(images)
                 embedding = outputs["embedding"]
@@ -227,12 +233,13 @@ class ExperimentRunner:
         
         return stats
     
-    def run(self, use_fvc: bool = True, resume: bool = False, fvc_only: bool = False, aggressive_aug: bool = False, sfinge_only: bool = False, sfinge_fvc: bool = False):
+    def run(self, use_fvc: bool = True, resume: bool = False, evaluate_only: bool = False, fvc_only: bool = False, aggressive_aug: bool = False, sfinge_only: bool = False, sfinge_fvc: bool = False):
         """Executar experimento completo
         
         Args:
             use_fvc: Se True, usa as bases FVC reais. Se False, usa dataset dummy.
             resume: Se True, retoma treinamento do último checkpoint.
+            evaluate_only: Se True, apenas carrega best_model e avalia (sem treinar).
             fvc_only: Se True, treina apenas com FVC (sem SD302).
             aggressive_aug: Se True, usa data augmentation agressivo.
             sfinge_only: Se True, treina apenas com SFinge (FP_gen_0).
@@ -363,9 +370,13 @@ class ExperimentRunner:
             minutia_embedding_dims=minutia_dims,
         )
         
-        # Treinar
-        self.logger.info("Iniciando treinamento...")
-        trainer.train(train_loader, val_loader, resume=resume)
+        # Treinar ou apenas carregar modelo
+        if evaluate_only:
+            self.logger.info("Modo de avaliação: carregando best_model.pt")
+            trainer.load_best_model()
+        else:
+            self.logger.info("Iniciando treinamento...")
+            trainer.train(train_loader, val_loader, resume=resume)
         
         # Avaliação no conjunto de teste (verificação e identificação)
         self.logger.info("=" * 80)
@@ -445,6 +456,11 @@ def main():
         help="Retomar treinamento do último checkpoint"
     )
     parser.add_argument(
+        "--evaluate",
+        action="store_true",
+        help="Apenas avaliar modelo já treinado (usa best_model.pt)"
+    )
+    parser.add_argument(
         "--fvc-only",
         action="store_true",
         help="Treinar apenas com bases FVC (sem SD302)"
@@ -469,7 +485,7 @@ def main():
     
     # Executar experimento
     runner = ExperimentRunner(args.experiment, args.mode)
-    results = runner.run(resume=args.resume, fvc_only=args.fvc_only, aggressive_aug=args.aggressive_aug, sfinge_only=args.sfinge, sfinge_fvc=args.sfinge_fvc)
+    results = runner.run(resume=args.resume, evaluate_only=args.evaluate, fvc_only=args.fvc_only, aggressive_aug=args.aggressive_aug, sfinge_only=args.sfinge, sfinge_fvc=args.sfinge_fvc)
     
     return 0
 

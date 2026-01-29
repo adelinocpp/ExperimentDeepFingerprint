@@ -377,8 +377,8 @@ class DeepPrintTrainer:
     def validate(self, val_loader: DataLoader, epoch: int) -> Dict[str, float]:
         """Validar modelo
         
-        Calcula CrossEntropy + Center Loss (IGUAL ao treino, fiel ao DeepPrint original).
-        Com remapeamento global de labels, podemos usar as mesmas losses.
+        IMPORTANTE: Em open-set, usa apenas CrossEntropy (sem Center Loss).
+        Center Loss não funciona para classes nunca vistas no treino.
         """
         self.model.eval()
         
@@ -399,7 +399,8 @@ class DeepPrintTrainer:
                 labels = labels.to(self.device)
                 
                 outputs = self.model(images)
-                batch_loss = self._compute_loss(outputs, labels)
+                # training_mode=False desabilita Center Loss (open-set)
+                batch_loss = self._compute_loss(outputs, labels, training_mode=False)
                 
                 total_loss += batch_loss.item()
                 num_batches += 1
@@ -423,13 +424,17 @@ class DeepPrintTrainer:
         outputs: Dict, 
         labels: torch.Tensor,
         minutia_maps: torch.Tensor = None,
-        minutia_map_weights: torch.Tensor = None
+        minutia_map_weights: torch.Tensor = None,
+        training_mode: bool = True
     ) -> torch.Tensor:
         """Computar perda total para DeepPrint (LocTexMinu)
         
+        Args:
+            training_mode: Se False, desabilita Center Loss (para validação open-set)
+        
         Baseado na implementação original do DeepPrint:
-        - Texture: CrossEntropy + Center Loss
-        - Minutiae: CrossEntropy + Center Loss + Minutia Map Loss
+        - Texture: CrossEntropy + Center Loss (apenas treino)
+        - Minutiae: CrossEntropy + Center Loss (apenas treino) + Minutia Map Loss
         - Pesos: W_CROSS_ENTROPY = 1.0, W_CENTER_LOSS = 0.125, W_MINUTIA_MAP_LOSS = 0.3
         """
         total_loss = torch.tensor(0.0, device=self.device)
@@ -443,8 +448,8 @@ class DeepPrintTrainer:
             ce_loss_texture = F.cross_entropy(texture_logits, labels)
             total_loss = total_loss + LOSS_CONFIG["softmax_loss_weight"] * ce_loss_texture
             
-            # Center Loss
-            if self.criterion_center_texture is not None:
+            # Center Loss (apenas em treino, não em validação open-set)
+            if training_mode and self.criterion_center_texture is not None:
                 center_loss_texture = self.criterion_center_texture(texture_embedding, labels)
                 total_loss = total_loss + LOSS_CONFIG["center_loss_weight"] * center_loss_texture
         
@@ -457,8 +462,8 @@ class DeepPrintTrainer:
             ce_loss_minutia = F.cross_entropy(minutia_logits, labels)
             total_loss = total_loss + LOSS_CONFIG["softmax_loss_weight"] * ce_loss_minutia
             
-            # Center Loss
-            if self.criterion_center_minutia is not None:
+            # Center Loss (apenas em treino, não em validação open-set)
+            if training_mode and self.criterion_center_minutia is not None:
                 center_loss_minutia = self.criterion_center_minutia(minutia_embedding, labels)
                 total_loss = total_loss + LOSS_CONFIG["center_loss_weight"] * center_loss_minutia
             
@@ -510,14 +515,19 @@ class DeepPrintTrainer:
         best_val_loss = float("inf")
         
         # Tentar retomar de checkpoint se solicitado
+        need_recreate_optimizer = False
         if resume:
             checkpoint_path = self.find_latest_checkpoint()
             if checkpoint_path:
-                start_epoch = self.load_checkpoint(checkpoint_path)
+                start_epoch, optimizer_loaded = self.load_checkpoint(checkpoint_path)
                 # Restaurar best_val_loss do histórico
                 if self.history.get("val_loss"):
                     best_val_loss = min(self.history["val_loss"])
                 self.logger.info(f"Retomando treinamento da época {start_epoch}")
+                
+                # Se optimizer não foi carregado, marcar para recriar após configurar classes
+                if not optimizer_loaded:
+                    need_recreate_optimizer = True
             else:
                 self.logger.info("Nenhum checkpoint encontrado, iniciando do zero")
         
@@ -537,13 +547,24 @@ class DeepPrintTrainer:
             # Configurar classificador no modelo
             if hasattr(self.model, 'set_num_classes'):
                 self.model.set_num_classes(num_classes)
-                # Adicionar parâmetros dos classificadores ao optimizer
-                if hasattr(self.model, 'texture_classifier') and self.model.texture_classifier is not None:
-                    self.optimizer.add_param_group({'params': self.model.texture_classifier.parameters()})
-                if hasattr(self.model, 'minutia_classifier') and self.model.minutia_classifier is not None:
-                    self.optimizer.add_param_group({'params': self.model.minutia_classifier.parameters()})
-                if hasattr(self.model, 'classifier') and self.model.classifier is not None:
-                    self.optimizer.add_param_group({'params': self.model.classifier.parameters()})
+                
+                # Se precisar recriar optimizer (após resume com falha), recriar completamente
+                if need_recreate_optimizer:
+                    self.logger.info("Recriando optimizer com todos os parâmetros do modelo")
+                    self.optimizer = optim.Adam(
+                        self.model.parameters(),
+                        **OPTIMIZER_CONFIG["adam"]
+                    )
+                    need_recreate_optimizer = False
+                else:
+                    # Adicionar parâmetros dos classificadores ao optimizer (treino do zero)
+                    if hasattr(self.model, 'texture_classifier') and self.model.texture_classifier is not None:
+                        self.optimizer.add_param_group({'params': self.model.texture_classifier.parameters()})
+                    if hasattr(self.model, 'minutia_classifier') and self.model.minutia_classifier is not None:
+                        self.optimizer.add_param_group({'params': self.model.minutia_classifier.parameters()})
+                    if hasattr(self.model, 'classifier') and self.model.classifier is not None:
+                        self.optimizer.add_param_group({'params': self.model.classifier.parameters()})
+                
                 self.logger.info(f"Classificador configurado com {num_classes} classes")
             
             # Inicializar Center Loss para texture e minutiae branches
@@ -564,13 +585,9 @@ class DeepPrintTrainer:
                 ).to(self.device)
                 self.logger.info(f"Center Loss inicializado com {num_classes} classes")
         
-        patience_counter = 0
-        max_patience = 20  # Aumentado de 10 para permitir mais exploração
-        
-        # LR Scheduler - reduz LR quando val_loss estagnar
-        scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
-            self.optimizer, mode='min', factor=0.5, patience=5
-        )
+        # Paper DeepPrint: treina épocas fixas, SEM early stopping
+        # Val_loss em open-set não é métrica confiável (classes disjuntas)
+        # Avaliação final: EER no teste após treinamento completo
         
         for epoch in range(start_epoch, num_epochs + 1):
             # Treinar
@@ -583,21 +600,16 @@ class DeepPrintTrainer:
             self.history["train_loss"].append(train_metrics["loss"])
             self.history["val_loss"].append(val_metrics["loss"])
             
-            # LR Scheduler - reduz LR quando val_loss estagnar
-            scheduler.step(val_metrics["loss"])
+            # Salvar checkpoint periódico (a cada 10 épocas)
+            if epoch % 10 == 0:
+                self._save_checkpoint(epoch, val_metrics["loss"], is_best=False)
+                self.logger.info(f"Checkpoint salvo: época {epoch}")
             
-            # Checkpoint
-            if val_metrics["loss"] < best_val_loss:
-                best_val_loss = val_metrics["loss"]
-                patience_counter = 0
-                self._save_checkpoint(epoch, val_metrics["loss"], is_best=True)
-            else:
-                patience_counter += 1
-            
-            # Early stopping
-            if patience_counter >= max_patience:
-                self.logger.info(f"Early stopping em epoch {epoch}")
-                break
+            # Salvar melhor modelo baseado em train_loss (não val_loss)
+            if train_metrics["loss"] < best_val_loss:
+                best_val_loss = train_metrics["loss"]
+                self._save_checkpoint(epoch, train_metrics["loss"], is_best=True)
+                self.logger.info(f"Melhor modelo salvo: época {epoch}, train_loss={train_metrics['loss']:.4f}")
             
             # Log
             self.logger.info(
@@ -646,15 +658,25 @@ class DeepPrintTrainer:
         
         self.logger.info(f"Histórico salvo em {history_file}")
     
-    def load_checkpoint(self, checkpoint_path: Path) -> int:
+    def load_checkpoint(self, checkpoint_path: Path) -> tuple[int, bool]:
         """Carregar checkpoint e retornar a época para retomada
         
         Returns:
-            start_epoch: época para iniciar (epoch + 1 do checkpoint)
+            (start_epoch, optimizer_loaded): época para iniciar e se optimizer foi carregado
         """
         checkpoint = torch.load(checkpoint_path, map_location=self.device, weights_only=False)
-        self.model.load_state_dict(checkpoint["model_state_dict"])
-        self.optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
+        # strict=False: ignora classificadores (são recriados via set_num_classes)
+        self.model.load_state_dict(checkpoint["model_state_dict"], strict=False)
+        
+        # Tentar carregar optimizer state (pode falhar se parameter groups mudaram)
+        optimizer_loaded = False
+        try:
+            self.optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
+            optimizer_loaded = True
+        except ValueError as e:
+            self.logger.warning(f"Não foi possível carregar optimizer state (parâmetros diferentes): {e}")
+            self.logger.warning("Optimizer será recriado após configurar classes para incluir todos os parâmetros")
+        
         self.history = checkpoint.get("history", {"train_loss": [], "val_loss": [], "train_metrics": [], "val_metrics": []})
         
         # Restaurar CenterLoss para texture branch
@@ -677,7 +699,52 @@ class DeepPrintTrainer:
         
         start_epoch = checkpoint.get("epoch", 0) + 1
         self.logger.info(f"Checkpoint carregado de {checkpoint_path}, retomando da época {start_epoch}")
-        return start_epoch
+        return start_epoch, optimizer_loaded
+    
+    def load_best_model(self):
+        """Carregar melhor modelo para avaliação (sem treinar)
+        
+        Configura o modelo com o best_model.pt e inicializa Center Loss.
+        """
+        best_model_path = self.experiment_dir / "models" / "best_model.pt"
+        if not best_model_path.exists():
+            raise FileNotFoundError(f"Best model não encontrado em {best_model_path}")
+        
+        self.logger.info(f"Carregando best_model de {best_model_path} para avaliação")
+        checkpoint = torch.load(best_model_path, map_location=self.device, weights_only=False)
+        
+        # Carregar model state
+        self.model.load_state_dict(checkpoint["model_state_dict"], strict=False)
+        
+        # Configurar número de classes e Center Loss
+        if checkpoint.get("num_classes"):
+            num_classes = checkpoint["num_classes"]
+            self.logger.info(f"Configurando modelo com {num_classes} classes")
+            
+            if hasattr(self.model, 'set_num_classes'):
+                self.model.set_num_classes(num_classes)
+            
+            # Restaurar Center Loss
+            if checkpoint.get("center_loss_texture_state"):
+                self.criterion_center_texture = CenterLoss(
+                    num_classes=num_classes,
+                    feat_dim=self.texture_embedding_dims,
+                    alpha=0.01
+                ).to(self.device)
+                self.criterion_center_texture.load_state_dict(checkpoint["center_loss_texture_state"])
+            
+            if checkpoint.get("center_loss_minutia_state"):
+                self.criterion_center_minutia = CenterLoss(
+                    num_classes=num_classes,
+                    feat_dim=self.minutia_embedding_dims,
+                    alpha=0.01
+                ).to(self.device)
+                self.criterion_center_minutia.load_state_dict(checkpoint["center_loss_minutia_state"])
+        
+        self.model.eval()
+        epoch = checkpoint.get("epoch", "?")
+        val_loss = checkpoint.get("val_loss", "?")
+        self.logger.info(f"Best model carregado (época {epoch}, val_loss={val_loss})")
     
     def find_latest_checkpoint(self) -> Optional[Path]:
         """Encontrar o checkpoint mais recente para retomada
