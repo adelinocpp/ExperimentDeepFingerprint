@@ -259,8 +259,10 @@ class ExperimentRunner:
         
         # Determinar datasets a usar
         if self.mode == "debug":
-            datasets_to_use = ["FVC2000"]  # Apenas uma base no debug
-            sample_size = config.get("sample_size", 100)
+            # Debug: usar amostra pequena do SFinge (tem minutiae, diferente do FVC)
+            datasets_to_use = ["SFinge"]
+            sample_size = config.get("sample_size", 64)  # Amostra pequena para teste rápido
+            self.logger.info(f"Modo DEBUG: usando {sample_size} amostras do SFinge (com minutiae)")
         elif sfinge_fvc:
             datasets_to_use = ["FVC2000", "FVC2002", "FVC2004", "SFinge"]  # SFinge + FVC
             sample_size = None

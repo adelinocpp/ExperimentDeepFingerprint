@@ -1156,24 +1156,37 @@ def load_datasets(
         current_label_offset += len(sfinge_loader.label_map)
         loaders["SFinge"] = sfinge_loader
     
-    # Remapeamento GLOBAL de labels (como no DeepPrint original)
-    # Todas as classes são compartilhadas entre train/val/test
-    # Isso permite usar CrossEntropy em todos os splits
+    # Remapeamento de labels para OPEN-SET (igual ao DeepPrint original)
+    # TREINO: apenas classes de FP_gen_0 (6000 classes) 
+    # VAL/TEST: classes de FP_gen_1 (2000 classes DISJUNTAS)
+    # Modelo é treinado APENAS com classes de treino!
     
-    # Coletar TODOS os labels únicos (train + val + test)
-    all_labels_combined = all_train_labels + all_val_labels + all_test_labels
-    unique_labels_global = sorted(set(all_labels_combined))
+    # Remapear APENAS labels de treino (contíguo 0 a num_train_classes-1)
+    unique_train_labels = sorted(set(all_train_labels))
+    train_label_remap = {old: new for new, old in enumerate(unique_train_labels)}
+    all_train_labels_remapped = [train_label_remap[l] for l in all_train_labels]
     
-    # Criar mapeamento global único
-    global_label_remap = {old: new for new, old in enumerate(unique_labels_global)}
+    # Val/Test: remapear separadamente (não importa muito pois não usam classificador)
+    # Mas mantemos consistência: remapear para 0 a num_val_classes-1
+    unique_val_labels = sorted(set(all_val_labels))
+    val_label_remap = {old: new for new, old in enumerate(unique_val_labels)}
+    all_val_labels_remapped = [val_label_remap[l] for l in all_val_labels]
     
-    # Remapear todos os splits com o MESMO mapeamento
-    all_train_labels_remapped = [global_label_remap[l] for l in all_train_labels]
-    all_val_labels_remapped = [global_label_remap[l] for l in all_val_labels]
-    all_test_labels_remapped = [global_label_remap[l] for l in all_test_labels]
+    unique_test_labels = sorted(set(all_test_labels))
+    test_label_remap = {old: new for new, old in enumerate(unique_test_labels)}
+    all_test_labels_remapped = [test_label_remap[l] for l in all_test_labels]
     
-    # Número total de classes (global)
-    num_classes_global = len(unique_labels_global)
+    # Número de classes: APENAS treino (modelo é treinado com estas)
+    num_classes_global = len(unique_train_labels)
+    
+    # Log claro sobre open-set split
+    logger.info("=" * 80)
+    logger.info("OPEN-SET SPLIT (classes disjuntas treino/val/test):")
+    logger.info(f"  Treino:     {len(unique_train_labels)} classes únicas (FP_gen_0)")
+    logger.info(f"  Validação:  {len(unique_val_labels)} classes únicas (FP_gen_1)")
+    logger.info(f"  Teste:      {len(unique_test_labels)} classes únicas (FP_gen_1)")
+    logger.info(f"  MODELO SERÁ TREINADO COM: {num_classes_global} classes (apenas treino)")
+    logger.info("=" * 80)
     
     train_dataset = FingerprintDataset(
         image_paths=all_train_paths,

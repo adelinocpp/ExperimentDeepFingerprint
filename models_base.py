@@ -61,9 +61,9 @@ class LocalizationNetwork(nn.Module):
         xs = xs.view(-1, 8 * 8 * 64)
         theta_x_y = self.fc_loc(xs)
         theta_x_y = theta_x_y.view(-1, 3)
-        theta = theta_x_y[:, 0]  # Ângulo de rotação
+        theta = theta_x_y[:, 0]  # Rotation angle - IGUAL AO ORIGINAL
         
-        # Construir matriz de rotação e translação
+        # Construir matriz de rotação e translação - IGUAL AO ORIGINAL
         m11 = torch.cos(theta)
         m12 = -torch.sin(theta)
         m13 = theta_x_y[:, 1]  # offset x
@@ -305,38 +305,71 @@ class DeepPrintBaseline(nn.Module):
             if next(self.parameters()).is_cuda:
                 self.texture_classifier = self.texture_classifier.cuda()
                 self.minutia_classifier = self.minutia_classifier.cuda()
+            
+            # CRÍTICO: Garantir que novos parâmetros tenham gradientes e estejam em training mode
+            self.texture_classifier.train()
+            self.minutia_classifier.train()
+            for param in self.texture_classifier.parameters():
+                param.requires_grad = True
+            for param in self.minutia_classifier.parameters():
+                param.requires_grad = True
         
     def forward(self, x):
-        # 1. Alinhamento automático (STN)
-        x_aligned = self.localization(x)
+        """
+        Forward pass EXATAMENTE igual ao DeepPrint original.
         
-        # 2. Stem compartilhado
-        features = self.stem(x_aligned)
+        Em training mode:
+            - Processa com gradientes
+            - Retorna embeddings + logits + minutia maps
         
-        # 3. Texture branch
-        texture_embedding = self.texture_branch(features)
+        Em eval mode:
+            - Usa torch.no_grad()
+            - Retorna apenas embeddings
+        """
+        if self.training:
+            # TRAINING MODE - igual ao original
+            x = self.localization(x)
+            features = self.stem(x)
+            
+            texture_embedding = self.texture_branch(features)
+            
+            minutia_features = self.minutia_stem(features)
+            minutia_embedding = self.minutia_embedding(minutia_features)
+            minutia_map = self.minutia_map(minutia_features)
+            
+            combined_embedding = torch.cat([texture_embedding, minutia_embedding], dim=1)
+            
+            result = {
+                "embedding": combined_embedding,
+                "texture_embedding": texture_embedding,
+                "minutia_embedding": minutia_embedding,
+                "minutia_maps": minutia_map,
+            }
+            
+            # Logits para treinamento
+            if self.texture_classifier is not None:
+                result["texture_logits"] = self.texture_classifier(texture_embedding)
+                result["minutia_logits"] = self.minutia_classifier(minutia_embedding)
+            
+            return result
         
-        # 4. Minutiae branch
-        minutia_features = self.minutia_stem(features)
-        minutia_embedding = self.minutia_embedding(minutia_features)
-        minutia_map = self.minutia_map(minutia_features)
-        
-        # 5. Concatenar embeddings (texture + minutiae = 192 dims)
-        combined_embedding = torch.cat([texture_embedding, minutia_embedding], dim=1)
-        
-        result = {
-            "embedding": combined_embedding,
-            "texture_embedding": texture_embedding,
-            "minutia_embedding": minutia_embedding,
-            "minutia_map": minutia_map,
-        }
-        
-        # Logits para treinamento
-        if self.texture_classifier is not None:
-            result["texture_logits"] = self.texture_classifier(texture_embedding)
-            result["minutia_logits"] = self.minutia_classifier(minutia_embedding)
-        
-        return result
+        # EVAL MODE - com torch.no_grad() igual ao original
+        with torch.no_grad():
+            x = self.localization(x)
+            features = self.stem(x)
+            
+            texture_embedding = self.texture_branch(features)
+            
+            minutia_features = self.minutia_stem(features)
+            minutia_embedding = self.minutia_embedding(minutia_features)
+            
+            combined_embedding = torch.cat([texture_embedding, minutia_embedding], dim=1)
+            
+            return {
+                "embedding": combined_embedding,
+                "texture_embedding": texture_embedding,
+                "minutia_embedding": minutia_embedding,
+            }
 
 
 class DeepPrintEnhancedRepresentation(nn.Module):

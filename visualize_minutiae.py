@@ -7,7 +7,9 @@ Gera imagens com as minutiae marcadas visualmente para conferência manual.
 Uso:
     python3 visualize_minutiae.py --data-dir /path/to/Bases_de_Dados --output-dir samples
     python3 visualize_minutiae.py --data-dir /path/to/Bases_de_Dados --num-samples 20
-    python3 visualize_minutiae.py --data-dir /home/adelino/MegaSync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Bases_de_Dados/FP_gen_0 --output-dir ./minucias_view --num-samples 20
+    python3 visualize_minutiae.py --data-dir /home/adelino/MegaSync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Bases_de_Dados/ --output-dir ./minucias_view --num-samples 20
+    python3 visualize_minutiae.py --data-dir /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Bases_de_Dados/ --output-dir ./minucias_view --num-samples 20
+
 """
 
 import argparse
@@ -72,9 +74,13 @@ def read_xyt_file(xyt_path: Path, image_height: int) -> Tuple[np.ndarray, np.nda
                 # Converter bottom-left para top-left
                 y_top = image_height - y_bottom
                 
+                # CRÍTICO: Ao inverter eixo Y (espelhamento vertical),
+                # o ângulo também precisa ser espelhado
+                theta_flipped = (360 - theta) % 360
+                
                 locations.append([x, y_top])
                 # Converter de graus para radianos
-                orientations.append(np.deg2rad(theta))
+                orientations.append(np.deg2rad(theta_flipped))
                 qualities.append(quality)
             except ValueError:
                 continue

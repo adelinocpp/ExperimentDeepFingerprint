@@ -437,3 +437,126 @@
 2026-01-25 16:21:39,057 - Experiment_exp0_baseline - INFO - ================================================================================
 2026-01-25 16:21:39,057 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
 2026-01-25 16:21:39,063 - Experiment_exp0_baseline - ERROR - Erro ao carregar datasets: FingerprintDataset.__init__() got an unexpected keyword argument 'aggressive_augment'
+2026-01-30 15:35:43,126 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
+2026-01-30 15:35:43,130 - Experiment_exp0_baseline - INFO - Modo: debug
+2026-01-30 15:35:43,130 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-30 15:35:43,130 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
+2026-01-30 15:35:43,130 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
+2026-01-30 15:35:43,130 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-30 15:35:43,130 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
+2026-01-30 15:35:43,137 - Experiment_exp0_baseline - INFO - === FVC ===
+2026-01-30 15:35:43,137 - Experiment_exp0_baseline - INFO - Total de imagens: 320
+2026-01-30 15:35:43,138 - Experiment_exp0_baseline - INFO - Total de origens únicas: 40
+2026-01-30 15:35:43,138 - Experiment_exp0_baseline - INFO - Imagens por dataset: {'FVC2000': 320}
+2026-01-30 15:35:43,138 - Experiment_exp0_baseline - INFO - Versões por origem: min=8, max=8, média=8.0
+2026-01-30 15:35:43,138 - Experiment_exp0_baseline - INFO - Dataset dividido: train=224, val=48, test=48
+2026-01-30 15:35:43,138 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
+2026-01-30 15:35:43,959 - Experiment_exp0_baseline - INFO - Modo de avaliação: carregando best_model.pt
+2026-01-30 15:35:44,758 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-30 15:35:44,758 - Experiment_exp0_baseline - INFO - Avaliação no conjunto de teste:
+2026-01-30 15:35:44,758 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-30 15:35:45,727 - Experiment_exp0_baseline - INFO - Embeddings extraídos: (48, 192)
+2026-01-30 15:35:45,729 - Experiment_exp0_baseline - INFO - Pares genuínos: 168
+2026-01-30 15:35:45,729 - Experiment_exp0_baseline - INFO - Pares impostores: 240
+2026-01-30 15:35:45,730 - Experiment_exp0_baseline - INFO - EER: 0.5000
+2026-01-30 15:35:45,730 - Experiment_exp0_baseline - INFO - FAR@FRR=0.1: 1.0000
+2026-01-30 15:35:45,730 - Experiment_exp0_baseline - INFO - FAR@FRR=0.01: 1.0000
+2026-01-30 15:35:45,730 - Experiment_exp0_baseline - INFO - Scores genuínos: média=1.0000, std=0.0000
+2026-01-30 15:35:45,730 - Experiment_exp0_baseline - INFO - Scores impostores: média=1.0000, std=0.0000
+2026-01-30 15:35:45,731 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/test_results_debug.json
+2026-01-30 15:35:45,731 - Experiment_exp0_baseline - INFO - Iniciando validação cruzada...
+2026-01-30 15:35:45,828 - Experiment_exp0_baseline - INFO - Fold 1/5
+2026-01-30 15:35:46,592 - Experiment_exp0_baseline - INFO - Fold 1 - EER: 0.5000
+2026-01-30 15:35:46,592 - Experiment_exp0_baseline - INFO - Fold 1 - Rank-1: 0.2000
+2026-01-30 15:35:46,592 - Experiment_exp0_baseline - INFO - Fold 2/5
+2026-01-30 15:35:47,298 - Experiment_exp0_baseline - INFO - Fold 2 - EER: 0.5000
+2026-01-30 15:35:47,298 - Experiment_exp0_baseline - INFO - Fold 2 - Rank-1: 0.2000
+2026-01-30 15:35:47,298 - Experiment_exp0_baseline - INFO - Fold 3/5
+2026-01-30 15:35:48,022 - Experiment_exp0_baseline - INFO - Fold 3 - EER: 0.5000
+2026-01-30 15:35:48,022 - Experiment_exp0_baseline - INFO - Fold 3 - Rank-1: 0.2000
+2026-01-30 15:35:48,022 - Experiment_exp0_baseline - INFO - Fold 4/5
+2026-01-30 15:35:48,775 - Experiment_exp0_baseline - INFO - Fold 4 - EER: 0.3788
+2026-01-30 15:35:48,776 - Experiment_exp0_baseline - INFO - Fold 4 - Rank-1: 0.2222
+2026-01-30 15:35:48,776 - Experiment_exp0_baseline - INFO - Fold 5/5
+2026-01-30 15:35:49,490 - Experiment_exp0_baseline - INFO - Fold 5 - EER: 0.3788
+2026-01-30 15:35:49,490 - Experiment_exp0_baseline - INFO - Fold 5 - Rank-1: 0.2222
+2026-01-30 15:35:49,493 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/cv_results_debug.json
+2026-01-30 15:35:49,493 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-30 15:35:49,493 - Experiment_exp0_baseline - INFO - Resultados da Validação Cruzada:
+2026-01-30 15:35:49,493 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-30 15:35:49,493 - Experiment_exp0_baseline - INFO - rank_1: 0.2089 (CI: [0.1954, 0.2224])
+2026-01-30 15:35:49,493 - Experiment_exp0_baseline - INFO - rank_5: 0.8333 (CI: [0.7704, 0.8963])
+2026-01-30 15:35:49,493 - Experiment_exp0_baseline - INFO - rank_10: 0.0000 (CI: [0.0000, 0.0000])
+2026-01-30 15:35:49,493 - Experiment_exp0_baseline - INFO - rank_20: 0.0000 (CI: [0.0000, 0.0000])
+2026-01-30 15:35:49,493 - Experiment_exp0_baseline - INFO - eer: 0.4515 (CI: [0.3778, 0.5252])
+2026-01-30 15:35:49,493 - Experiment_exp0_baseline - INFO - far_at_frr_0.1: 0.9030 (CI: [0.7556, 1.0505])
+2026-01-30 15:35:49,493 - Experiment_exp0_baseline - INFO - far_at_frr_0.01: 0.9030 (CI: [0.7556, 1.0505])
+2026-01-30 15:35:49,494 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-30 15:35:49,494 - Experiment_exp0_baseline - INFO - Avaliação Pairwise (todas-contra-todas):
+2026-01-30 15:35:49,494 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-30 15:35:49,495 - Experiment_exp0_baseline - INFO - Avaliação pairwise com 48 amostras
+2026-01-30 15:35:49,495 - Experiment_exp0_baseline - INFO - Total de comparações: 1176
+2026-01-30 15:35:49,495 - Experiment_exp0_baseline - INFO - Carregando qualidades NFIQ2...
+2026-01-30 15:35:49,545 - Experiment_exp0_baseline - INFO - Qualidades carregadas: 960 arquivos
+2026-01-30 15:35:49,545 - Experiment_exp0_baseline - INFO - Qualidade média: 44.5
+2026-01-30 15:35:49,554 - Experiment_exp0_baseline - INFO - Extraindo embeddings...
+2026-01-30 15:36:20,467 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
+2026-01-30 15:36:20,467 - Experiment_exp0_baseline - INFO - Modo: debug
+2026-01-30 15:36:20,467 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-30 15:36:20,467 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
+2026-01-30 15:36:20,467 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
+2026-01-30 15:36:20,467 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-30 15:36:20,467 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
+2026-01-30 15:36:20,472 - Experiment_exp0_baseline - INFO - === FVC ===
+2026-01-30 15:36:20,473 - Experiment_exp0_baseline - INFO - Total de imagens: 320
+2026-01-30 15:36:20,473 - Experiment_exp0_baseline - INFO - Total de origens únicas: 40
+2026-01-30 15:36:20,473 - Experiment_exp0_baseline - INFO - Imagens por dataset: {'FVC2000': 320}
+2026-01-30 15:36:20,473 - Experiment_exp0_baseline - INFO - Versões por origem: min=8, max=8, média=8.0
+2026-01-30 15:36:20,473 - Experiment_exp0_baseline - INFO - Dataset dividido: train=224, val=48, test=48
+2026-01-30 15:36:20,473 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
+2026-01-30 15:36:21,335 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
+2026-01-30 15:39:24,827 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
+2026-01-30 15:39:24,827 - Experiment_exp0_baseline - INFO - Modo: debug
+2026-01-30 15:39:24,827 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-30 15:39:24,827 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
+2026-01-30 15:39:24,827 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
+2026-01-30 15:39:24,827 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-30 15:39:24,827 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
+2026-01-30 15:39:24,827 - Experiment_exp0_baseline - INFO - Modo DEBUG: usando 200 amostras do SFinge (com minutiae)
+2026-01-30 15:39:26,262 - Experiment_exp0_baseline - INFO - === SFinge ===
+2026-01-30 15:39:26,262 - Experiment_exp0_baseline - INFO - Total de imagens: 84000
+2026-01-30 15:39:26,262 - Experiment_exp0_baseline - INFO - Total de origens únicas: 8000
+2026-01-30 15:39:26,263 - Experiment_exp0_baseline - INFO - Versões por origem: min=10, max=12, média=10.5
+2026-01-30 15:39:26,263 - Experiment_exp0_baseline - INFO - Dataset dividido: train=60000, val=12000, test=12000
+2026-01-30 15:39:26,263 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
+2026-01-30 15:39:27,076 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
+2026-01-30 15:39:42,910 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
+2026-01-30 15:39:42,910 - Experiment_exp0_baseline - INFO - Modo: debug
+2026-01-30 15:39:42,910 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-30 15:39:42,910 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
+2026-01-30 15:39:42,910 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
+2026-01-30 15:39:42,910 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-30 15:39:42,910 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
+2026-01-30 15:39:42,910 - Experiment_exp0_baseline - INFO - Modo DEBUG: usando 200 amostras do SFinge (com minutiae)
+2026-01-30 15:39:44,302 - Experiment_exp0_baseline - INFO - === SFinge ===
+2026-01-30 15:39:44,302 - Experiment_exp0_baseline - INFO - Total de imagens: 84000
+2026-01-30 15:39:44,302 - Experiment_exp0_baseline - INFO - Total de origens únicas: 8000
+2026-01-30 15:39:44,302 - Experiment_exp0_baseline - INFO - Versões por origem: min=10, max=12, média=10.5
+2026-01-30 15:39:44,302 - Experiment_exp0_baseline - INFO - Dataset dividido: train=60000, val=12000, test=12000
+2026-01-30 15:39:44,302 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
+2026-01-30 15:39:45,061 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
+2026-01-30 15:47:18,558 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
+2026-01-30 15:47:18,558 - Experiment_exp0_baseline - INFO - Modo: debug
+2026-01-30 15:47:18,558 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-30 15:47:18,558 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
+2026-01-30 15:47:18,558 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
+2026-01-30 15:47:18,558 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-01-30 15:47:18,558 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
+2026-01-30 15:47:18,558 - Experiment_exp0_baseline - INFO - Modo DEBUG: usando 200 amostras do SFinge (com minutiae)
+2026-01-30 15:47:19,929 - Experiment_exp0_baseline - INFO - === SFinge ===
+2026-01-30 15:47:19,929 - Experiment_exp0_baseline - INFO - Total de imagens: 84000
+2026-01-30 15:47:19,929 - Experiment_exp0_baseline - INFO - Total de origens únicas: 8000
+2026-01-30 15:47:19,929 - Experiment_exp0_baseline - INFO - Versões por origem: min=10, max=12, média=10.5
+2026-01-30 15:47:19,929 - Experiment_exp0_baseline - INFO - Dataset dividido: train=60000, val=12000, test=12000
+2026-01-30 15:47:19,930 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
+2026-01-30 15:47:20,674 - Experiment_exp0_baseline - INFO - Iniciando treinamento...

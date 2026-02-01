@@ -54,11 +54,11 @@ EXPERIMENTS = {
 TRAINING_CONFIG = {
     "debug": {
         "batch_size": 8,
-        "num_epochs": 2,  # Debug rápido
+        "num_epochs": 5,  # Debug mais completo para verificar convergência
         "num_workers": min(2, NUM_CPUS),  # Usa mínimo entre 2 e CPUs disponíveis
-        "sample_size": 32,  # Mínimo possível para testar
+        "sample_size": 200,  # ~20 classes x 10 amostras (SFinge tem minutiae)
         "use_gpu": True,  # Usar GPU para ser rápido
-        "mixed_precision": True, # APS, era False
+        "mixed_precision": False,  # Desabilitado (problemas de compatibilidade)
     },
     "prod": {
         "batch_size": 20,  # Ajustado para RTX 2070 8GB (paper usa 30)
@@ -87,7 +87,7 @@ METRICS_CONFIG = {
 # Alinhado com paper original (Adam com apenas lr customizado)
 OPTIMIZER_CONFIG = {
     "adam": {
-        "lr": 0.016,  # Ajustado para batch_size=24 (paper: 0.025 com batch=30)
+        "lr": 0.010,  # Ajustado para batch_size=24 (paper: 0.025 com batch=30)
         "betas": (0.9, 0.999),  # Default PyTorch
         "eps": 1e-8,            # Default PyTorch
         "weight_decay": 0,      # Paper NÃO usa weight decay

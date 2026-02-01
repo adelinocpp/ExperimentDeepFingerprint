@@ -7,7 +7,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from torch.utils.data import DataLoader, random_split, Subset
-from torch.cuda.amp import autocast, GradScaler
+from torch.amp import autocast, GradScaler
 from minutia_map_generator import batch_load_minutia_maps
 import numpy as np
 from pathlib import Path
@@ -219,7 +219,7 @@ class DeepPrintTrainer:
         self.criterion_triplet = TripletLoss(margin=1.0)
         
         # Mixed precision
-        self.scaler = GradScaler('cuda') if self.config["use_gpu"] and self.config["mixed_precision"] else None
+        self.scaler = GradScaler(device='cuda') if self.config["use_gpu"] and self.config["mixed_precision"] else None
         
         # Histórico
         self.history = {
@@ -288,8 +288,19 @@ class DeepPrintTrainer:
         return result
     
     def train_epoch(self, train_loader: DataLoader, epoch: int) -> Dict[str, float]:
-        """Treinar uma epoch"""
+        """Treinar uma época"""
+        # CRÍTICO: Forçar training mode em TUDO no início de cada época
         self.model.train()
+        if self.criterion_center_texture is not None:
+            self.criterion_center_texture.train()
+        if self.criterion_center_minutia is not None:
+            self.criterion_center_minutia.train()
+        
+        # Verificar requires_grad novamente (pode ter sido alterado)
+        for param in self.model.parameters():
+            if not param.requires_grad:
+                param.requires_grad = True
+        
         total_loss = 0.0
         num_batches = 0
         
@@ -329,7 +340,7 @@ class DeepPrintTrainer:
             
             # Forward pass com mixed precision
             if self.scaler:
-                with autocast('cuda'):
+                with autocast(device_type='cuda', dtype=torch.float16):
                     outputs = self.model(images)
                     loss = self._compute_loss(outputs, labels, minutia_maps, minutia_map_weights)
                 
@@ -346,6 +357,10 @@ class DeepPrintTrainer:
                 
                 # Backward pass
                 loss.backward()
+                
+                # CRÍTICO: Gradient clipping para evitar explosão (especialmente STN)
+                torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=1.0)
+                
                 self.optimizer.step()
             
             total_loss += loss.item()
@@ -531,59 +546,82 @@ class DeepPrintTrainer:
             else:
                 self.logger.info("Nenhum checkpoint encontrado, iniciando do zero")
         
-        # Obter número de classes do dataset ou calcular (apenas se não retomou)
-        if self.criterion_center_texture is None:
-            if num_classes is None:
-                if hasattr(train_loader.dataset, 'num_classes'):
-                    num_classes = train_loader.dataset.num_classes
-                else:
-                    all_labels = set()
-                    for _, labels in train_loader:
-                        all_labels.update(labels.tolist())
-                    num_classes = len(all_labels)
-            
-            self.logger.info(f"Número total de classes (origens únicas): {num_classes}")
-            
-            # Configurar classificador no modelo
-            if hasattr(self.model, 'set_num_classes'):
-                self.model.set_num_classes(num_classes)
-                
-                # Se precisar recriar optimizer (após resume com falha), recriar completamente
-                if need_recreate_optimizer:
-                    self.logger.info("Recriando optimizer com todos os parâmetros do modelo")
-                    self.optimizer = optim.Adam(
-                        self.model.parameters(),
-                        **OPTIMIZER_CONFIG["adam"]
-                    )
-                    need_recreate_optimizer = False
-                else:
-                    # Adicionar parâmetros dos classificadores ao optimizer (treino do zero)
-                    if hasattr(self.model, 'texture_classifier') and self.model.texture_classifier is not None:
-                        self.optimizer.add_param_group({'params': self.model.texture_classifier.parameters()})
-                    if hasattr(self.model, 'minutia_classifier') and self.model.minutia_classifier is not None:
-                        self.optimizer.add_param_group({'params': self.model.minutia_classifier.parameters()})
-                    if hasattr(self.model, 'classifier') and self.model.classifier is not None:
-                        self.optimizer.add_param_group({'params': self.model.classifier.parameters()})
-                
-                self.logger.info(f"Classificador configurado com {num_classes} classes")
-            
-            # Inicializar Center Loss para texture e minutiae branches
-            if self.criterion_center_texture is None:
-                self.logger.info(f"Inicializando Center Loss (Texture) com {num_classes} classes e {self.texture_embedding_dims} dims")
-                self.criterion_center_texture = CenterLoss(
-                    num_classes=num_classes,
-                    feat_dim=self.texture_embedding_dims,
-                    alpha=0.01
-                ).to(self.device)
+        # Obter número de classes do dataset
+        # CRÍTICO: Sempre configurar classificadores, mesmo no resume (podem estar None após load_checkpoint)
+        if num_classes is None:
+            if hasattr(train_loader.dataset, 'num_classes'):
+                num_classes = train_loader.dataset.num_classes
+            else:
+                all_labels = set()
+                for _, labels in train_loader:
+                    all_labels.update(labels.tolist())
+                num_classes = len(all_labels)
         
-            if self.criterion_center_minutia is None and hasattr(self.model, 'minutia_embedding_dims'):
-                self.logger.info(f"Inicializando Center Loss (Minutiae) com {num_classes} classes e {self.minutia_embedding_dims} dims")
-                self.criterion_center_minutia = CenterLoss(
-                    num_classes=num_classes,
-                    feat_dim=self.minutia_embedding_dims,
-                    alpha=0.01
-                ).to(self.device)
-                self.logger.info(f"Center Loss inicializado com {num_classes} classes")
+        self.logger.info(f"Número total de classes (origens únicas): {num_classes}")
+        
+        # Configurar classificador no modelo (sempre, mesmo no resume)
+        if hasattr(self.model, 'set_num_classes'):
+            self.model.set_num_classes(num_classes)
+            
+            # Se precisar recriar optimizer (após resume com falha), recriar completamente
+            if need_recreate_optimizer:
+                self.logger.info("Recriando optimizer com todos os parâmetros do modelo")
+                self.optimizer = optim.Adam(
+                    self.model.parameters(),
+                    **OPTIMIZER_CONFIG["adam"]
+                )
+                need_recreate_optimizer = False
+            else:
+                # Adicionar parâmetros dos classificadores ao optimizer (treino do zero)
+                if hasattr(self.model, 'texture_classifier') and self.model.texture_classifier is not None:
+                    self.optimizer.add_param_group({'params': self.model.texture_classifier.parameters()})
+                if hasattr(self.model, 'minutia_classifier') and self.model.minutia_classifier is not None:
+                    self.optimizer.add_param_group({'params': self.model.minutia_classifier.parameters()})
+                if hasattr(self.model, 'classifier') and self.model.classifier is not None:
+                    self.optimizer.add_param_group({'params': self.model.classifier.parameters()})
+            
+            self.logger.info(f"Classificador configurado com {num_classes} classes")
+        
+        # Inicializar Center Loss para texture e minutiae branches (fora do bloco anterior)
+        if self.criterion_center_texture is None:
+            self.logger.info(f"Inicializando Center Loss (Texture) com {num_classes} classes e {self.texture_embedding_dims} dims")
+            self.criterion_center_texture = CenterLoss(
+                num_classes=num_classes,
+                feat_dim=self.texture_embedding_dims,
+                alpha=0.01
+            ).to(self.device)
+            
+            # Adicionar ao optimizer se necessário
+            if need_recreate_optimizer or resume:
+                self.optimizer.add_param_group({'params': self.criterion_center_texture.parameters()})
+    
+        if self.criterion_center_minutia is None and hasattr(self.model, 'minutia_embedding_dims'):
+            self.logger.info(f"Inicializando Center Loss (Minutiae) com {num_classes} classes e {self.minutia_embedding_dims} dims")
+            self.criterion_center_minutia = CenterLoss(
+                num_classes=num_classes,
+                feat_dim=self.minutia_embedding_dims,
+                alpha=0.01
+            ).to(self.device)
+            self.logger.info(f"Center Loss inicializado com {num_classes} classes")
+            
+            # Adicionar ao optimizer se necessário
+            if need_recreate_optimizer or resume:
+                self.optimizer.add_param_group({'params': self.criterion_center_minutia.parameters()})
+        
+        # CRÍTICO: Garantir que modelo esteja em training mode após todas as modificações
+        self.model.train()
+        if self.criterion_center_texture is not None:
+            self.criterion_center_texture.train()
+        if self.criterion_center_minutia is not None:
+            self.criterion_center_minutia.train()
+        
+        # Verificar que todos os parâmetros têm requires_grad
+        for name, param in self.model.named_parameters():
+            if not param.requires_grad:
+                self.logger.warning(f"Parâmetro {name} NÃO tem requires_grad=True! Corrigindo...")
+                param.requires_grad = True
+        
+        self.logger.info("Modelo configurado e pronto para treinamento")
         
         # Paper DeepPrint: treina épocas fixas, SEM early stopping
         # Val_loss em open-set não é métrica confiável (classes disjuntas)
@@ -616,9 +654,176 @@ class DeepPrintTrainer:
                 f"Epoch {epoch} - Train Loss: {train_metrics['loss']:.4f} - "
                 f"Val Loss: {val_metrics['loss']:.4f}"
             )
+            
+            # Calcular EER a cada 5 épocas para monitorar progresso
+            if epoch % 5 == 0:
+                self.logger.info(f"Calculando EER na validação (época {epoch})...")
+                eer_result = self._compute_quick_eer(val_loader)
+                if eer_result is not None:
+                    self.logger.info(
+                        f"  EER (época {epoch}): {eer_result['eer']:.4f} "
+                        f"(FAR@FRR=0.1: {eer_result.get('far_at_frr_01', 0):.4f})"
+                    )
         
         self.logger.info("Treinamento concluído")
         self._save_history()
+    
+    def _compute_quick_eer(self, val_loader: DataLoader, max_samples: int = 500) -> Optional[Dict]:
+        """Calcular EER rapidamente com amostra do val_loader
+        
+        Estratégia: coletar múltiplas amostras por classe para ter pares genuínos
+        
+        Args:
+            val_loader: DataLoader de validação
+            max_samples: Número máximo de amostras para usar
+        
+        Returns:
+            Dict com EER e outras métricas, ou None se erro
+        """
+        try:
+            self.model.eval()
+            embeddings_by_label = {}  # Agrupar por label para ter genuínos
+            
+            with torch.no_grad():
+                total_samples = 0
+                for batch_idx, batch_data in enumerate(val_loader):
+                    if total_samples >= max_samples:
+                        break
+                    
+                    # Desempacotar batch
+                    if len(batch_data) == 3:
+                        images, batch_labels, _ = batch_data
+                    else:
+                        images, batch_labels = batch_data
+                    
+                    images = images.to(self.device)
+                    outputs = self.model(images)
+                    embedding = outputs["embedding"]
+                    
+                    batch_embeddings = embedding.cpu().numpy()
+                    batch_labels_np = batch_labels.numpy()
+                    
+                    # Agrupar por label
+                    for emb, lbl in zip(batch_embeddings, batch_labels_np):
+                        if lbl not in embeddings_by_label:
+                            embeddings_by_label[lbl] = []
+                        embeddings_by_label[lbl].append(emb)
+                        total_samples += 1
+                        if total_samples >= max_samples:
+                            break
+                    
+                    # Liberar memória GPU a cada batch
+                    del images, outputs, embedding
+                    if self.device.type == 'cuda':
+                        torch.cuda.empty_cache()
+            
+            if len(embeddings_by_label) < 2:
+                return None
+            
+            # Criar pares genuínos e impostores balanceados
+            genuine_scores = []
+            impostor_scores = []
+            
+            labels_list = list(embeddings_by_label.keys())
+            
+            # Pares genuínos: mesma classe
+            for label, embs in embeddings_by_label.items():
+                embs = np.array(embs)
+                if len(embs) < 2:
+                    continue
+                
+                # Normalizar embeddings
+                embs = embs / (np.linalg.norm(embs, axis=1, keepdims=True) + 1e-8)
+                
+                # Criar até 10 pares genuínos por classe
+                n_pairs = min(10, len(embs) * (len(embs) - 1) // 2)
+                for _ in range(n_pairs):
+                    i, j = np.random.choice(len(embs), size=2, replace=False)
+                    score = np.dot(embs[i], embs[j])
+                    genuine_scores.append(score)
+            
+            # Pares impostores: classes diferentes
+            max_impostor_pairs = len(genuine_scores) * 3  # 3x mais impostores
+            for _ in range(max_impostor_pairs):
+                # Escolher 2 classes diferentes
+                if len(labels_list) < 2:
+                    break
+                lbl1, lbl2 = np.random.choice(labels_list, size=2, replace=False)
+                
+                embs1 = np.array(embeddings_by_label[lbl1])
+                embs2 = np.array(embeddings_by_label[lbl2])
+                
+                # Normalizar
+                embs1 = embs1 / (np.linalg.norm(embs1, axis=1, keepdims=True) + 1e-8)
+                embs2 = embs2 / (np.linalg.norm(embs2, axis=1, keepdims=True) + 1e-8)
+                
+                # Escolher 1 amostra de cada
+                i = np.random.choice(len(embs1))
+                j = np.random.choice(len(embs2))
+                
+                score = np.dot(embs1[i], embs2[j])
+                impostor_scores.append(score)
+            
+            if len(genuine_scores) == 0 or len(impostor_scores) == 0:
+                self.logger.warning(f"EER: Pares insuficientes (genuínos={len(genuine_scores)}, impostores={len(impostor_scores)})")
+                return None
+            
+            genuine_scores = np.array(genuine_scores)
+            impostor_scores = np.array(impostor_scores)
+            
+            # DEBUG: Estatísticas dos scores
+            self.logger.info(f"  DEBUG - Pares genuínos: {len(genuine_scores)}, impostores: {len(impostor_scores)}")
+            self.logger.info(f"  DEBUG - Genuínos: min={genuine_scores.min():.4f}, max={genuine_scores.max():.4f}, mean={genuine_scores.mean():.4f}, std={genuine_scores.std():.4f}")
+            self.logger.info(f"  DEBUG - Impostores: min={impostor_scores.min():.4f}, max={impostor_scores.max():.4f}, mean={impostor_scores.mean():.4f}, std={impostor_scores.std():.4f}")
+            
+            # Calcular EER: ponto onde FAR = FRR
+            all_scores = np.concatenate([genuine_scores, impostor_scores])
+            thresholds = np.linspace(all_scores.min(), all_scores.max(), 200)
+            
+            best_eer = 1.0
+            best_threshold = 0.0
+            best_diff = 1.0
+            far_at_frr_01 = 1.0
+            
+            # DEBUG: Mostrar alguns pontos do threshold
+            debug_thresholds = [thresholds[0], thresholds[len(thresholds)//2], thresholds[-1]]
+            
+            for idx, threshold in enumerate(thresholds):
+                # False Accept Rate (impostor aceito como genuíno)
+                far = np.sum(impostor_scores >= threshold) / len(impostor_scores)
+                # False Reject Rate (genuíno rejeitado como impostor)
+                frr = np.sum(genuine_scores < threshold) / len(genuine_scores)
+                
+                # DEBUG: Mostrar alguns valores
+                if threshold in debug_thresholds or idx == 0:
+                    self.logger.info(f"  DEBUG - Threshold={threshold:.4f}: FAR={far:.4f}, FRR={frr:.4f}, diff={abs(far-frr):.4f}")
+                
+                # EER é onde FAR ≈ FRR (mínima diferença)
+                diff = abs(far - frr)
+                if diff < best_diff:
+                    best_diff = diff
+                    best_eer = (far + frr) / 2
+                    best_threshold = threshold
+                
+                # FAR quando FRR = 0.1
+                if abs(frr - 0.1) < 0.02:
+                    far_at_frr_01 = far
+            
+            # DEBUG: Resultado final
+            self.logger.info(f"  DEBUG - RESULTADO: EER={best_eer:.4f}, threshold={best_threshold:.4f}, diff={best_diff:.4f}")
+            
+            return {
+                "eer": best_eer,
+                "threshold": best_threshold,
+                "far_at_frr_01": far_at_frr_01,
+                "num_genuine": len(genuine_scores),
+                "num_impostor": len(impostor_scores),
+                "num_classes": len(embeddings_by_label),
+            }
+            
+        except Exception as e:
+            self.logger.warning(f"Erro ao calcular EER: {e}")
+            return None
     
     def _save_checkpoint(self, epoch: int, val_loss: float, is_best: bool = False):
         """Salvar checkpoint: apenas latest (retomada) e best (melhor modelo)"""
@@ -687,6 +892,10 @@ class DeepPrintTrainer:
                 alpha=0.01
             ).to(self.device)
             self.criterion_center_texture.load_state_dict(checkpoint["center_loss_texture_state"])
+            # CRÍTICO: Garantir requires_grad após load_state_dict
+            self.criterion_center_texture.train()
+            for param in self.criterion_center_texture.parameters():
+                param.requires_grad = True
         
         # Restaurar CenterLoss para minutiae branch
         if checkpoint.get("center_loss_minutia_state") and checkpoint.get("num_classes"):
@@ -696,6 +905,15 @@ class DeepPrintTrainer:
                 alpha=0.01
             ).to(self.device)
             self.criterion_center_minutia.load_state_dict(checkpoint["center_loss_minutia_state"])
+            # CRÍTICO: Garantir requires_grad após load_state_dict
+            self.criterion_center_minutia.train()
+            for param in self.criterion_center_minutia.parameters():
+                param.requires_grad = True
+        
+        # CRÍTICO: Garantir que TODOS os parâmetros do modelo tenham requires_grad após load
+        self.model.train()
+        for param in self.model.parameters():
+            param.requires_grad = True
         
         start_epoch = checkpoint.get("epoch", 0) + 1
         self.logger.info(f"Checkpoint carregado de {checkpoint_path}, retomando da época {start_epoch}")

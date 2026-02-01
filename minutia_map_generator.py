@@ -79,9 +79,14 @@ def read_xyt_file(
                 # Converter bottom-left para top-left
                 y_top = image_height - y_bottom
                 
+                # CRÍTICO: Ao inverter eixo Y (espelhamento vertical),
+                # o ângulo também precisa ser espelhado
+                # θ_novo = 360° - θ_original (ou 2π - θ em radianos)
+                theta_flipped = (360 - theta_degrees) % 360
+                
                 locations.append([x, y_top])
                 # Converter graus para radianos
-                orientations.append(np.deg2rad(theta_degrees))
+                orientations.append(np.deg2rad(theta_flipped))
     
     except Exception as e:
         logger.warning(f"Erro lendo {xyt_path}: {e}")
