@@ -166,43 +166,82 @@ class FingerprintDataset(Dataset):
         return resized
     
     def _augment_image(self, image: np.ndarray) -> np.ndarray:
-        """Aplicar augmentation à imagem (usa self.aug_config)"""
+        """
+        Aplicar augmentation à imagem seguindo o paper original.
+
+        Paper usa:
+        - Rotação: ±60° (não ±15°)
+        - Translação: ±80px (não ±25px)
+        - Padding 80px ANTES das transformações
+        - Border mode: WHITE (não REFLECT) - background natural de impressões digitais
+        - Crop após transformação para remover padding
+        """
         cfg = self.aug_config
         h, w = image.shape
-        
-        # Rotação aleatória
+
+        # CRÍTICO: Adicionar padding ANTES das transformações (paper usa 80px)
+        padding = cfg.get("padding", 80)
+        if padding > 0:
+            # Pad com branco (1.0 para imagens normalizadas)
+            fill_value = 1.0 if image.max() <= 1.0 else 255
+            image = cv2.copyMakeBorder(
+                image, padding, padding, padding, padding,
+                cv2.BORDER_CONSTANT, value=fill_value
+            )
+            h_padded, w_padded = image.shape
+        else:
+            h_padded, w_padded = h, w
+
+        # Rotação: ±60° (paper), não ±15°
         angle = np.random.uniform(-cfg["rotation_range"], cfg["rotation_range"])
-        center = (w // 2, h // 2)
-        M = cv2.getRotationMatrix2D(center, angle, 1.0)
-        image = cv2.warpAffine(image, M, (w, h), borderMode=cv2.BORDER_REFLECT)
-        
-        # Translação aleatória
+
+        # Translação: ±80px (paper), não ±25px
         tx = np.random.uniform(-cfg["translation_range"], cfg["translation_range"])
         ty = np.random.uniform(-cfg["translation_range"], cfg["translation_range"])
-        M = np.float32([[1, 0, tx], [0, 1, ty]])
-        image = cv2.warpAffine(image, M, (w, h), borderMode=cv2.BORDER_REFLECT)
-        
-        # Ajuste de contraste e brilho
+
+        # Combinar rotation e translation em uma única transformação afim
+        center = (w_padded // 2, h_padded // 2)
+        M = cv2.getRotationMatrix2D(center, angle, 1.0)
+        M[0, 2] += tx
+        M[1, 2] += ty
+
+        # CRÍTICO: Border mode WHITE (paper), não REFLECT
+        border_mode = cv2.BORDER_CONSTANT
+        border_value = 1.0 if image.max() <= 1.0 else 255
+
+        image = cv2.warpAffine(
+            image, M, (w_padded, h_padded),
+            flags=cv2.INTER_LINEAR,
+            borderMode=border_mode,
+            borderValue=border_value
+        )
+
+        # Crop de volta ao tamanho original (remover padding)
+        if padding > 0:
+            image = image[padding:-padding, padding:-padding]
+
+        # Ajuste de contraste e brilho (paper usa ranges específicos)
         if cfg.get("quality_augmentation", False):
             contrast = np.random.uniform(cfg["contrast_range"][0], cfg["contrast_range"][1])
             brightness = np.random.uniform(cfg["brightness_range"][0], cfg["brightness_range"][1])
-            image = np.clip(image * contrast + (brightness - 1) * 0.5, 0, 1)
-        
+            # Ajustar brilho como multiplicador direto
+            image = np.clip(image * contrast * brightness, 0, 1)
+
         # === Augmentations agressivos (apenas se configurado) ===
-        
+
         # Elastic deformation
         if cfg.get("elastic_deformation", False):
             image = self._elastic_deformation(image, cfg["elastic_alpha"], cfg["elastic_sigma"])
-        
+
         # Gaussian noise
         if cfg.get("gaussian_noise", False):
             noise = np.random.normal(0, cfg["noise_std"], image.shape)
             image = np.clip(image + noise, 0, 1)
-        
+
         # Random erasing
         if cfg.get("random_erasing", False) and np.random.random() < cfg["erasing_prob"]:
             image = self._random_erasing(image, cfg["erasing_scale"])
-        
+
         return image
     
     def _elastic_deformation(self, image: np.ndarray, alpha: float, sigma: float) -> np.ndarray:
@@ -1049,10 +1088,11 @@ def load_datasets(
     augment_train: bool = True,
     aggressive_augment: bool = False,
     image_size: Tuple[int, int] = (299, 299),
+    sample_size: int = None,  # NOVO: Limitar número de amostras (para debug)
 ):
     """
     Função unificada para carregar múltiplos datasets (FVC e SD302).
-    
+
     Args:
         datasets: lista de datasets (ex: ["FVC2000", "FVC2002", "FVC2004", "SD302"])
         random_state: seed para reprodutibilidade
@@ -1062,7 +1102,8 @@ def load_datasets(
         augment_train: aplicar augmentation no treino
         aggressive_augment: aplicar augmentation agressivo (para datasets pequenos)
         image_size: tamanho das imagens
-    
+        sample_size: limitar número total de amostras (None = todas). Usado para debug.
+
     Returns:
         (train_dataset, val_dataset, test_dataset, loaders_dict)
     """
@@ -1143,7 +1184,63 @@ def load_datasets(
         train_idx, val_idx, test_idx = sfinge_loader.get_split_indices(
             train_ratio, val_ratio, test_ratio, use_openset=True
         )
-        
+
+        # NOVO: Limitar amostras se sample_size for fornecido (para debug)
+        if sample_size is not None:
+            logger.info(f"Limitando SFinge para {sample_size} amostras totais (sample_size fornecido)")
+
+            # Calcular quantas amostras por split
+            train_samples = int(sample_size * train_ratio)
+            val_samples = int(sample_size * val_ratio)
+            test_samples = sample_size - train_samples - val_samples
+
+            # CRÍTICO: Amostrar BALANCEADAMENTE entre múltiplas classes
+            # (não apenas os primeiros N índices, que podem ser de 1 só classe!)
+            def sample_balanced(indices, labels_list, n_samples, min_classes=3):
+                """Amostra N índices balanceadamente entre múltiplas classes."""
+                # Agrupar índices por label
+                label_to_idx = {}
+                for idx in indices:
+                    label = labels_list[idx]
+                    if label not in label_to_idx:
+                        label_to_idx[label] = []
+                    label_to_idx[label].append(idx)
+
+                # Determinar quantas classes usar (mínimo 3 para ter impostores)
+                available_classes = len(label_to_idx)
+                n_classes = max(min_classes, min(available_classes, max(3, n_samples // 10)))
+
+                # Selecionar classes aleatoriamente
+                selected_labels = np.random.choice(
+                    list(label_to_idx.keys()),
+                    size=min(n_classes, available_classes),
+                    replace=False
+                )
+
+                # Amostrar igualmente de cada classe
+                samples_per_class = n_samples // len(selected_labels)
+                remainder = n_samples % len(selected_labels)
+
+                sampled_indices = []
+                for i, label in enumerate(selected_labels):
+                    class_indices = label_to_idx[label]
+                    n_take = samples_per_class + (1 if i < remainder else 0)
+                    n_take = min(n_take, len(class_indices))
+                    sampled = np.random.choice(class_indices, size=n_take, replace=False)
+                    sampled_indices.extend(sampled)
+
+                return sampled_indices[:n_samples]
+
+            # Amostrar balanceadamente
+            train_idx = sample_balanced(train_idx, sfinge_loader.labels, train_samples, min_classes=2)
+            val_idx = sample_balanced(val_idx, sfinge_loader.labels, val_samples, min_classes=2)
+            test_idx = sample_balanced(test_idx, sfinge_loader.labels, test_samples, min_classes=3)
+
+            logger.info(f"  Train: {len(train_idx)}, Val: {len(val_idx)}, Test: {len(test_idx)}")
+            logger.info(f"  BALANCEAMENTO: train com {len(set(sfinge_loader.labels[i] for i in train_idx))} classes, "
+                       f"val com {len(set(sfinge_loader.labels[i] for i in val_idx))} classes, "
+                       f"test com {len(set(sfinge_loader.labels[i] for i in test_idx))} classes")
+
         all_train_paths.extend([sfinge_loader.image_paths[i] for i in train_idx])
         all_train_labels.extend([sfinge_loader.labels[i] + current_label_offset for i in train_idx])
         

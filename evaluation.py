@@ -259,30 +259,38 @@ class PairwiseEvaluator:
     ) -> Tuple[np.ndarray, List[str], List[int]]:
         """
         Extrai embeddings para todas as imagens.
-        
+
         Args:
             dataloader: DataLoader com as imagens
             file_paths: lista de caminhos dos arquivos
             labels: lista de labels (origem)
-        
+
         Returns:
             embeddings, file_paths, labels
         """
         embeddings = []
-        
+
         self.model.eval()
         with torch.no_grad():
-            for images, _ in tqdm(dataloader, desc="Extraindo embeddings"):
+            for batch in tqdm(dataloader, desc="Extraindo embeddings"):
+                # O dataloader retorna tupla (image, label) ou (image, label, path)
+                if len(batch) == 3:
+                    images, batch_labels, image_paths = batch
+                else:
+                    images, batch_labels = batch
+
                 images = images.to(self.device)
+
+                # O modelo gera minutia maps internamente - passa apenas a imagem!
                 outputs = self.model(images)
                 embedding = outputs["embedding"]
                 embeddings.append(embedding.cpu().numpy())
-        
+
         embeddings = np.concatenate(embeddings, axis=0)
-        
+
         # Normalizar embeddings
         embeddings = embeddings / (np.linalg.norm(embeddings, axis=1, keepdims=True) + 1e-8)
-        
+
         return embeddings, file_paths, labels
     
     def compute_pairwise_comparisons(

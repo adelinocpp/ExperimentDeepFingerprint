@@ -1,0 +1,55 @@
+{
+  "fold_results": [
+    {
+      "fold": 1,
+      "cmc": [
+        0.3333333333333333,
+        0.6666666666666666
+      ],
+      "metrics": {
+        "rank_1": 0.3333333333333333
+      },
+      "num_genuine_pairs": 0,
+      "num_impostor_pairs": 3
+    },
+    {
+      "fold": 2,
+      "cmc": [
+        0.5,
+        1.0,
+        1.0
+      ],
+      "metrics": {
+        "rank_1": 0.5
+      },
+      "num_genuine_pairs": 0,
+      "num_impostor_pairs": 1
+    }
+  ],
+  "overall_metrics": {
+    "rank_1": {
+      "mean": 0.41666666666666663,
+      "ci_lower": -0.33205362767447955,
+      "ci_upper": 1.1653869610078127,
+      "std": 0.08333333333333334
+    },
+    "rank_5": {
+      "mean": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "std": 0.0
+    },
+    "rank_10": {
+      "mean": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "std": 0.0
+    },
+    "rank_20": {
+      "mean": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "std": 0.0
+    }
+  }
+}

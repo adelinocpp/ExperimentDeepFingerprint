@@ -35,6 +35,17 @@ class ExperimentRunner:
         self.logger = self._setup_logging()
         self.logger.info(f"Iniciando experimento: {self.experiment_config['name']}")
         self.logger.info(f"Modo: {mode}")
+
+        # Log especial para debug_minimal
+        if mode == "debug_minimal":
+            self.logger.info("=" * 80)
+            self.logger.info("MODO DEBUG MINIMAL - TESTE RÁPIDO:")
+            self.logger.info("  - 30 amostras (3 classes × 10 impressões)")
+            self.logger.info("  - 3 épocas")
+            self.logger.info("  - Batch size 4")
+            self.logger.info("  - Tempo estimado: 5-10 minutos")
+            self.logger.info("  - OBJETIVO: Verificar se pipeline funciona SEM colapso")
+            self.logger.info("=" * 80)
     
     def _setup_logging(self) -> logging.Logger:
         """Configurar logging"""
@@ -258,10 +269,15 @@ class ExperimentRunner:
         self.logger.info("Carregando bases de dados...")
         
         # Determinar datasets a usar
-        if self.mode == "debug":
+        if self.mode == "debug_minimal":
+            # Debug minimal: TESTE ULTRA-RÁPIDO com amostra mínima
+            datasets_to_use = ["SFinge"]
+            sample_size = config.get("sample_size", 30)  # 30 amostras (3 classes × 10 impressões)
+            self.logger.info(f"Modo DEBUG MINIMAL: usando {sample_size} amostras do SFinge para teste rápido")
+        elif self.mode == "debug":
             # Debug: usar amostra pequena do SFinge (tem minutiae, diferente do FVC)
             datasets_to_use = ["SFinge"]
-            sample_size = config.get("sample_size", 64)  # Amostra pequena para teste rápido
+            sample_size = config.get("sample_size", 200)  # Amostra pequena para teste rápido
             self.logger.info(f"Modo DEBUG: usando {sample_size} amostras do SFinge (com minutiae)")
         elif sfinge_fvc:
             datasets_to_use = ["FVC2000", "FVC2002", "FVC2004", "SFinge"]  # SFinge + FVC
@@ -293,6 +309,7 @@ class ExperimentRunner:
                 test_ratio=0.15,
                 augment_train=True,
                 aggressive_augment=aggressive_aug,
+                sample_size=sample_size,  # CRÍTICO: Passar sample_size para limitar amostras
             )
             
             # Log estatísticas por loader
@@ -448,9 +465,9 @@ def main():
     parser.add_argument(
         "--mode",
         type=str,
-        choices=["debug", "prod"],
+        choices=["debug_minimal", "debug", "prod"],  # ADICIONADO: debug_minimal para testes rápidos
         default="debug",
-        help="Modo de execução (debug ou prod)"
+        help="Modo de execução: debug_minimal (30 amostras, 3 épocas), debug (200 amostras, 5 épocas), ou prod (completo)"
     )
     parser.add_argument(
         "--resume",

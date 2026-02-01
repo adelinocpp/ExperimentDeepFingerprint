@@ -1,562 +1,79 @@
-2026-01-17 10:28:58,574 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
-2026-01-17 10:28:58,574 - Experiment_exp0_baseline - INFO - Modo: debug
-2026-01-17 10:28:58,574 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 10:28:58,574 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
-2026-01-17 10:28:58,574 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint puro sem modificações
-2026-01-17 10:28:58,574 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 10:28:58,574 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
-2026-01-17 10:28:58,579 - Experiment_exp0_baseline - INFO - === FVC ===
-2026-01-17 10:28:58,579 - Experiment_exp0_baseline - INFO - Total de imagens: 320
-2026-01-17 10:28:58,579 - Experiment_exp0_baseline - INFO - Total de origens únicas: 40
-2026-01-17 10:28:58,579 - Experiment_exp0_baseline - INFO - Imagens por dataset: {'FVC2000': 320}
-2026-01-17 10:28:58,579 - Experiment_exp0_baseline - INFO - Versões por origem: min=8, max=8, média=8.0
-2026-01-17 10:28:58,579 - Experiment_exp0_baseline - INFO - Dataset dividido: train=224, val=48, test=48
-2026-01-17 10:28:58,580 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 512 dimensões
-2026-01-17 10:28:59,777 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
-2026-01-17 10:41:17,521 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
-2026-01-17 10:41:17,521 - Experiment_exp0_baseline - INFO - Modo: debug
-2026-01-17 10:41:17,521 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 10:41:17,521 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
-2026-01-17 10:41:17,521 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint puro sem modificações
-2026-01-17 10:41:17,521 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 10:41:17,522 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
-2026-01-17 10:41:17,526 - Experiment_exp0_baseline - INFO - === FVC ===
-2026-01-17 10:41:17,527 - Experiment_exp0_baseline - INFO - Total de imagens: 320
-2026-01-17 10:41:17,527 - Experiment_exp0_baseline - INFO - Total de origens únicas: 40
-2026-01-17 10:41:17,527 - Experiment_exp0_baseline - INFO - Imagens por dataset: {'FVC2000': 320}
-2026-01-17 10:41:17,527 - Experiment_exp0_baseline - INFO - Versões por origem: min=8, max=8, média=8.0
-2026-01-17 10:41:17,527 - Experiment_exp0_baseline - INFO - Dataset dividido: train=224, val=48, test=48
-2026-01-17 10:41:17,527 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 512 dimensões
-2026-01-17 10:41:19,763 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
-2026-01-17 10:46:42,814 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
-2026-01-17 10:46:42,814 - Experiment_exp0_baseline - INFO - Modo: debug
-2026-01-17 10:46:42,815 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 10:46:42,815 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
-2026-01-17 10:46:42,815 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint puro sem modificações
-2026-01-17 10:46:42,815 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 10:46:42,815 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
-2026-01-17 10:46:42,819 - Experiment_exp0_baseline - INFO - === FVC ===
-2026-01-17 10:46:42,820 - Experiment_exp0_baseline - INFO - Total de imagens: 320
-2026-01-17 10:46:42,820 - Experiment_exp0_baseline - INFO - Total de origens únicas: 40
-2026-01-17 10:46:42,820 - Experiment_exp0_baseline - INFO - Imagens por dataset: {'FVC2000': 320}
-2026-01-17 10:46:42,820 - Experiment_exp0_baseline - INFO - Versões por origem: min=8, max=8, média=8.0
-2026-01-17 10:46:42,820 - Experiment_exp0_baseline - INFO - Dataset dividido: train=224, val=48, test=48
-2026-01-17 10:46:42,820 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 512 dimensões
-2026-01-17 10:46:44,324 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
-2026-01-17 10:47:08,795 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 10:47:08,796 - Experiment_exp0_baseline - INFO - Avaliação no conjunto de teste:
-2026-01-17 10:47:08,796 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 10:47:09,254 - Experiment_exp0_baseline - INFO - Embeddings extraídos: (48, 512)
-2026-01-17 10:47:09,256 - Experiment_exp0_baseline - INFO - Pares genuínos: 168
-2026-01-17 10:47:09,256 - Experiment_exp0_baseline - INFO - Pares impostores: 960
-2026-01-17 10:47:09,270 - Experiment_exp0_baseline - INFO - EER: 0.1489
-2026-01-17 10:47:09,270 - Experiment_exp0_baseline - INFO - FAR@FRR=0.1: 0.1729
-2026-01-17 10:47:09,270 - Experiment_exp0_baseline - INFO - FAR@FRR=0.01: 0.2333
-2026-01-17 10:47:09,270 - Experiment_exp0_baseline - INFO - Scores genuínos: média=0.9922, std=0.0168
-2026-01-17 10:47:09,270 - Experiment_exp0_baseline - INFO - Scores impostores: média=0.7453, std=0.2068
-2026-01-17 10:47:09,270 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/test_results_debug.json
-2026-01-17 10:47:09,271 - Experiment_exp0_baseline - INFO - Iniciando validação cruzada...
-2026-01-17 10:47:09,351 - Experiment_exp0_baseline - INFO - Fold 1/5
-2026-01-17 10:47:10,006 - Experiment_exp0_baseline - INFO - Fold 1 - EER: 0.2104
-2026-01-17 10:47:10,006 - Experiment_exp0_baseline - INFO - Fold 1 - Rank-1: 0.7000
-2026-01-17 10:47:10,006 - Experiment_exp0_baseline - INFO - Fold 2/5
-2026-01-17 10:47:10,586 - Experiment_exp0_baseline - INFO - Fold 2 - EER: 0.2104
-2026-01-17 10:47:10,586 - Experiment_exp0_baseline - INFO - Fold 2 - Rank-1: 0.8000
-2026-01-17 10:47:10,586 - Experiment_exp0_baseline - INFO - Fold 3/5
-2026-01-17 10:47:11,157 - Experiment_exp0_baseline - INFO - Fold 3 - EER: 0.0366
-2026-01-17 10:47:11,157 - Experiment_exp0_baseline - INFO - Fold 3 - Rank-1: 0.6000
-2026-01-17 10:47:11,157 - Experiment_exp0_baseline - INFO - Fold 4/5
-2026-01-17 10:49:31,779 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
-2026-01-17 10:49:31,779 - Experiment_exp0_baseline - INFO - Modo: debug
-2026-01-17 10:49:31,780 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 10:49:31,780 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
-2026-01-17 10:49:31,780 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint puro sem modificações
-2026-01-17 10:49:31,780 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 10:49:31,780 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
-2026-01-17 10:49:31,785 - Experiment_exp0_baseline - INFO - === FVC ===
-2026-01-17 10:49:31,785 - Experiment_exp0_baseline - INFO - Total de imagens: 320
-2026-01-17 10:49:31,785 - Experiment_exp0_baseline - INFO - Total de origens únicas: 40
-2026-01-17 10:49:31,785 - Experiment_exp0_baseline - INFO - Imagens por dataset: {'FVC2000': 320}
-2026-01-17 10:49:31,785 - Experiment_exp0_baseline - INFO - Versões por origem: min=8, max=8, média=8.0
-2026-01-17 10:49:31,785 - Experiment_exp0_baseline - INFO - Dataset dividido: train=224, val=48, test=48
-2026-01-17 10:49:31,786 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 512 dimensões
-2026-01-17 10:49:33,369 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
-2026-01-17 10:49:58,144 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 10:49:58,144 - Experiment_exp0_baseline - INFO - Avaliação no conjunto de teste:
-2026-01-17 10:49:58,144 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 10:49:58,678 - Experiment_exp0_baseline - INFO - Embeddings extraídos: (48, 512)
-2026-01-17 10:49:58,680 - Experiment_exp0_baseline - INFO - Pares genuínos: 168
-2026-01-17 10:49:58,680 - Experiment_exp0_baseline - INFO - Pares impostores: 960
-2026-01-17 10:49:58,695 - Experiment_exp0_baseline - INFO - EER: 0.3628
-2026-01-17 10:49:58,695 - Experiment_exp0_baseline - INFO - FAR@FRR=0.1: 0.5563
-2026-01-17 10:49:58,695 - Experiment_exp0_baseline - INFO - FAR@FRR=0.01: 0.7083
-2026-01-17 10:49:58,695 - Experiment_exp0_baseline - INFO - Scores genuínos: média=0.9873, std=0.0475
-2026-01-17 10:49:58,695 - Experiment_exp0_baseline - INFO - Scores impostores: média=0.8296, std=0.2484
-2026-01-17 10:49:58,696 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/test_results_debug.json
-2026-01-17 10:49:58,696 - Experiment_exp0_baseline - INFO - Iniciando validação cruzada...
-2026-01-17 10:49:58,778 - Experiment_exp0_baseline - INFO - Fold 1/5
-2026-01-17 10:49:59,511 - Experiment_exp0_baseline - INFO - Fold 1 - EER: 0.2713
-2026-01-17 10:49:59,511 - Experiment_exp0_baseline - INFO - Fold 1 - Rank-1: 0.5000
-2026-01-17 10:49:59,511 - Experiment_exp0_baseline - INFO - Fold 2/5
-2026-01-17 10:50:00,189 - Experiment_exp0_baseline - INFO - Fold 2 - EER: 0.4939
-2026-01-17 10:50:00,190 - Experiment_exp0_baseline - INFO - Fold 2 - Rank-1: 0.6000
-2026-01-17 10:50:00,190 - Experiment_exp0_baseline - INFO - Fold 3/5
-2026-01-17 10:50:00,852 - Experiment_exp0_baseline - INFO - Fold 3 - EER: 0.2470
-2026-01-17 10:50:00,853 - Experiment_exp0_baseline - INFO - Fold 3 - Rank-1: 0.8000
-2026-01-17 10:50:00,853 - Experiment_exp0_baseline - INFO - Fold 4/5
-2026-01-17 10:50:01,584 - Experiment_exp0_baseline - INFO - Fold 4 - EER: 0.2879
-2026-01-17 10:50:01,584 - Experiment_exp0_baseline - INFO - Fold 4 - Rank-1: 0.6667
-2026-01-17 10:50:01,584 - Experiment_exp0_baseline - INFO - Fold 5/5
-2026-01-17 10:50:02,218 - Experiment_exp0_baseline - INFO - Fold 5 - EER: 0.0758
-2026-01-17 10:50:02,218 - Experiment_exp0_baseline - INFO - Fold 5 - Rank-1: 0.4444
-2026-01-17 10:50:02,224 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/cv_results_debug.json
-2026-01-17 10:50:02,224 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 10:50:02,224 - Experiment_exp0_baseline - INFO - Resultados da Validação Cruzada:
-2026-01-17 10:50:02,224 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 10:50:02,224 - Experiment_exp0_baseline - INFO - rank_1: 0.6022 (CI: [0.4465, 0.7579])
-2026-01-17 10:50:02,224 - Experiment_exp0_baseline - INFO - rank_5: 0.9378 (CI: [0.8369, 1.0386])
-2026-01-17 10:50:02,224 - Experiment_exp0_baseline - INFO - rank_10: 0.9600 (CI: [0.8607, 1.0593])
-2026-01-17 10:50:02,224 - Experiment_exp0_baseline - INFO - rank_20: 0.9600 (CI: [0.8607, 1.0593])
-2026-01-17 10:50:02,224 - Experiment_exp0_baseline - INFO - eer: 0.2752 (CI: [0.1099, 0.4404])
-2026-01-17 10:50:02,225 - Experiment_exp0_baseline - INFO - far_at_frr_0.1: 0.4251 (CI: [0.1445, 0.7057])
-2026-01-17 10:50:02,225 - Experiment_exp0_baseline - INFO - far_at_frr_0.01: 0.4251 (CI: [0.1445, 0.7057])
-2026-01-17 10:50:02,225 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 10:50:02,225 - Experiment_exp0_baseline - INFO - Avaliação Pairwise (todas-contra-todas):
-2026-01-17 10:50:02,225 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 10:50:02,233 - Experiment_exp0_baseline - INFO - Avaliação pairwise com 48 amostras
-2026-01-17 10:50:02,233 - Experiment_exp0_baseline - INFO - Total de comparações: 1176
-2026-01-17 10:50:02,233 - Experiment_exp0_baseline - INFO - Carregando qualidades NFIQ2...
-2026-01-17 10:50:02,299 - Experiment_exp0_baseline - INFO - Qualidades carregadas: 240 arquivos
-2026-01-17 10:50:02,299 - Experiment_exp0_baseline - INFO - Qualidade média: 44.5
-2026-01-17 10:50:02,309 - Experiment_exp0_baseline - INFO - Extraindo embeddings...
-2026-01-17 10:50:02,898 - Experiment_exp0_baseline - INFO - Embeddings extraídos: (48, 512)
-2026-01-17 10:50:02,898 - Experiment_exp0_baseline - INFO - Realizando comparações todas-contra-todas...
-2026-01-17 10:50:02,899 - Experiment_exp0_baseline - INFO - Iniciando 1176 comparações (48 amostras)
-2026-01-17 10:50:03,400 - Experiment_exp0_baseline - INFO - Comparações concluídas em 0.03s
-2026-01-17 10:50:03,400 - Experiment_exp0_baseline - INFO - Pares genuínos: 168, Pares impostores: 960
-2026-01-17 10:50:03,400 - Experiment_exp0_baseline - INFO - Memória pico: 1443.4 MB
-2026-01-17 10:50:03,400 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/pairwise_comparisons_debug.csv
-2026-01-17 10:50:03,400 - Experiment_exp0_baseline - INFO - Estatísticas salvas em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/pairwise_stats_debug.json
-2026-01-17 10:50:03,400 - Experiment_exp0_baseline - INFO - Comparações realizadas: 1176
-2026-01-17 10:50:03,401 - Experiment_exp0_baseline - INFO - Pares genuínos: 168
-2026-01-17 10:50:03,401 - Experiment_exp0_baseline - INFO - Pares impostores: 960
-2026-01-17 10:50:03,401 - Experiment_exp0_baseline - INFO - Tempo total: 0.03s
-2026-01-17 10:50:03,401 - Experiment_exp0_baseline - INFO - Memória pico: 1443.4 MB
-2026-01-17 10:50:03,401 - Experiment_exp0_baseline - INFO - CSV salvo em: /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/pairwise_comparisons_debug.csv
-2026-01-17 10:50:03,401 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 10:50:03,401 - Experiment_exp0_baseline - INFO - Experimento concluído com sucesso!
-2026-01-17 18:37:34,195 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
-2026-01-17 18:37:34,195 - Experiment_exp0_baseline - INFO - Modo: debug
-2026-01-17 18:37:34,195 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 18:37:34,195 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
-2026-01-17 18:37:34,195 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint puro sem modificações
-2026-01-17 18:37:34,195 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 18:37:34,195 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
-2026-01-17 18:37:34,195 - Experiment_exp0_baseline - INFO - Modo AUGMENTATION AGRESSIVO ativado
-2026-01-17 18:37:34,200 - Experiment_exp0_baseline - INFO - === FVC ===
-2026-01-17 18:37:34,200 - Experiment_exp0_baseline - INFO - Total de imagens: 320
-2026-01-17 18:37:34,200 - Experiment_exp0_baseline - INFO - Total de origens únicas: 40
-2026-01-17 18:37:34,200 - Experiment_exp0_baseline - INFO - Imagens por dataset: {'FVC2000': 320}
-2026-01-17 18:37:34,200 - Experiment_exp0_baseline - INFO - Versões por origem: min=8, max=8, média=8.0
-2026-01-17 18:37:34,200 - Experiment_exp0_baseline - INFO - Dataset dividido: train=224, val=48, test=48
-2026-01-17 18:37:34,200 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 512 dimensões
-2026-01-17 18:37:35,529 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
-2026-01-17 18:40:46,125 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
-2026-01-17 18:40:46,125 - Experiment_exp0_baseline - INFO - Modo: debug
-2026-01-17 18:40:46,125 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 18:40:46,125 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
-2026-01-17 18:40:46,125 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint puro sem modificações
-2026-01-17 18:40:46,125 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 18:40:46,125 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
-2026-01-17 18:40:46,125 - Experiment_exp0_baseline - INFO - Modo AUGMENTATION AGRESSIVO ativado
-2026-01-17 18:40:46,130 - Experiment_exp0_baseline - INFO - === FVC ===
-2026-01-17 18:40:46,130 - Experiment_exp0_baseline - INFO - Total de imagens: 320
-2026-01-17 18:40:46,130 - Experiment_exp0_baseline - INFO - Total de origens únicas: 40
-2026-01-17 18:40:46,131 - Experiment_exp0_baseline - INFO - Imagens por dataset: {'FVC2000': 320}
-2026-01-17 18:40:46,131 - Experiment_exp0_baseline - INFO - Versões por origem: min=8, max=8, média=8.0
-2026-01-17 18:40:46,131 - Experiment_exp0_baseline - INFO - Dataset dividido: train=224, val=48, test=48
-2026-01-17 18:40:46,131 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 512 dimensões
-2026-01-17 18:40:47,576 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
-2026-01-17 18:41:13,943 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 18:41:13,943 - Experiment_exp0_baseline - INFO - Avaliação no conjunto de teste:
-2026-01-17 18:41:13,943 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 18:41:14,422 - Experiment_exp0_baseline - INFO - Embeddings extraídos: (48, 512)
-2026-01-17 18:41:14,425 - Experiment_exp0_baseline - INFO - Pares genuínos: 168
-2026-01-17 18:41:14,425 - Experiment_exp0_baseline - INFO - Pares impostores: 960
-2026-01-17 18:41:14,425 - Experiment_exp0_baseline - INFO - EER: 0.4804
-2026-01-17 18:41:14,425 - Experiment_exp0_baseline - INFO - FAR@FRR=0.1: 0.9021
-2026-01-17 18:41:14,425 - Experiment_exp0_baseline - INFO - FAR@FRR=0.01: 0.9990
-2026-01-17 18:41:14,426 - Experiment_exp0_baseline - INFO - Scores genuínos: média=1.0000, std=0.0000
-2026-01-17 18:41:14,426 - Experiment_exp0_baseline - INFO - Scores impostores: média=1.0000, std=0.0000
-2026-01-17 18:41:14,426 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/test_results_debug.json
-2026-01-17 18:41:14,426 - Experiment_exp0_baseline - INFO - Iniciando validação cruzada...
-2026-01-17 18:41:14,508 - Experiment_exp0_baseline - INFO - Fold 1/5
-2026-01-17 18:41:15,070 - Experiment_exp0_baseline - INFO - Fold 1 - EER: 0.5152
-2026-01-17 18:41:15,070 - Experiment_exp0_baseline - INFO - Fold 1 - Rank-1: 0.4000
-2026-01-17 18:41:15,070 - Experiment_exp0_baseline - INFO - Fold 2/5
-2026-01-17 18:41:15,579 - Experiment_exp0_baseline - INFO - Fold 2 - EER: 0.6341
-2026-01-17 18:41:15,580 - Experiment_exp0_baseline - INFO - Fold 2 - Rank-1: 0.7000
-2026-01-17 18:41:15,580 - Experiment_exp0_baseline - INFO - Fold 3/5
-2026-01-17 18:41:16,083 - Experiment_exp0_baseline - INFO - Fold 3 - EER: 0.5030
-2026-01-17 18:41:16,083 - Experiment_exp0_baseline - INFO - Fold 3 - Rank-1: 0.3000
-2026-01-17 18:41:16,083 - Experiment_exp0_baseline - INFO - Fold 4/5
-2026-01-17 18:41:16,650 - Experiment_exp0_baseline - INFO - Fold 4 - EER: 0.3788
-2026-01-17 18:41:16,651 - Experiment_exp0_baseline - INFO - Fold 4 - Rank-1: 0.5556
-2026-01-17 18:41:16,651 - Experiment_exp0_baseline - INFO - Fold 5/5
-2026-01-17 18:41:17,179 - Experiment_exp0_baseline - INFO - Fold 5 - EER: 0.3788
-2026-01-17 18:41:17,179 - Experiment_exp0_baseline - INFO - Fold 5 - Rank-1: 0.4444
-2026-01-17 18:41:17,182 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/cv_results_debug.json
-2026-01-17 18:41:17,182 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 18:41:17,183 - Experiment_exp0_baseline - INFO - Resultados da Validação Cruzada:
-2026-01-17 18:41:17,183 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 18:41:17,183 - Experiment_exp0_baseline - INFO - rank_1: 0.4800 (CI: [0.3096, 0.6504])
-2026-01-17 18:41:17,183 - Experiment_exp0_baseline - INFO - rank_5: 0.7111 (CI: [0.5734, 0.8488])
-2026-01-17 18:41:17,183 - Experiment_exp0_baseline - INFO - rank_10: 1.0000 (CI: [1.0000, 1.0000])
-2026-01-17 18:41:17,183 - Experiment_exp0_baseline - INFO - rank_20: 1.0000 (CI: [1.0000, 1.0000])
-2026-01-17 18:41:17,183 - Experiment_exp0_baseline - INFO - eer: 0.4820 (CI: [0.3629, 0.6011])
-2026-01-17 18:41:17,183 - Experiment_exp0_baseline - INFO - far_at_frr_0.1: 0.9707 (CI: [0.8980, 1.0434])
-2026-01-17 18:41:17,183 - Experiment_exp0_baseline - INFO - far_at_frr_0.01: 0.9707 (CI: [0.8980, 1.0434])
-2026-01-17 18:41:17,183 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 18:41:17,183 - Experiment_exp0_baseline - INFO - Avaliação Pairwise (todas-contra-todas):
-2026-01-17 18:41:17,183 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 18:41:17,185 - Experiment_exp0_baseline - INFO - Avaliação pairwise com 48 amostras
-2026-01-17 18:41:17,185 - Experiment_exp0_baseline - INFO - Total de comparações: 1176
-2026-01-17 18:41:17,185 - Experiment_exp0_baseline - INFO - Carregando qualidades NFIQ2...
-2026-01-17 18:41:17,236 - Experiment_exp0_baseline - INFO - Qualidades carregadas: 240 arquivos
-2026-01-17 18:41:17,236 - Experiment_exp0_baseline - INFO - Qualidade média: 44.5
-2026-01-17 18:41:17,246 - Experiment_exp0_baseline - INFO - Extraindo embeddings...
-2026-01-17 18:41:17,699 - Experiment_exp0_baseline - INFO - Embeddings extraídos: (48, 512)
-2026-01-17 18:41:17,700 - Experiment_exp0_baseline - INFO - Realizando comparações todas-contra-todas...
-2026-01-17 18:41:17,700 - Experiment_exp0_baseline - INFO - Iniciando 1176 comparações (48 amostras)
-2026-01-17 18:41:18,201 - Experiment_exp0_baseline - INFO - Comparações concluídas em 0.03s
-2026-01-17 18:41:18,201 - Experiment_exp0_baseline - INFO - Pares genuínos: 168, Pares impostores: 960
-2026-01-17 18:41:18,201 - Experiment_exp0_baseline - INFO - Memória pico: 1444.7 MB
-2026-01-17 18:41:18,201 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/pairwise_comparisons_debug.csv
-2026-01-17 18:41:18,202 - Experiment_exp0_baseline - INFO - Estatísticas salvas em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/pairwise_stats_debug.json
-2026-01-17 18:41:18,202 - Experiment_exp0_baseline - INFO - Comparações realizadas: 1176
-2026-01-17 18:41:18,202 - Experiment_exp0_baseline - INFO - Pares genuínos: 168
-2026-01-17 18:41:18,202 - Experiment_exp0_baseline - INFO - Pares impostores: 960
-2026-01-17 18:41:18,202 - Experiment_exp0_baseline - INFO - Tempo total: 0.03s
-2026-01-17 18:41:18,202 - Experiment_exp0_baseline - INFO - Memória pico: 1444.7 MB
-2026-01-17 18:41:18,202 - Experiment_exp0_baseline - INFO - CSV salvo em: /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/pairwise_comparisons_debug.csv
-2026-01-17 18:41:18,202 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-17 18:41:18,202 - Experiment_exp0_baseline - INFO - Experimento concluído com sucesso!
-2026-01-19 17:50:33,522 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
-2026-01-19 17:50:33,522 - Experiment_exp0_baseline - INFO - Modo: debug
-2026-01-19 17:50:33,522 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-19 17:50:33,522 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
-2026-01-19 17:50:33,522 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint puro sem modificações
-2026-01-19 17:50:33,522 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-19 17:50:33,522 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
-2026-01-19 17:50:33,527 - Experiment_exp0_baseline - INFO - === FVC ===
-2026-01-19 17:50:33,527 - Experiment_exp0_baseline - INFO - Total de imagens: 320
-2026-01-19 17:50:33,527 - Experiment_exp0_baseline - INFO - Total de origens únicas: 40
-2026-01-19 17:50:33,527 - Experiment_exp0_baseline - INFO - Imagens por dataset: {'FVC2000': 320}
-2026-01-19 17:50:33,527 - Experiment_exp0_baseline - INFO - Versões por origem: min=8, max=8, média=8.0
-2026-01-19 17:50:33,527 - Experiment_exp0_baseline - INFO - Dataset dividido: train=224, val=48, test=48
-2026-01-19 17:50:33,527 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 512 dimensões
-2026-01-19 17:50:35,126 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
-2026-01-19 17:51:05,771 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-19 17:51:05,771 - Experiment_exp0_baseline - INFO - Avaliação no conjunto de teste:
-2026-01-19 17:51:05,771 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-19 17:51:06,231 - Experiment_exp0_baseline - INFO - Embeddings extraídos: (48, 512)
-2026-01-19 17:51:06,233 - Experiment_exp0_baseline - INFO - Pares genuínos: 168
-2026-01-19 17:51:06,233 - Experiment_exp0_baseline - INFO - Pares impostores: 960
-2026-01-19 17:51:06,241 - Experiment_exp0_baseline - INFO - EER: 0.4414
-2026-01-19 17:51:06,241 - Experiment_exp0_baseline - INFO - FAR@FRR=0.1: 0.6667
-2026-01-19 17:51:06,241 - Experiment_exp0_baseline - INFO - FAR@FRR=0.01: 0.6667
-2026-01-19 17:51:06,242 - Experiment_exp0_baseline - INFO - Scores genuínos: média=0.9954, std=0.0174
-2026-01-19 17:51:06,242 - Experiment_exp0_baseline - INFO - Scores impostores: média=0.8773, std=0.1853
-2026-01-19 17:51:06,242 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/test_results_debug.json
-2026-01-19 17:51:06,242 - Experiment_exp0_baseline - INFO - Iniciando validação cruzada...
-2026-01-19 17:51:06,322 - Experiment_exp0_baseline - INFO - Fold 1/5
-2026-01-19 17:51:06,845 - Experiment_exp0_baseline - INFO - Fold 1 - EER: 0.3354
-2026-01-19 17:51:06,846 - Experiment_exp0_baseline - INFO - Fold 1 - Rank-1: 0.5000
-2026-01-19 17:51:06,846 - Experiment_exp0_baseline - INFO - Fold 2/5
-2026-01-19 17:51:07,349 - Experiment_exp0_baseline - INFO - Fold 2 - EER: 0.4329
-2026-01-19 17:51:07,349 - Experiment_exp0_baseline - INFO - Fold 2 - Rank-1: 0.3000
-2026-01-19 17:51:07,349 - Experiment_exp0_baseline - INFO - Fold 3/5
-2026-01-19 17:51:07,873 - Experiment_exp0_baseline - INFO - Fold 3 - EER: 0.4085
-2026-01-19 17:51:07,873 - Experiment_exp0_baseline - INFO - Fold 3 - Rank-1: 0.4000
-2026-01-19 17:51:07,874 - Experiment_exp0_baseline - INFO - Fold 4/5
-2026-01-19 17:51:08,441 - Experiment_exp0_baseline - INFO - Fold 4 - EER: 0.4545
-2026-01-19 17:51:08,441 - Experiment_exp0_baseline - INFO - Fold 4 - Rank-1: 0.5556
-2026-01-19 17:51:08,441 - Experiment_exp0_baseline - INFO - Fold 5/5
-2026-01-19 17:51:08,911 - Experiment_exp0_baseline - INFO - Fold 5 - EER: 0.3636
-2026-01-19 17:51:08,911 - Experiment_exp0_baseline - INFO - Fold 5 - Rank-1: 0.3333
-2026-01-19 17:51:08,915 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/cv_results_debug.json
-2026-01-19 17:51:08,915 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-19 17:51:08,915 - Experiment_exp0_baseline - INFO - Resultados da Validação Cruzada:
-2026-01-19 17:51:08,915 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-19 17:51:08,915 - Experiment_exp0_baseline - INFO - rank_1: 0.4178 (CI: [0.2973, 0.5382])
-2026-01-19 17:51:08,915 - Experiment_exp0_baseline - INFO - rank_5: 0.8911 (CI: [0.7676, 1.0146])
-2026-01-19 17:51:08,915 - Experiment_exp0_baseline - INFO - rank_10: 0.9778 (CI: [0.9226, 1.0330])
-2026-01-19 17:51:08,915 - Experiment_exp0_baseline - INFO - rank_20: 1.0000 (CI: [1.0000, 1.0000])
-2026-01-19 17:51:08,915 - Experiment_exp0_baseline - INFO - eer: 0.3990 (CI: [0.3445, 0.4535])
-2026-01-19 17:51:08,915 - Experiment_exp0_baseline - INFO - far_at_frr_0.1: 0.6628 (CI: [0.5813, 0.7444])
-2026-01-19 17:51:08,915 - Experiment_exp0_baseline - INFO - far_at_frr_0.01: 0.6628 (CI: [0.5813, 0.7444])
-2026-01-19 17:51:08,915 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-19 17:51:08,916 - Experiment_exp0_baseline - INFO - Avaliação Pairwise (todas-contra-todas):
-2026-01-19 17:51:08,916 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-19 17:51:08,917 - Experiment_exp0_baseline - INFO - Avaliação pairwise com 48 amostras
-2026-01-19 17:51:08,917 - Experiment_exp0_baseline - INFO - Total de comparações: 1176
-2026-01-19 17:51:08,917 - Experiment_exp0_baseline - INFO - Carregando qualidades NFIQ2...
-2026-01-19 17:51:08,972 - Experiment_exp0_baseline - INFO - Qualidades carregadas: 240 arquivos
-2026-01-19 17:51:08,972 - Experiment_exp0_baseline - INFO - Qualidade média: 44.5
-2026-01-19 17:51:08,982 - Experiment_exp0_baseline - INFO - Extraindo embeddings...
-2026-01-19 17:51:09,449 - Experiment_exp0_baseline - INFO - Embeddings extraídos: (48, 512)
-2026-01-19 17:51:09,449 - Experiment_exp0_baseline - INFO - Realizando comparações todas-contra-todas...
-2026-01-19 17:51:09,449 - Experiment_exp0_baseline - INFO - Iniciando 1176 comparações (48 amostras)
-2026-01-19 17:51:09,977 - Experiment_exp0_baseline - INFO - Comparações concluídas em 0.03s
-2026-01-19 17:51:09,977 - Experiment_exp0_baseline - INFO - Pares genuínos: 168, Pares impostores: 960
-2026-01-19 17:51:09,977 - Experiment_exp0_baseline - INFO - Memória pico: 1432.4 MB
-2026-01-19 17:51:09,977 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/pairwise_comparisons_debug.csv
-2026-01-19 17:51:09,978 - Experiment_exp0_baseline - INFO - Estatísticas salvas em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/pairwise_stats_debug.json
-2026-01-19 17:51:09,978 - Experiment_exp0_baseline - INFO - Comparações realizadas: 1176
-2026-01-19 17:51:09,978 - Experiment_exp0_baseline - INFO - Pares genuínos: 168
-2026-01-19 17:51:09,978 - Experiment_exp0_baseline - INFO - Pares impostores: 960
-2026-01-19 17:51:09,978 - Experiment_exp0_baseline - INFO - Tempo total: 0.03s
-2026-01-19 17:51:09,978 - Experiment_exp0_baseline - INFO - Memória pico: 1432.4 MB
-2026-01-19 17:51:09,978 - Experiment_exp0_baseline - INFO - CSV salvo em: /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/pairwise_comparisons_debug.csv
-2026-01-19 17:51:09,978 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-19 17:51:09,978 - Experiment_exp0_baseline - INFO - Experimento concluído com sucesso!
-2026-01-24 17:45:43,091 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
-2026-01-24 17:45:43,091 - Experiment_exp0_baseline - INFO - Modo: debug
-2026-01-24 17:45:43,091 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-24 17:45:43,091 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
-2026-01-24 17:45:43,091 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint puro sem modificações
-2026-01-24 17:45:43,091 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-24 17:45:43,092 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
-2026-01-24 17:45:43,097 - Experiment_exp0_baseline - INFO - === FVC ===
-2026-01-24 17:45:43,098 - Experiment_exp0_baseline - INFO - Total de imagens: 320
-2026-01-24 17:45:43,098 - Experiment_exp0_baseline - INFO - Total de origens únicas: 40
-2026-01-24 17:45:43,098 - Experiment_exp0_baseline - INFO - Imagens por dataset: {'FVC2000': 320}
-2026-01-24 17:45:43,098 - Experiment_exp0_baseline - INFO - Versões por origem: min=8, max=8, média=8.0
-2026-01-24 17:45:43,098 - Experiment_exp0_baseline - INFO - Dataset dividido: train=224, val=48, test=48
-2026-01-24 17:45:43,098 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 512 dimensões
-2026-01-24 17:45:44,819 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
-2026-01-24 18:02:27,526 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
-2026-01-24 18:02:27,526 - Experiment_exp0_baseline - INFO - Modo: debug
-2026-01-24 18:02:27,526 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-24 18:02:27,526 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
-2026-01-24 18:02:27,526 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
-2026-01-24 18:02:27,527 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-24 18:02:27,527 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
-2026-01-24 18:02:27,531 - Experiment_exp0_baseline - INFO - === FVC ===
-2026-01-24 18:02:27,531 - Experiment_exp0_baseline - INFO - Total de imagens: 320
-2026-01-24 18:02:27,531 - Experiment_exp0_baseline - INFO - Total de origens únicas: 40
-2026-01-24 18:02:27,531 - Experiment_exp0_baseline - INFO - Imagens por dataset: {'FVC2000': 320}
-2026-01-24 18:02:27,531 - Experiment_exp0_baseline - INFO - Versões por origem: min=8, max=8, média=8.0
-2026-01-24 18:02:27,531 - Experiment_exp0_baseline - INFO - Dataset dividido: train=224, val=48, test=48
-2026-01-24 18:02:27,531 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
-2026-01-24 18:02:28,370 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
-2026-01-24 18:04:02,287 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
-2026-01-24 18:04:02,287 - Experiment_exp0_baseline - INFO - Modo: debug
-2026-01-24 18:04:02,287 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-24 18:04:02,287 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
-2026-01-24 18:04:02,287 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
-2026-01-24 18:04:02,287 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-24 18:04:02,287 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
-2026-01-24 18:04:02,292 - Experiment_exp0_baseline - INFO - === FVC ===
-2026-01-24 18:04:02,292 - Experiment_exp0_baseline - INFO - Total de imagens: 320
-2026-01-24 18:04:02,292 - Experiment_exp0_baseline - INFO - Total de origens únicas: 40
-2026-01-24 18:04:02,292 - Experiment_exp0_baseline - INFO - Imagens por dataset: {'FVC2000': 320}
-2026-01-24 18:04:02,292 - Experiment_exp0_baseline - INFO - Versões por origem: min=8, max=8, média=8.0
-2026-01-24 18:04:02,292 - Experiment_exp0_baseline - INFO - Dataset dividido: train=224, val=48, test=48
-2026-01-24 18:04:02,292 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
-2026-01-24 18:04:03,148 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
-2026-01-24 18:04:47,469 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-24 18:04:47,469 - Experiment_exp0_baseline - INFO - Avaliação no conjunto de teste:
-2026-01-24 18:04:47,469 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-24 18:04:48,221 - Experiment_exp0_baseline - INFO - Embeddings extraídos: (48, 192)
-2026-01-24 18:04:48,223 - Experiment_exp0_baseline - INFO - Pares genuínos: 168
-2026-01-24 18:04:48,224 - Experiment_exp0_baseline - INFO - Pares impostores: 240
-2026-01-24 18:04:48,228 - Experiment_exp0_baseline - INFO - EER: 0.1789
-2026-01-24 18:04:48,229 - Experiment_exp0_baseline - INFO - FAR@FRR=0.1: 0.2333
-2026-01-24 18:04:48,229 - Experiment_exp0_baseline - INFO - FAR@FRR=0.01: 0.3500
-2026-01-24 18:04:48,229 - Experiment_exp0_baseline - INFO - Scores genuínos: média=0.9830, std=0.0236
-2026-01-24 18:04:48,229 - Experiment_exp0_baseline - INFO - Scores impostores: média=0.7828, std=0.1570
-2026-01-24 18:04:48,232 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/test_results_debug.json
-2026-01-24 18:04:48,232 - Experiment_exp0_baseline - INFO - Iniciando validação cruzada...
-2026-01-24 18:04:48,315 - Experiment_exp0_baseline - INFO - Fold 1/5
-2026-01-24 18:04:49,306 - Experiment_exp0_baseline - INFO - Fold 1 - EER: 0.0366
-2026-01-24 18:04:49,306 - Experiment_exp0_baseline - INFO - Fold 1 - Rank-1: 0.9000
-2026-01-24 18:04:49,306 - Experiment_exp0_baseline - INFO - Fold 2/5
-2026-01-24 18:04:50,187 - Experiment_exp0_baseline - INFO - Fold 2 - EER: 0.2470
-2026-01-24 18:04:50,187 - Experiment_exp0_baseline - INFO - Fold 2 - Rank-1: 0.7000
-2026-01-24 18:04:50,188 - Experiment_exp0_baseline - INFO - Fold 3/5
-2026-01-24 18:04:51,139 - Experiment_exp0_baseline - INFO - Fold 3 - EER: 0.0244
-2026-01-24 18:04:51,140 - Experiment_exp0_baseline - INFO - Fold 3 - Rank-1: 0.7000
-2026-01-24 18:04:51,140 - Experiment_exp0_baseline - INFO - Fold 4/5
-2026-01-24 18:04:52,125 - Experiment_exp0_baseline - INFO - Fold 4 - EER: 0.0606
-2026-01-24 18:04:52,126 - Experiment_exp0_baseline - INFO - Fold 4 - Rank-1: 0.7778
-2026-01-24 18:04:52,127 - Experiment_exp0_baseline - INFO - Fold 5/5
-2026-01-24 18:04:53,005 - Experiment_exp0_baseline - INFO - Fold 5 - EER: 0.0455
-2026-01-24 18:04:53,006 - Experiment_exp0_baseline - INFO - Fold 5 - Rank-1: 0.6667
-2026-01-24 18:04:53,010 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/cv_results_debug.json
-2026-01-24 18:04:53,010 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-24 18:04:53,010 - Experiment_exp0_baseline - INFO - Resultados da Validação Cruzada:
-2026-01-24 18:04:53,010 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-24 18:04:53,010 - Experiment_exp0_baseline - INFO - rank_1: 0.7489 (CI: [0.6447, 0.8531])
-2026-01-24 18:04:53,010 - Experiment_exp0_baseline - INFO - rank_5: 1.0000 (CI: [1.0000, 1.0000])
-2026-01-24 18:04:53,010 - Experiment_exp0_baseline - INFO - rank_10: 0.0000 (CI: [0.0000, 0.0000])
-2026-01-24 18:04:53,010 - Experiment_exp0_baseline - INFO - rank_20: 0.0000 (CI: [0.0000, 0.0000])
-2026-01-24 18:04:53,011 - Experiment_exp0_baseline - INFO - eer: 0.0828 (CI: [-0.0202, 0.1858])
-2026-01-24 18:04:53,011 - Experiment_exp0_baseline - INFO - far_at_frr_0.1: 0.1156 (CI: [0.0307, 0.2005])
-2026-01-24 18:04:53,011 - Experiment_exp0_baseline - INFO - far_at_frr_0.01: 0.1156 (CI: [0.0307, 0.2005])
-2026-01-24 18:04:53,011 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-24 18:04:53,012 - Experiment_exp0_baseline - INFO - Avaliação Pairwise (todas-contra-todas):
-2026-01-24 18:04:53,012 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-24 18:04:53,013 - Experiment_exp0_baseline - INFO - Avaliação pairwise com 48 amostras
-2026-01-24 18:04:53,013 - Experiment_exp0_baseline - INFO - Total de comparações: 1176
-2026-01-24 18:04:53,014 - Experiment_exp0_baseline - INFO - Carregando qualidades NFIQ2...
-2026-01-24 18:04:53,075 - Experiment_exp0_baseline - INFO - Qualidades carregadas: 960 arquivos
-2026-01-24 18:04:53,075 - Experiment_exp0_baseline - INFO - Qualidade média: 44.5
-2026-01-24 18:04:53,088 - Experiment_exp0_baseline - INFO - Extraindo embeddings...
-2026-01-24 18:04:53,940 - Experiment_exp0_baseline - INFO - Embeddings extraídos: (48, 192)
-2026-01-24 18:04:53,940 - Experiment_exp0_baseline - INFO - Realizando comparações todas-contra-todas...
-2026-01-24 18:04:53,941 - Experiment_exp0_baseline - INFO - Iniciando 1176 comparações (48 amostras)
-2026-01-24 18:04:54,461 - Experiment_exp0_baseline - INFO - Comparações concluídas em 0.02s
-2026-01-24 18:04:54,462 - Experiment_exp0_baseline - INFO - Pares genuínos: 168, Pares impostores: 960
-2026-01-24 18:04:54,462 - Experiment_exp0_baseline - INFO - Memória pico: 1554.1 MB
-2026-01-24 18:04:54,462 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/pairwise_comparisons_debug.csv
-2026-01-24 18:04:54,462 - Experiment_exp0_baseline - INFO - Estatísticas salvas em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/pairwise_stats_debug.json
-2026-01-24 18:04:54,463 - Experiment_exp0_baseline - INFO - Comparações realizadas: 1176
-2026-01-24 18:04:54,463 - Experiment_exp0_baseline - INFO - Pares genuínos: 168
-2026-01-24 18:04:54,463 - Experiment_exp0_baseline - INFO - Pares impostores: 960
-2026-01-24 18:04:54,463 - Experiment_exp0_baseline - INFO - Tempo total: 0.02s
-2026-01-24 18:04:54,463 - Experiment_exp0_baseline - INFO - Memória pico: 1554.1 MB
-2026-01-24 18:04:54,463 - Experiment_exp0_baseline - INFO - CSV salvo em: /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/pairwise_comparisons_debug.csv
-2026-01-24 18:04:54,463 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-24 18:04:54,463 - Experiment_exp0_baseline - INFO - Experimento concluído com sucesso!
-2026-01-25 16:21:39,054 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
-2026-01-25 16:21:39,057 - Experiment_exp0_baseline - INFO - Modo: debug
-2026-01-25 16:21:39,057 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-25 16:21:39,057 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
-2026-01-25 16:21:39,057 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
-2026-01-25 16:21:39,057 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-25 16:21:39,057 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
-2026-01-25 16:21:39,063 - Experiment_exp0_baseline - ERROR - Erro ao carregar datasets: FingerprintDataset.__init__() got an unexpected keyword argument 'aggressive_augment'
-2026-01-30 15:35:43,126 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
-2026-01-30 15:35:43,130 - Experiment_exp0_baseline - INFO - Modo: debug
-2026-01-30 15:35:43,130 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-30 15:35:43,130 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
-2026-01-30 15:35:43,130 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
-2026-01-30 15:35:43,130 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-30 15:35:43,130 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
-2026-01-30 15:35:43,137 - Experiment_exp0_baseline - INFO - === FVC ===
-2026-01-30 15:35:43,137 - Experiment_exp0_baseline - INFO - Total de imagens: 320
-2026-01-30 15:35:43,138 - Experiment_exp0_baseline - INFO - Total de origens únicas: 40
-2026-01-30 15:35:43,138 - Experiment_exp0_baseline - INFO - Imagens por dataset: {'FVC2000': 320}
-2026-01-30 15:35:43,138 - Experiment_exp0_baseline - INFO - Versões por origem: min=8, max=8, média=8.0
-2026-01-30 15:35:43,138 - Experiment_exp0_baseline - INFO - Dataset dividido: train=224, val=48, test=48
-2026-01-30 15:35:43,138 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
-2026-01-30 15:35:43,959 - Experiment_exp0_baseline - INFO - Modo de avaliação: carregando best_model.pt
-2026-01-30 15:35:44,758 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-30 15:35:44,758 - Experiment_exp0_baseline - INFO - Avaliação no conjunto de teste:
-2026-01-30 15:35:44,758 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-30 15:35:45,727 - Experiment_exp0_baseline - INFO - Embeddings extraídos: (48, 192)
-2026-01-30 15:35:45,729 - Experiment_exp0_baseline - INFO - Pares genuínos: 168
-2026-01-30 15:35:45,729 - Experiment_exp0_baseline - INFO - Pares impostores: 240
-2026-01-30 15:35:45,730 - Experiment_exp0_baseline - INFO - EER: 0.5000
-2026-01-30 15:35:45,730 - Experiment_exp0_baseline - INFO - FAR@FRR=0.1: 1.0000
-2026-01-30 15:35:45,730 - Experiment_exp0_baseline - INFO - FAR@FRR=0.01: 1.0000
-2026-01-30 15:35:45,730 - Experiment_exp0_baseline - INFO - Scores genuínos: média=1.0000, std=0.0000
-2026-01-30 15:35:45,730 - Experiment_exp0_baseline - INFO - Scores impostores: média=1.0000, std=0.0000
-2026-01-30 15:35:45,731 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/test_results_debug.json
-2026-01-30 15:35:45,731 - Experiment_exp0_baseline - INFO - Iniciando validação cruzada...
-2026-01-30 15:35:45,828 - Experiment_exp0_baseline - INFO - Fold 1/5
-2026-01-30 15:35:46,592 - Experiment_exp0_baseline - INFO - Fold 1 - EER: 0.5000
-2026-01-30 15:35:46,592 - Experiment_exp0_baseline - INFO - Fold 1 - Rank-1: 0.2000
-2026-01-30 15:35:46,592 - Experiment_exp0_baseline - INFO - Fold 2/5
-2026-01-30 15:35:47,298 - Experiment_exp0_baseline - INFO - Fold 2 - EER: 0.5000
-2026-01-30 15:35:47,298 - Experiment_exp0_baseline - INFO - Fold 2 - Rank-1: 0.2000
-2026-01-30 15:35:47,298 - Experiment_exp0_baseline - INFO - Fold 3/5
-2026-01-30 15:35:48,022 - Experiment_exp0_baseline - INFO - Fold 3 - EER: 0.5000
-2026-01-30 15:35:48,022 - Experiment_exp0_baseline - INFO - Fold 3 - Rank-1: 0.2000
-2026-01-30 15:35:48,022 - Experiment_exp0_baseline - INFO - Fold 4/5
-2026-01-30 15:35:48,775 - Experiment_exp0_baseline - INFO - Fold 4 - EER: 0.3788
-2026-01-30 15:35:48,776 - Experiment_exp0_baseline - INFO - Fold 4 - Rank-1: 0.2222
-2026-01-30 15:35:48,776 - Experiment_exp0_baseline - INFO - Fold 5/5
-2026-01-30 15:35:49,490 - Experiment_exp0_baseline - INFO - Fold 5 - EER: 0.3788
-2026-01-30 15:35:49,490 - Experiment_exp0_baseline - INFO - Fold 5 - Rank-1: 0.2222
-2026-01-30 15:35:49,493 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/cv_results_debug.json
-2026-01-30 15:35:49,493 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-30 15:35:49,493 - Experiment_exp0_baseline - INFO - Resultados da Validação Cruzada:
-2026-01-30 15:35:49,493 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-30 15:35:49,493 - Experiment_exp0_baseline - INFO - rank_1: 0.2089 (CI: [0.1954, 0.2224])
-2026-01-30 15:35:49,493 - Experiment_exp0_baseline - INFO - rank_5: 0.8333 (CI: [0.7704, 0.8963])
-2026-01-30 15:35:49,493 - Experiment_exp0_baseline - INFO - rank_10: 0.0000 (CI: [0.0000, 0.0000])
-2026-01-30 15:35:49,493 - Experiment_exp0_baseline - INFO - rank_20: 0.0000 (CI: [0.0000, 0.0000])
-2026-01-30 15:35:49,493 - Experiment_exp0_baseline - INFO - eer: 0.4515 (CI: [0.3778, 0.5252])
-2026-01-30 15:35:49,493 - Experiment_exp0_baseline - INFO - far_at_frr_0.1: 0.9030 (CI: [0.7556, 1.0505])
-2026-01-30 15:35:49,493 - Experiment_exp0_baseline - INFO - far_at_frr_0.01: 0.9030 (CI: [0.7556, 1.0505])
-2026-01-30 15:35:49,494 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-30 15:35:49,494 - Experiment_exp0_baseline - INFO - Avaliação Pairwise (todas-contra-todas):
-2026-01-30 15:35:49,494 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-30 15:35:49,495 - Experiment_exp0_baseline - INFO - Avaliação pairwise com 48 amostras
-2026-01-30 15:35:49,495 - Experiment_exp0_baseline - INFO - Total de comparações: 1176
-2026-01-30 15:35:49,495 - Experiment_exp0_baseline - INFO - Carregando qualidades NFIQ2...
-2026-01-30 15:35:49,545 - Experiment_exp0_baseline - INFO - Qualidades carregadas: 960 arquivos
-2026-01-30 15:35:49,545 - Experiment_exp0_baseline - INFO - Qualidade média: 44.5
-2026-01-30 15:35:49,554 - Experiment_exp0_baseline - INFO - Extraindo embeddings...
-2026-01-30 15:36:20,467 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
-2026-01-30 15:36:20,467 - Experiment_exp0_baseline - INFO - Modo: debug
-2026-01-30 15:36:20,467 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-30 15:36:20,467 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
-2026-01-30 15:36:20,467 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
-2026-01-30 15:36:20,467 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-30 15:36:20,467 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
-2026-01-30 15:36:20,472 - Experiment_exp0_baseline - INFO - === FVC ===
-2026-01-30 15:36:20,473 - Experiment_exp0_baseline - INFO - Total de imagens: 320
-2026-01-30 15:36:20,473 - Experiment_exp0_baseline - INFO - Total de origens únicas: 40
-2026-01-30 15:36:20,473 - Experiment_exp0_baseline - INFO - Imagens por dataset: {'FVC2000': 320}
-2026-01-30 15:36:20,473 - Experiment_exp0_baseline - INFO - Versões por origem: min=8, max=8, média=8.0
-2026-01-30 15:36:20,473 - Experiment_exp0_baseline - INFO - Dataset dividido: train=224, val=48, test=48
-2026-01-30 15:36:20,473 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
-2026-01-30 15:36:21,335 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
-2026-01-30 15:39:24,827 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
-2026-01-30 15:39:24,827 - Experiment_exp0_baseline - INFO - Modo: debug
-2026-01-30 15:39:24,827 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-30 15:39:24,827 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
-2026-01-30 15:39:24,827 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
-2026-01-30 15:39:24,827 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-30 15:39:24,827 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
-2026-01-30 15:39:24,827 - Experiment_exp0_baseline - INFO - Modo DEBUG: usando 200 amostras do SFinge (com minutiae)
-2026-01-30 15:39:26,262 - Experiment_exp0_baseline - INFO - === SFinge ===
-2026-01-30 15:39:26,262 - Experiment_exp0_baseline - INFO - Total de imagens: 84000
-2026-01-30 15:39:26,262 - Experiment_exp0_baseline - INFO - Total de origens únicas: 8000
-2026-01-30 15:39:26,263 - Experiment_exp0_baseline - INFO - Versões por origem: min=10, max=12, média=10.5
-2026-01-30 15:39:26,263 - Experiment_exp0_baseline - INFO - Dataset dividido: train=60000, val=12000, test=12000
-2026-01-30 15:39:26,263 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
-2026-01-30 15:39:27,076 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
-2026-01-30 15:39:42,910 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
-2026-01-30 15:39:42,910 - Experiment_exp0_baseline - INFO - Modo: debug
-2026-01-30 15:39:42,910 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-30 15:39:42,910 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
-2026-01-30 15:39:42,910 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
-2026-01-30 15:39:42,910 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-30 15:39:42,910 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
-2026-01-30 15:39:42,910 - Experiment_exp0_baseline - INFO - Modo DEBUG: usando 200 amostras do SFinge (com minutiae)
-2026-01-30 15:39:44,302 - Experiment_exp0_baseline - INFO - === SFinge ===
-2026-01-30 15:39:44,302 - Experiment_exp0_baseline - INFO - Total de imagens: 84000
-2026-01-30 15:39:44,302 - Experiment_exp0_baseline - INFO - Total de origens únicas: 8000
-2026-01-30 15:39:44,302 - Experiment_exp0_baseline - INFO - Versões por origem: min=10, max=12, média=10.5
-2026-01-30 15:39:44,302 - Experiment_exp0_baseline - INFO - Dataset dividido: train=60000, val=12000, test=12000
-2026-01-30 15:39:44,302 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
-2026-01-30 15:39:45,061 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
-2026-01-30 15:47:18,558 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
-2026-01-30 15:47:18,558 - Experiment_exp0_baseline - INFO - Modo: debug
-2026-01-30 15:47:18,558 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-30 15:47:18,558 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
-2026-01-30 15:47:18,558 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
-2026-01-30 15:47:18,558 - Experiment_exp0_baseline - INFO - ================================================================================
-2026-01-30 15:47:18,558 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
-2026-01-30 15:47:18,558 - Experiment_exp0_baseline - INFO - Modo DEBUG: usando 200 amostras do SFinge (com minutiae)
-2026-01-30 15:47:19,929 - Experiment_exp0_baseline - INFO - === SFinge ===
-2026-01-30 15:47:19,929 - Experiment_exp0_baseline - INFO - Total de imagens: 84000
-2026-01-30 15:47:19,929 - Experiment_exp0_baseline - INFO - Total de origens únicas: 8000
-2026-01-30 15:47:19,929 - Experiment_exp0_baseline - INFO - Versões por origem: min=10, max=12, média=10.5
-2026-01-30 15:47:19,929 - Experiment_exp0_baseline - INFO - Dataset dividido: train=60000, val=12000, test=12000
-2026-01-30 15:47:19,930 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
-2026-01-30 15:47:20,674 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
+2026-02-01 15:16:26,954 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
+2026-02-01 15:16:26,955 - Experiment_exp0_baseline - INFO - Modo: debug
+2026-02-01 15:16:26,955 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-01 15:16:26,955 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
+2026-02-01 15:16:26,955 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
+2026-02-01 15:16:26,955 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-01 15:16:26,955 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
+2026-02-01 15:16:26,955 - Experiment_exp0_baseline - INFO - Modo DEBUG: usando 200 amostras do SFinge (com minutiae)
+2026-02-01 15:16:28,242 - Experiment_exp0_baseline - INFO - === SFinge ===
+2026-02-01 15:16:28,243 - Experiment_exp0_baseline - INFO - Total de imagens: 84000
+2026-02-01 15:16:28,243 - Experiment_exp0_baseline - INFO - Total de origens únicas: 8000
+2026-02-01 15:16:28,243 - Experiment_exp0_baseline - INFO - Versões por origem: min=10, max=12, média=10.5
+2026-02-01 15:16:28,243 - Experiment_exp0_baseline - INFO - Dataset dividido: train=140, val=30, test=30
+2026-02-01 15:16:28,243 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
+2026-02-01 15:16:29,029 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
+2026-02-01 15:17:44,683 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-01 15:17:44,683 - Experiment_exp0_baseline - INFO - Avaliação no conjunto de teste:
+2026-02-01 15:17:44,683 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-01 15:17:45,174 - Experiment_exp0_baseline - INFO - Embeddings extraídos: (30, 192)
+2026-02-01 15:17:45,175 - Experiment_exp0_baseline - INFO - Pares genuínos: 135
+2026-02-01 15:17:45,175 - Experiment_exp0_baseline - INFO - Pares impostores: 60
+2026-02-01 15:17:45,178 - Experiment_exp0_baseline - INFO - EER: 0.1648
+2026-02-01 15:17:45,178 - Experiment_exp0_baseline - INFO - FAR@FRR=0.1: 0.2500
+2026-02-01 15:17:45,178 - Experiment_exp0_baseline - INFO - FAR@FRR=0.01: 0.6833
+2026-02-01 15:17:45,178 - Experiment_exp0_baseline - INFO - Scores genuínos: média=0.9999, std=0.0000
+2026-02-01 15:17:45,178 - Experiment_exp0_baseline - INFO - Scores impostores: média=0.9998, std=0.0001
+2026-02-01 15:17:45,178 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/test_results_debug.json
+2026-02-01 15:17:45,178 - Experiment_exp0_baseline - INFO - Iniciando validação cruzada...
+2026-02-01 15:17:45,395 - Experiment_exp0_baseline - INFO - Fold 1/5
+2026-02-01 15:17:46,018 - Experiment_exp0_baseline - INFO - Fold 1 - EER: 0.3333
+2026-02-01 15:17:46,018 - Experiment_exp0_baseline - INFO - Fold 1 - Rank-1: 1.0000
+2026-02-01 15:17:46,018 - Experiment_exp0_baseline - INFO - Fold 2/5
+2026-02-01 15:17:46,634 - Experiment_exp0_baseline - INFO - Fold 2 - EER: 0.3333
+2026-02-01 15:17:46,634 - Experiment_exp0_baseline - INFO - Fold 2 - Rank-1: 0.8333
+2026-02-01 15:17:46,634 - Experiment_exp0_baseline - INFO - Fold 3/5
+2026-02-01 15:17:47,244 - Experiment_exp0_baseline - INFO - Fold 3 - EER: 0.3333
+2026-02-01 15:17:47,244 - Experiment_exp0_baseline - INFO - Fold 3 - Rank-1: 1.0000
+2026-02-01 15:17:47,244 - Experiment_exp0_baseline - INFO - Fold 4/5
+2026-02-01 15:17:47,848 - Experiment_exp0_baseline - INFO - Fold 4 - EER: 0.0000
+2026-02-01 15:17:47,848 - Experiment_exp0_baseline - INFO - Fold 4 - Rank-1: 0.8333
+2026-02-01 15:17:47,848 - Experiment_exp0_baseline - INFO - Fold 5/5
+2026-02-01 15:17:48,445 - Experiment_exp0_baseline - INFO - Fold 5 - EER: 0.0000
+2026-02-01 15:17:48,445 - Experiment_exp0_baseline - INFO - Fold 5 - Rank-1: 1.0000
+2026-02-01 15:17:48,448 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/cv_results_debug.json
+2026-02-01 15:17:48,448 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-01 15:17:48,448 - Experiment_exp0_baseline - INFO - Resultados da Validação Cruzada:
+2026-02-01 15:17:48,448 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-01 15:17:48,449 - Experiment_exp0_baseline - INFO - rank_1: 0.9333 (CI: [0.8320, 1.0347])
+2026-02-01 15:17:48,449 - Experiment_exp0_baseline - INFO - rank_5: 0.0000 (CI: [0.0000, 0.0000])
+2026-02-01 15:17:48,449 - Experiment_exp0_baseline - INFO - rank_10: 0.0000 (CI: [0.0000, 0.0000])
+2026-02-01 15:17:48,449 - Experiment_exp0_baseline - INFO - rank_20: 0.0000 (CI: [0.0000, 0.0000])
+2026-02-01 15:17:48,449 - Experiment_exp0_baseline - INFO - eer: 0.2000 (CI: [-0.0028, 0.4028])
+2026-02-01 15:17:48,449 - Experiment_exp0_baseline - INFO - far_at_frr_0.1: 0.3667 (CI: [-0.0554, 0.7888])
+2026-02-01 15:17:48,449 - Experiment_exp0_baseline - INFO - far_at_frr_0.01: 0.3667 (CI: [-0.0554, 0.7888])
+2026-02-01 15:17:48,449 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-01 15:17:48,449 - Experiment_exp0_baseline - INFO - Avaliação Pairwise (todas-contra-todas):
+2026-02-01 15:17:48,449 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-01 15:17:48,451 - Experiment_exp0_baseline - INFO - Avaliação pairwise com 30 amostras
+2026-02-01 15:17:48,451 - Experiment_exp0_baseline - INFO - Total de comparações: 465
+2026-02-01 15:17:48,451 - Experiment_exp0_baseline - INFO - Carregando qualidades NFIQ2...
+2026-02-01 15:17:48,501 - Experiment_exp0_baseline - INFO - Qualidades carregadas: 960 arquivos
+2026-02-01 15:17:48,501 - Experiment_exp0_baseline - INFO - Qualidade média: 44.5
+2026-02-01 15:17:48,514 - Experiment_exp0_baseline - INFO - Extraindo embeddings...
+2026-02-01 15:17:49,076 - Experiment_exp0_baseline - INFO - Embeddings extraídos: (30, 192)
+2026-02-01 15:17:49,076 - Experiment_exp0_baseline - INFO - Realizando comparações todas-contra-todas...
+2026-02-01 15:17:49,077 - Experiment_exp0_baseline - INFO - Iniciando 465 comparações (30 amostras)
+2026-02-01 15:17:49,594 - Experiment_exp0_baseline - INFO - Comparações concluídas em 0.10s
+2026-02-01 15:17:49,594 - Experiment_exp0_baseline - INFO - Pares genuínos: 135, Pares impostores: 300
+2026-02-01 15:17:49,594 - Experiment_exp0_baseline - INFO - Memória pico: 1649.8 MB
+2026-02-01 15:17:49,595 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/pairwise_comparisons_debug.csv
+2026-02-01 15:17:49,595 - Experiment_exp0_baseline - INFO - Estatísticas salvas em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/pairwise_stats_debug.json
+2026-02-01 15:17:49,595 - Experiment_exp0_baseline - INFO - Comparações realizadas: 465
+2026-02-01 15:17:49,595 - Experiment_exp0_baseline - INFO - Pares genuínos: 135
+2026-02-01 15:17:49,595 - Experiment_exp0_baseline - INFO - Pares impostores: 300
+2026-02-01 15:17:49,595 - Experiment_exp0_baseline - INFO - Tempo total: 0.10s
+2026-02-01 15:17:49,595 - Experiment_exp0_baseline - INFO - Memória pico: 1649.8 MB
+2026-02-01 15:17:49,596 - Experiment_exp0_baseline - INFO - CSV salvo em: /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/pairwise_comparisons_debug.csv
+2026-02-01 15:17:49,596 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-01 15:17:49,596 - Experiment_exp0_baseline - INFO - Experimento concluído com sucesso!

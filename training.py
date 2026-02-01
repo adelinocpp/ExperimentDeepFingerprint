@@ -194,11 +194,9 @@ class DeepPrintTrainer:
         else:
             raise ValueError(f"Model type {model_type} not supported")
         
-        # Otimizador
-        self.optimizer = optim.Adam(
-            self.model.parameters(),
-            **OPTIMIZER_CONFIG["adam"]
-        )
+        # Otimizador - CORRIGIDO: Paper usa RMSprop, não Adam!
+        # STN (Localization Network) precisa de LR menor (3.5% do base LR)
+        self.optimizer = self._create_optimizer()
         
         # Scheduler (melhorias para datasets grandes)
         self.scheduler = None
@@ -229,6 +227,52 @@ class DeepPrintTrainer:
             "val_metrics": [],
         }
         
+    def _create_optimizer(self):
+        """
+        Cria otimizador Adam com learning rate diferenciado para STN.
+
+        Seguindo implementação original:
+        - Adam (não RMSprop como paper reporta)
+        - LR do Localization Network (STN) = 3.5% do LR base
+        - Weight decay = 0 (implementação original)
+        """
+        base_lr = OPTIMIZER_CONFIG["adam"]["lr"]
+        loc_lr_scale = OPTIMIZER_CONFIG.get("localization_network_lr_scale", 0.035)
+
+        # Separar parâmetros do Localization Network (STN)
+        loc_params = []
+        other_params = []
+
+        for name, param in self.model.named_parameters():
+            # STN pode estar como "localization_network" ou nomes variantes
+            if "localization" in name.lower() or "stn" in name.lower() or "_loc" in name.lower():
+                loc_params.append(param)
+                self.logger.debug(f"  STN param: {name}")
+            else:
+                other_params.append(param)
+
+        # Criar grupos de parâmetros com LRs diferentes
+        param_groups = [
+            {"params": other_params, "lr": base_lr},
+            {"params": loc_params, "lr": base_lr * loc_lr_scale},  # STN: 3.5% do LR base
+        ]
+
+        optimizer = optim.Adam(
+            param_groups,
+            lr=base_lr,  # LR base
+            betas=(OPTIMIZER_CONFIG["adam"]["beta1"], OPTIMIZER_CONFIG["adam"]["beta2"]),
+            eps=OPTIMIZER_CONFIG["adam"]["eps"],
+            weight_decay=OPTIMIZER_CONFIG["adam"]["weight_decay"],
+        )
+
+        self.logger.info(f"Otimizador: Adam (implementação original)")
+        self.logger.info(f"  Base LR: {base_lr}")
+        self.logger.info(f"  STN LR: {base_lr * loc_lr_scale:.6f} ({loc_lr_scale*100:.1f}% do base)")
+        self.logger.info(f"  Weight decay: {OPTIMIZER_CONFIG['adam']['weight_decay']}")
+        self.logger.info(f"  STN params: {len(loc_params)}, Other params: {len(other_params)}")
+
+        return optimizer
+
     def _setup_device(self) -> torch.device:
         """Configurar dispositivo (CPU ou GPU)"""
         if self.config["use_gpu"] and torch.cuda.is_available():
@@ -347,7 +391,8 @@ class DeepPrintTrainer:
                 # Backward pass
                 self.scaler.scale(loss).backward()
                 self.scaler.unscale_(self.optimizer)
-                torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=1.0)
+                # REMOVIDO: Gradient clipping NÃO é usado no paper original
+                # torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=1.0)
                 self.scaler.step(self.optimizer)
                 self.scaler.update()
             else:
@@ -357,10 +402,12 @@ class DeepPrintTrainer:
                 
                 # Backward pass
                 loss.backward()
-                
-                # CRÍTICO: Gradient clipping para evitar explosão (especialmente STN)
-                torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=1.0)
-                
+
+                # REMOVIDO: Gradient clipping NÃO é usado no paper original
+                # Era adicionado para estabilizar STN, mas paper não usa
+                # STN agora usa LR 3.5% menor, o que deve estabilizar
+                # torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=1.0)
+
                 self.optimizer.step()
             
             total_loss += loss.item()
@@ -391,46 +438,66 @@ class DeepPrintTrainer:
     
     def validate(self, val_loader: DataLoader, epoch: int) -> Dict[str, float]:
         """Validar modelo
-        
-        IMPORTANTE: Em open-set, usa apenas CrossEntropy (sem Center Loss).
-        Center Loss não funciona para classes nunca vistas no treino.
+
+        CORRIGIDO: Calcula loss completa (CrossEntropy + Minutia Map Loss).
+        Center Loss desabilitado (training_mode=False) para open-set.
         """
         self.model.eval()
-        
+
         total_loss = 0.0
         num_batches = 0
-        
+
         with torch.no_grad():
             pbar = tqdm(val_loader, desc=f"Epoch {epoch} [Val]", disable=self.mode != "debug")
-            
+
             for batch_data in pbar:
                 # Desempacotar batch (pode ter paths se for dataset customizado)
                 if len(batch_data) == 3:
                     images, labels, image_paths = batch_data
                 else:
                     images, labels = batch_data
-                
+                    image_paths = None
+
                 images = images.to(self.device)
                 labels = labels.to(self.device)
-                
+
+                # CRÍTICO: Carregar minutia maps para calcular loss corretamente!
+                minutia_maps = None
+                minutia_map_weights = None
+                if image_paths is not None:
+                    try:
+                        minutia_maps, minutia_map_weights = batch_load_minutia_maps(image_paths)
+                        minutia_maps = minutia_maps.to(self.device)
+                        minutia_map_weights = minutia_map_weights.to(self.device)
+                    except Exception as e:
+                        self.logger.warning(f"Erro ao carregar minutia maps na validação: {e}")
+
                 outputs = self.model(images)
+
                 # training_mode=False desabilita Center Loss (open-set)
-                batch_loss = self._compute_loss(outputs, labels, training_mode=False)
-                
+                # MAS calcula CrossEntropy + Minutia Map Loss!
+                batch_loss = self._compute_loss(
+                    outputs,
+                    labels,
+                    minutia_maps=minutia_maps,
+                    minutia_map_weights=minutia_map_weights,
+                    training_mode=False
+                )
+
                 total_loss += batch_loss.item()
                 num_batches += 1
-                
+
                 pbar.set_postfix({"loss": total_loss / num_batches})
-                
+
                 # Limpeza agressiva de memória GPU
                 if self.config["use_gpu"] and num_batches % 5 == 0:
                     torch.cuda.empty_cache()
-        
+
         # Limpeza final
         if self.config["use_gpu"]:
             torch.cuda.empty_cache()
         gc.collect()
-        
+
         avg_loss = total_loss / num_batches if num_batches > 0 else 0.0
         return {"loss": avg_loss}
     

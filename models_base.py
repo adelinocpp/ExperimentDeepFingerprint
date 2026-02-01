@@ -188,7 +188,7 @@ class _Branch_MinutiaEmbedding(nn.Module):
 
 class _Branch_MinutiaMap(nn.Module):
     """Branch de mapa de minutiae - IGUAL AO ORIGINAL"""
-    
+
     def __init__(self):
         super().__init__()
         self.features = nn.Sequential(
@@ -199,7 +199,10 @@ class _Branch_MinutiaMap(nn.Module):
         )
 
     def forward(self, x):
-        return self.features(x)[:, :, :-1, :-1]
+        # Seguindo implementação original: SEM sigmoid
+        # O código original não usa sigmoid aqui
+        x = self.features(x)[:, :, :-1, :-1]
+        return x
 
 # =============================================================================
 # Módulo de Atenção Espacial (para experimentos derivados)
@@ -353,23 +356,32 @@ class DeepPrintBaseline(nn.Module):
             
             return result
         
-        # EVAL MODE - com torch.no_grad() igual ao original
+        # EVAL MODE - CORRIGIDO: precisa retornar logits e minutia_maps para validação!
         with torch.no_grad():
             x = self.localization(x)
             features = self.stem(x)
-            
+
             texture_embedding = self.texture_branch(features)
-            
+
             minutia_features = self.minutia_stem(features)
             minutia_embedding = self.minutia_embedding(minutia_features)
-            
+            minutia_map = self.minutia_map(minutia_features)
+
             combined_embedding = torch.cat([texture_embedding, minutia_embedding], dim=1)
-            
-            return {
+
+            result = {
                 "embedding": combined_embedding,
                 "texture_embedding": texture_embedding,
                 "minutia_embedding": minutia_embedding,
+                "minutia_maps": minutia_map,  # CRÍTICO: precisa para calcular loss!
             }
+
+            # Logits necessários para validação
+            if self.texture_classifier is not None:
+                result["texture_logits"] = self.texture_classifier(texture_embedding)
+                result["minutia_logits"] = self.minutia_classifier(minutia_embedding)
+
+            return result
 
 
 class DeepPrintEnhancedRepresentation(nn.Module):

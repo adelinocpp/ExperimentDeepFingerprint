@@ -52,6 +52,14 @@ EXPERIMENTS = {
 
 # Configuração de treinamento
 TRAINING_CONFIG = {
+    "debug_minimal": {  # NOVO: Modo para testes ultra-rápidos
+        "batch_size": 4,
+        "num_epochs": 3,
+        "num_workers": 2,
+        "sample_size": 30,  # 3 classes × 10 amostras cada - TESTE RÁPIDO
+        "use_gpu": True,
+        "mixed_precision": False,
+    },
     "debug": {
         "batch_size": 8,
         "num_epochs": 5,  # Debug mais completo para verificar convergência
@@ -62,7 +70,7 @@ TRAINING_CONFIG = {
     },
     "prod": {
         "batch_size": 20,  # Ajustado para RTX 2070 8GB (paper usa 30)
-        "num_epochs": 150,  # Reduzido de 256 para 150 (suficiente para 84k imagens)
+        "num_epochs": 256,  # RESTAURADO: Paper original usa 256 épocas (ou 140K steps)
         "num_workers": NUM_CPUS,  # Usa número de CPUs da máquina
         "sample_size": None,  # Usar todas as amostras (84k)
         "use_gpu": True,
@@ -84,18 +92,20 @@ METRICS_CONFIG = {
 }
 
 # Configuração de otimizador
-# Alinhado com paper original (Adam com apenas lr customizado)
+# SEGUINDO IMPLEMENTAÇÃO ORIGINAL: Adam (código funciona, paper reporta RMSprop mas não bate)
 OPTIMIZER_CONFIG = {
-    "adam": {
-        "lr": 0.010,  # Ajustado para batch_size=24 (paper: 0.025 com batch=30)
-        "betas": (0.9, 0.999),  # Default PyTorch
-        "eps": 1e-8,            # Default PyTorch
-        "weight_decay": 0,      # Paper NÃO usa weight decay
+    "adam": {  # Implementação original usa Adam
+        "lr": 0.0001,  # Learning rate base (implementação original)
+        "beta1": 0.9,  # Adam beta1
+        "beta2": 0.999,  # Adam beta2
+        "eps": 1e-8,  # default
+        "weight_decay": 0,  # Implementação original não usa weight decay
     },
-    "use_lr_scheduler": False,  # Paper NÃO usa scheduler
-    "scheduler_type": "cosine",
-    "warmup_epochs": 5,
-    "min_lr": 5e-5,
+    "localization_network_lr_scale": 0.035,  # STN usa 3.5% do LR base
+    "use_lr_scheduler": False,  # Não usa scheduler
+    "scheduler_type": "cosine",  # Mantido para compatibilidade
+    "warmup_epochs": 5,  # Mantido para compatibilidade
+    "min_lr": 5e-5,  # Mantido para compatibilidade
 }
 
 # Configuração de modelo
@@ -119,23 +129,27 @@ MODEL_CONFIG = {
     "use_minutiae": True,
 }
 
-# Configuração de perda (baseado no projeto original DeepPrint)
-# Original deep_print_loss.py: W_CROSS_ENTROPY = 1.0, W_CENTER_LOSS = 0.125, W_MINUTIA_MAP_LOSS = 0.3
-# Triplet loss NÃO é usado no DeepPrint original
+# Configuração de perda
+# CORRIGIDO: Center Loss com peso do PAPER ORIGINAL (0.00125, NÃO 0.125!)
+# O peso estava 100x MAIOR causando colapso prematuro dos embeddings
 LOSS_CONFIG = {
-    "center_loss_weight": 0.125,  # Original: W_CENTER_LOSS
+    "center_loss_weight": 0.00125,  # CORRIGIDO: Paper usa 0.00125 (λ2), era 0.125 (100x maior!)
     "triplet_loss_weight": 0.0,   # DESABILITADO (não existe no original)
-    "softmax_loss_weight": 1.0,   # Original: W_CROSS_ENTROPY
-    "minutia_map_loss_weight": 0.3,  # Original: W_MINUTIA_MAP_LOSS (apenas para minutiae branch)
+    "softmax_loss_weight": 1.0,   # λ1 = 1.0
+    "minutia_map_loss_weight": 0.3,  # Implementação original: 0.3
 }
 
 # Configuração de data augmentation (normal)
+# CORRIGIDO: Paper usa augmentation mais agressivo (±60° rotation, ±80px translation)
+# Augmentation anterior era muito conservador e impedia STN de aprender alinhamentos robustos
 AUGMENTATION_CONFIG = {
-    "rotation_range": 15,  # -15 a +15 graus
-    "translation_range": 25,  # até 25 pixels em x e y
+    "rotation_range": 60,  # CORRIGIDO: Paper usa ±60°, não ±15°
+    "translation_range": 80,  # CORRIGIDO: Paper usa ±80px, não ±25px
+    "padding": 80,  # NOVO: Padding para comportar translações (paper)
+    "border_mode": "white",  # CORRIGIDO: Paper usa fill branco (background natural), não REFLECT
     "quality_augmentation": True,
-    "contrast_range": (0.8, 1.2),
-    "brightness_range": (0.8, 1.2),
+    "contrast_range": (0.9, 2.0),  # CORRIGIDO: Paper ranges
+    "brightness_range": (0.9, 1.1),  # CORRIGIDO: Paper ranges
 }
 
 # Configuração de data augmentation AGRESSIVO (para datasets pequenos)

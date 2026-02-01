@@ -1,0 +1,132 @@
+2026-02-01 14:59:37,550 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
+2026-02-01 14:59:37,551 - Experiment_exp0_baseline - INFO - Modo: debug
+2026-02-01 14:59:37,551 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-01 14:59:37,551 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
+2026-02-01 14:59:37,551 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
+2026-02-01 14:59:37,551 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-01 14:59:37,551 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
+2026-02-01 14:59:37,551 - Experiment_exp0_baseline - INFO - Modo DEBUG: usando 200 amostras do SFinge (com minutiae)
+2026-02-01 14:59:38,785 - Experiment_exp0_baseline - INFO - === SFinge ===
+2026-02-01 14:59:38,785 - Experiment_exp0_baseline - INFO - Total de imagens: 84000
+2026-02-01 14:59:38,785 - Experiment_exp0_baseline - INFO - Total de origens únicas: 8000
+2026-02-01 14:59:38,785 - Experiment_exp0_baseline - INFO - Versões por origem: min=10, max=12, média=10.5
+2026-02-01 14:59:38,785 - Experiment_exp0_baseline - INFO - Dataset dividido: train=140, val=30, test=30
+2026-02-01 14:59:38,785 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
+2026-02-01 14:59:38,786 - DeepPrint_debug - INFO - Iniciando treinamento em modo debug
+2026-02-01 14:59:38,865 - DeepPrint_debug - INFO - GPU disponível: NVIDIA GeForce RTX 2070
+2026-02-01 14:59:38,865 - DeepPrint_debug - INFO - Dispositivo: cuda:0
+2026-02-01 14:59:39,489 - DeepPrint_debug - INFO - Otimizador: Adam (implementação original)
+2026-02-01 14:59:39,489 - DeepPrint_debug - INFO -   Base LR: 0.0001
+2026-02-01 14:59:39,489 - DeepPrint_debug - INFO -   STN LR: 0.000004 (3.5% do base)
+2026-02-01 14:59:39,489 - DeepPrint_debug - INFO -   Weight decay: 0
+2026-02-01 14:59:39,489 - DeepPrint_debug - INFO -   STN params: 12, Other params: 593
+2026-02-01 14:59:39,489 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
+2026-02-01 14:59:39,489 - DeepPrint_debug - INFO - Número total de classes (origens únicas): 14
+2026-02-01 14:59:39,490 - DeepPrint_debug - INFO - Classificador configurado com 14 classes
+2026-02-01 14:59:39,490 - DeepPrint_debug - INFO - Inicializando Center Loss (Texture) com 14 classes e 96 dims
+2026-02-01 14:59:39,491 - DeepPrint_debug - INFO - Inicializando Center Loss (Minutiae) com 14 classes e 96 dims
+2026-02-01 14:59:39,491 - DeepPrint_debug - INFO - Center Loss inicializado com 14 classes
+2026-02-01 14:59:39,495 - DeepPrint_debug - INFO - Modelo configurado e pronto para treinamento
+Epoch 1 [Train]:   0%|          | 0/18 [00:00<?, ?it/s]2026-02-01 14:59:39,686 - DeepPrint_debug - INFO - Minutia maps carregados: 8/8 amostras com minutiae
+Epoch 1 [Train]:   6%|▌         | 1/18 [00:01<00:18,  1.11s/it]Epoch 1 [Train]:  11%|█         | 2/18 [00:01<00:11,  1.37it/s]Epoch 1 [Train]:  17%|█▋        | 3/18 [00:02<00:09,  1.66it/s]Epoch 1 [Train]:  22%|██▏       | 4/18 [00:02<00:07,  1.83it/s]Epoch 1 [Train]:  28%|██▊       | 5/18 [00:02<00:06,  1.93it/s]Epoch 1 [Train]:  33%|███▎      | 6/18 [00:03<00:06,  2.00it/s]Epoch 1 [Train]:  39%|███▉      | 7/18 [00:03<00:05,  2.04it/s]Epoch 1 [Train]:  44%|████▍     | 8/18 [00:04<00:04,  2.04it/s]Epoch 1 [Train]:  50%|█████     | 9/18 [00:04<00:04,  2.05it/s]Epoch 1 [Train]:  56%|█████▌    | 10/18 [00:05<00:03,  2.05it/s]Epoch 1 [Train]:  61%|██████    | 11/18 [00:05<00:03,  2.05it/s]Epoch 1 [Train]:  67%|██████▋   | 12/18 [00:06<00:02,  2.07it/s]Epoch 1 [Train]:  72%|███████▏  | 13/18 [00:06<00:02,  2.10it/s]Epoch 1 [Train]:  78%|███████▊  | 14/18 [00:07<00:01,  2.10it/s]Epoch 1 [Train]:  83%|████████▎ | 15/18 [00:07<00:01,  2.12it/s]Epoch 1 [Train]:  89%|████████▉ | 16/18 [00:08<00:00,  2.12it/s]Epoch 1 [Train]:  94%|█████████▍| 17/18 [00:08<00:00,  2.13it/s]Epoch 1 [Train]: 100%|██████████| 18/18 [00:09<00:00,  2.22it/s]Epoch 1 [Train]: 100%|██████████| 18/18 [00:09<00:00,  1.98it/s]
+Epoch 1 [Val]:   0%|          | 0/4 [00:00<?, ?it/s]Epoch 1 [Val]:   0%|          | 0/4 [00:00<?, ?it/s, loss=5.42]Epoch 1 [Val]:  25%|██▌       | 1/4 [00:00<00:00,  3.93it/s, loss=5.42]Epoch 1 [Val]:  25%|██▌       | 1/4 [00:00<00:00,  3.93it/s, loss=5.48]Epoch 1 [Val]:  50%|█████     | 2/4 [00:00<00:00,  5.60it/s, loss=5.48]Epoch 1 [Val]:  50%|█████     | 2/4 [00:00<00:00,  5.60it/s, loss=5.44]Epoch 1 [Val]:  75%|███████▌  | 3/4 [00:00<00:00,  6.33it/s, loss=5.44]Epoch 1 [Val]:  75%|███████▌  | 3/4 [00:00<00:00,  6.33it/s, loss=5.37]Epoch 1 [Val]: 100%|██████████| 4/4 [00:00<00:00,  6.75it/s, loss=5.37]Epoch 1 [Val]: 100%|██████████| 4/4 [00:00<00:00,  5.98it/s, loss=5.37]
+2026-02-01 14:59:59,476 - DeepPrint_debug - INFO - Melhor modelo salvo: época 1, val_loss=8.3189
+2026-02-01 14:59:59,478 - DeepPrint_debug - INFO - Melhor modelo salvo: época 1, train_loss=8.3189
+2026-02-01 14:59:59,478 - DeepPrint_debug - INFO - Epoch 1 - Train Loss: 8.3189 - Val Loss: 5.3684
+Epoch 2 [Train]:   0%|          | 0/18 [00:00<?, ?it/s]Epoch 2 [Train]:   6%|▌         | 1/18 [00:00<00:11,  1.48it/s]Epoch 2 [Train]:  11%|█         | 2/18 [00:01<00:08,  1.82it/s]Epoch 2 [Train]:  17%|█▋        | 3/18 [00:01<00:07,  1.96it/s]Epoch 2 [Train]:  22%|██▏       | 4/18 [00:02<00:06,  2.04it/s]Epoch 2 [Train]:  28%|██▊       | 5/18 [00:02<00:06,  2.11it/s]Epoch 2 [Train]:  33%|███▎      | 6/18 [00:02<00:05,  2.15it/s]Epoch 2 [Train]:  39%|███▉      | 7/18 [00:03<00:05,  2.16it/s]Epoch 2 [Train]:  44%|████▍     | 8/18 [00:03<00:04,  2.16it/s]Epoch 2 [Train]:  50%|█████     | 9/18 [00:04<00:04,  2.16it/s]Epoch 2 [Train]:  56%|█████▌    | 10/18 [00:04<00:03,  2.16it/s]Epoch 2 [Train]:  61%|██████    | 11/18 [00:05<00:03,  2.16it/s]Epoch 2 [Train]:  67%|██████▋   | 12/18 [00:05<00:02,  2.16it/s]Epoch 2 [Train]:  72%|███████▏  | 13/18 [00:06<00:02,  2.16it/s]Epoch 2 [Train]:  78%|███████▊  | 14/18 [00:06<00:01,  2.15it/s]Epoch 2 [Train]:  83%|████████▎ | 15/18 [00:07<00:01,  2.17it/s]Epoch 2 [Train]:  89%|████████▉ | 16/18 [00:07<00:00,  2.18it/s]Epoch 2 [Train]:  94%|█████████▍| 17/18 [00:08<00:00,  2.18it/s]Epoch 2 [Train]: 100%|██████████| 18/18 [00:08<00:00,  2.33it/s]Epoch 2 [Train]: 100%|██████████| 18/18 [00:08<00:00,  2.14it/s]
+Epoch 2 [Val]:   0%|          | 0/4 [00:00<?, ?it/s]Epoch 2 [Val]:   0%|          | 0/4 [00:00<?, ?it/s, loss=5.43]Epoch 2 [Val]:  25%|██▌       | 1/4 [00:00<00:00,  3.99it/s, loss=5.43]Epoch 2 [Val]:  25%|██▌       | 1/4 [00:00<00:00,  3.99it/s, loss=5.46]Epoch 2 [Val]:  50%|█████     | 2/4 [00:00<00:00,  5.53it/s, loss=5.46]Epoch 2 [Val]:  50%|█████     | 2/4 [00:00<00:00,  5.53it/s, loss=5.42]Epoch 2 [Val]:  75%|███████▌  | 3/4 [00:00<00:00,  6.40it/s, loss=5.42]Epoch 2 [Val]:  75%|███████▌  | 3/4 [00:00<00:00,  6.40it/s, loss=5.35]Epoch 2 [Val]: 100%|██████████| 4/4 [00:00<00:00,  7.29it/s, loss=5.35]Epoch 2 [Val]: 100%|██████████| 4/4 [00:00<00:00,  6.03it/s, loss=5.35]
+2026-02-01 15:00:16,299 - DeepPrint_debug - INFO - Melhor modelo salvo: época 2, val_loss=7.5872
+2026-02-01 15:00:16,300 - DeepPrint_debug - INFO - Melhor modelo salvo: época 2, train_loss=7.5872
+2026-02-01 15:00:16,301 - DeepPrint_debug - INFO - Epoch 2 - Train Loss: 7.5872 - Val Loss: 5.3539
+Epoch 3 [Train]:   0%|          | 0/18 [00:00<?, ?it/s]Epoch 3 [Train]:   6%|▌         | 1/18 [00:00<00:12,  1.39it/s]Epoch 3 [Train]:  11%|█         | 2/18 [00:01<00:09,  1.71it/s]Epoch 3 [Train]:  17%|█▋        | 3/18 [00:01<00:08,  1.87it/s]Epoch 3 [Train]:  22%|██▏       | 4/18 [00:02<00:07,  1.89it/s]Epoch 3 [Train]:  28%|██▊       | 5/18 [00:02<00:06,  1.95it/s]Epoch 3 [Train]:  33%|███▎      | 6/18 [00:03<00:06,  1.98it/s]Epoch 3 [Train]:  39%|███▉      | 7/18 [00:03<00:05,  2.02it/s]Epoch 3 [Train]:  44%|████▍     | 8/18 [00:04<00:04,  2.02it/s]Epoch 3 [Train]:  50%|█████     | 9/18 [00:04<00:04,  2.06it/s]Epoch 3 [Train]:  56%|█████▌    | 10/18 [00:05<00:03,  2.10it/s]Epoch 3 [Train]:  61%|██████    | 11/18 [00:05<00:03,  2.13it/s]Epoch 3 [Train]:  67%|██████▋   | 12/18 [00:05<00:02,  2.15it/s]Epoch 3 [Train]:  72%|███████▏  | 13/18 [00:06<00:02,  2.15it/s]Epoch 3 [Train]:  78%|███████▊  | 14/18 [00:06<00:01,  2.15it/s]Epoch 3 [Train]:  83%|████████▎ | 15/18 [00:07<00:01,  2.15it/s]Epoch 3 [Train]:  89%|████████▉ | 16/18 [00:07<00:00,  2.14it/s]Epoch 3 [Train]:  94%|█████████▍| 17/18 [00:08<00:00,  2.14it/s]Epoch 3 [Train]: 100%|██████████| 18/18 [00:08<00:00,  2.31it/s]Epoch 3 [Train]: 100%|██████████| 18/18 [00:08<00:00,  2.07it/s]
+Epoch 3 [Val]:   0%|          | 0/4 [00:00<?, ?it/s]Epoch 3 [Val]:   0%|          | 0/4 [00:00<?, ?it/s, loss=5.41]Epoch 3 [Val]:  25%|██▌       | 1/4 [00:00<00:00,  4.16it/s, loss=5.41]Epoch 3 [Val]:  25%|██▌       | 1/4 [00:00<00:00,  4.16it/s, loss=5.44]Epoch 3 [Val]:  50%|█████     | 2/4 [00:00<00:00,  5.82it/s, loss=5.44]Epoch 3 [Val]:  50%|█████     | 2/4 [00:00<00:00,  5.82it/s, loss=5.41]Epoch 3 [Val]:  75%|███████▌  | 3/4 [00:00<00:00,  6.67it/s, loss=5.41]Epoch 3 [Val]:  75%|███████▌  | 3/4 [00:00<00:00,  6.67it/s, loss=5.34]Epoch 3 [Val]: 100%|██████████| 4/4 [00:00<00:00,  7.56it/s, loss=5.34]Epoch 3 [Val]: 100%|██████████| 4/4 [00:00<00:00,  6.41it/s, loss=5.34]
+2026-02-01 15:00:29,833 - DeepPrint_debug - INFO - Melhor modelo salvo: época 3, val_loss=7.1638
+2026-02-01 15:00:29,835 - DeepPrint_debug - INFO - Melhor modelo salvo: época 3, train_loss=7.1638
+2026-02-01 15:00:29,835 - DeepPrint_debug - INFO - Epoch 3 - Train Loss: 7.1638 - Val Loss: 5.3447
+Epoch 4 [Train]:   0%|          | 0/18 [00:00<?, ?it/s]Epoch 4 [Train]:   6%|▌         | 1/18 [00:00<00:11,  1.42it/s]Epoch 4 [Train]:  11%|█         | 2/18 [00:01<00:08,  1.78it/s]Epoch 4 [Train]:  17%|█▋        | 3/18 [00:01<00:07,  1.94it/s]Epoch 4 [Train]:  22%|██▏       | 4/18 [00:02<00:06,  2.02it/s]Epoch 4 [Train]:  28%|██▊       | 5/18 [00:02<00:06,  2.08it/s]Epoch 4 [Train]:  33%|███▎      | 6/18 [00:03<00:05,  2.11it/s]Epoch 4 [Train]:  39%|███▉      | 7/18 [00:03<00:05,  2.12it/s]Epoch 4 [Train]:  44%|████▍     | 8/18 [00:03<00:04,  2.12it/s]Epoch 4 [Train]:  50%|█████     | 9/18 [00:04<00:04,  2.11it/s]Epoch 4 [Train]:  56%|█████▌    | 10/18 [00:04<00:03,  2.13it/s]Epoch 4 [Train]:  61%|██████    | 11/18 [00:05<00:03,  2.14it/s]Epoch 4 [Train]:  67%|██████▋   | 12/18 [00:05<00:02,  2.15it/s]Epoch 4 [Train]:  72%|███████▏  | 13/18 [00:06<00:02,  2.16it/s]Epoch 4 [Train]:  78%|███████▊  | 14/18 [00:06<00:01,  2.17it/s]Epoch 4 [Train]:  83%|████████▎ | 15/18 [00:07<00:01,  2.17it/s]Epoch 4 [Train]:  89%|████████▉ | 16/18 [00:07<00:00,  2.17it/s]Epoch 4 [Train]:  94%|█████████▍| 17/18 [00:08<00:00,  2.18it/s]Epoch 4 [Train]: 100%|██████████| 18/18 [00:08<00:00,  2.33it/s]Epoch 4 [Train]: 100%|██████████| 18/18 [00:08<00:00,  2.12it/s]
+Epoch 4 [Val]:   0%|          | 0/4 [00:00<?, ?it/s]Epoch 4 [Val]:   0%|          | 0/4 [00:00<?, ?it/s, loss=5.44]Epoch 4 [Val]:  25%|██▌       | 1/4 [00:00<00:00,  4.33it/s, loss=5.44]Epoch 4 [Val]:  25%|██▌       | 1/4 [00:00<00:00,  4.33it/s, loss=5.47]Epoch 4 [Val]:  50%|█████     | 2/4 [00:00<00:00,  6.02it/s, loss=5.47]Epoch 4 [Val]:  50%|█████     | 2/4 [00:00<00:00,  6.02it/s, loss=5.43]Epoch 4 [Val]:  75%|███████▌  | 3/4 [00:00<00:00,  6.73it/s, loss=5.43]Epoch 4 [Val]:  75%|███████▌  | 3/4 [00:00<00:00,  6.73it/s, loss=5.37]Epoch 4 [Val]: 100%|██████████| 4/4 [00:00<00:00,  7.54it/s, loss=5.37]Epoch 4 [Val]: 100%|██████████| 4/4 [00:00<00:00,  6.47it/s, loss=5.37]
+2026-02-01 15:00:43,188 - DeepPrint_debug - INFO - Melhor modelo salvo: época 4, val_loss=6.8241
+2026-02-01 15:00:43,189 - DeepPrint_debug - INFO - Melhor modelo salvo: época 4, train_loss=6.8241
+2026-02-01 15:00:43,189 - DeepPrint_debug - INFO - Epoch 4 - Train Loss: 6.8241 - Val Loss: 5.3712
+Epoch 5 [Train]:   0%|          | 0/18 [00:00<?, ?it/s]Epoch 5 [Train]:   6%|▌         | 1/18 [00:00<00:12,  1.32it/s]Epoch 5 [Train]:  11%|█         | 2/18 [00:01<00:09,  1.70it/s]Epoch 5 [Train]:  17%|█▋        | 3/18 [00:01<00:07,  1.89it/s]Epoch 5 [Train]:  22%|██▏       | 4/18 [00:02<00:07,  2.00it/s]Epoch 5 [Train]:  28%|██▊       | 5/18 [00:02<00:06,  2.06it/s]Epoch 5 [Train]:  33%|███▎      | 6/18 [00:03<00:05,  2.09it/s]Epoch 5 [Train]:  39%|███▉      | 7/18 [00:03<00:05,  2.11it/s]Epoch 5 [Train]:  44%|████▍     | 8/18 [00:03<00:04,  2.12it/s]Epoch 5 [Train]:  50%|█████     | 9/18 [00:04<00:04,  2.14it/s]Epoch 5 [Train]:  56%|█████▌    | 10/18 [00:04<00:03,  2.16it/s]Epoch 5 [Train]:  61%|██████    | 11/18 [00:05<00:03,  2.17it/s]Epoch 5 [Train]:  67%|██████▋   | 12/18 [00:05<00:02,  2.16it/s]Epoch 5 [Train]:  72%|███████▏  | 13/18 [00:06<00:02,  2.16it/s]Epoch 5 [Train]:  78%|███████▊  | 14/18 [00:06<00:01,  2.11it/s]Epoch 5 [Train]:  83%|████████▎ | 15/18 [00:07<00:01,  2.10it/s]Epoch 5 [Train]:  89%|████████▉ | 16/18 [00:07<00:00,  2.11it/s]Epoch 5 [Train]:  94%|█████████▍| 17/18 [00:08<00:00,  2.11it/s]Epoch 5 [Train]: 100%|██████████| 18/18 [00:08<00:00,  2.27it/s]Epoch 5 [Train]: 100%|██████████| 18/18 [00:08<00:00,  2.09it/s]
+Epoch 5 [Val]:   0%|          | 0/4 [00:00<?, ?it/s]Epoch 5 [Val]:   0%|          | 0/4 [00:00<?, ?it/s, loss=5.4]Epoch 5 [Val]:  25%|██▌       | 1/4 [00:00<00:00,  4.05it/s, loss=5.4]Epoch 5 [Val]:  25%|██▌       | 1/4 [00:00<00:00,  4.05it/s, loss=5.42]Epoch 5 [Val]:  50%|█████     | 2/4 [00:00<00:00,  5.77it/s, loss=5.42]Epoch 5 [Val]:  50%|█████     | 2/4 [00:00<00:00,  5.77it/s, loss=5.4] Epoch 5 [Val]:  75%|███████▌  | 3/4 [00:00<00:00,  6.53it/s, loss=5.4]Epoch 5 [Val]:  75%|███████▌  | 3/4 [00:00<00:00,  6.53it/s, loss=5.35]Epoch 5 [Val]: 100%|██████████| 4/4 [00:00<00:00,  7.42it/s, loss=5.35]Epoch 5 [Val]: 100%|██████████| 4/4 [00:00<00:00,  6.22it/s, loss=5.35]
+2026-02-01 15:00:58,329 - DeepPrint_debug - INFO - Melhor modelo salvo: época 5, val_loss=6.5507
+2026-02-01 15:00:58,330 - DeepPrint_debug - INFO - Melhor modelo salvo: época 5, train_loss=6.5507
+2026-02-01 15:00:58,330 - DeepPrint_debug - INFO - Epoch 5 - Train Loss: 6.5507 - Val Loss: 5.3512
+2026-02-01 15:00:58,330 - DeepPrint_debug - INFO - Calculando EER na validação (época 5)...
+2026-02-01 15:00:58,903 - DeepPrint_debug - INFO -   DEBUG - Pares genuínos: 30, impostores: 90
+2026-02-01 15:00:58,904 - DeepPrint_debug - INFO -   DEBUG - Genuínos: min=0.9998, max=1.0000, mean=0.9999, std=0.0000
+2026-02-01 15:00:58,904 - DeepPrint_debug - INFO -   DEBUG - Impostores: min=0.9997, max=1.0000, mean=0.9998, std=0.0001
+2026-02-01 15:00:58,904 - DeepPrint_debug - INFO -   DEBUG - Threshold=0.9997: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-01 15:00:58,906 - DeepPrint_debug - INFO -   DEBUG - Threshold=0.9998: FAR=0.5444, FRR=0.0000, diff=0.5444
+2026-02-01 15:00:58,907 - DeepPrint_debug - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9667, diff=0.9667
+2026-02-01 15:00:58,908 - DeepPrint_debug - INFO -   DEBUG - RESULTADO: EER=0.2000, threshold=0.9999, diff=0.0000
+2026-02-01 15:00:58,908 - DeepPrint_debug - INFO -   EER (época 5): 0.2000 (FAR@FRR=0.1: 1.0000)
+2026-02-01 15:00:58,908 - DeepPrint_debug - INFO - Treinamento concluído
+2026-02-01 15:00:58,909 - DeepPrint_debug - INFO - Histórico salvo em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/training_history_debug.json
+2026-02-01 15:00:58,909 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-01 15:00:58,909 - Experiment_exp0_baseline - INFO - Avaliação no conjunto de teste:
+2026-02-01 15:00:58,909 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-01 15:00:59,453 - Experiment_exp0_baseline - INFO - Embeddings extraídos: (30, 192)
+2026-02-01 15:00:59,454 - Experiment_exp0_baseline - INFO - Pares genuínos: 135
+2026-02-01 15:00:59,454 - Experiment_exp0_baseline - INFO - Pares impostores: 60
+2026-02-01 15:00:59,457 - Experiment_exp0_baseline - INFO - EER: 0.4704
+2026-02-01 15:00:59,457 - Experiment_exp0_baseline - INFO - FAR@FRR=0.1: 0.8667
+2026-02-01 15:00:59,457 - Experiment_exp0_baseline - INFO - FAR@FRR=0.01: 1.0000
+2026-02-01 15:00:59,457 - Experiment_exp0_baseline - INFO - Scores genuínos: média=0.9999, std=0.0000
+2026-02-01 15:00:59,458 - Experiment_exp0_baseline - INFO - Scores impostores: média=0.9999, std=0.0000
+2026-02-01 15:00:59,458 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/test_results_debug.json
+2026-02-01 15:00:59,458 - Experiment_exp0_baseline - INFO - Iniciando validação cruzada...
+2026-02-01 15:00:59,678 - Experiment_exp0_baseline - INFO - Fold 1/5
+2026-02-01 15:01:00,293 - Experiment_exp0_baseline - INFO - Fold 1 - EER: 0.6250
+2026-02-01 15:01:00,293 - Experiment_exp0_baseline - INFO - Fold 1 - Rank-1: 0.3333
+2026-02-01 15:01:00,293 - Experiment_exp0_baseline - INFO - Fold 2/5
+2026-02-01 15:01:00,905 - Experiment_exp0_baseline - INFO - Fold 2 - EER: 0.6667
+2026-02-01 15:01:00,905 - Experiment_exp0_baseline - INFO - Fold 2 - Rank-1: 0.3333
+2026-02-01 15:01:00,906 - Experiment_exp0_baseline - INFO - Fold 3/5
+2026-02-01 15:01:01,518 - Experiment_exp0_baseline - INFO - Fold 3 - EER: 0.5833
+2026-02-01 15:01:01,518 - Experiment_exp0_baseline - INFO - Fold 3 - Rank-1: 0.3333
+2026-02-01 15:01:01,519 - Experiment_exp0_baseline - INFO - Fold 4/5
+2026-02-01 15:01:02,142 - Experiment_exp0_baseline - INFO - Fold 4 - EER: 0.3750
+2026-02-01 15:01:02,142 - Experiment_exp0_baseline - INFO - Fold 4 - Rank-1: 0.1667
+2026-02-01 15:01:02,142 - Experiment_exp0_baseline - INFO - Fold 5/5
+2026-02-01 15:01:02,747 - Experiment_exp0_baseline - INFO - Fold 5 - EER: 0.5833
+2026-02-01 15:01:02,747 - Experiment_exp0_baseline - INFO - Fold 5 - Rank-1: 0.3333
+2026-02-01 15:01:02,750 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/cv_results_debug.json
+2026-02-01 15:01:02,750 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-01 15:01:02,750 - Experiment_exp0_baseline - INFO - Resultados da Validação Cruzada:
+2026-02-01 15:01:02,750 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-01 15:01:02,750 - Experiment_exp0_baseline - INFO - rank_1: 0.3000 (CI: [0.2172, 0.3828])
+2026-02-01 15:01:02,750 - Experiment_exp0_baseline - INFO - rank_5: 0.0000 (CI: [0.0000, 0.0000])
+2026-02-01 15:01:02,750 - Experiment_exp0_baseline - INFO - rank_10: 0.0000 (CI: [0.0000, 0.0000])
+2026-02-01 15:01:02,750 - Experiment_exp0_baseline - INFO - rank_20: 0.0000 (CI: [0.0000, 0.0000])
+2026-02-01 15:01:02,750 - Experiment_exp0_baseline - INFO - eer: 0.5667 (CI: [0.4416, 0.6917])
+2026-02-01 15:01:02,750 - Experiment_exp0_baseline - INFO - far_at_frr_0.1: 0.6833 (CI: [0.4438, 0.9229])
+2026-02-01 15:01:02,750 - Experiment_exp0_baseline - INFO - far_at_frr_0.01: 0.6833 (CI: [0.4438, 0.9229])
+2026-02-01 15:01:02,751 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-01 15:01:02,751 - Experiment_exp0_baseline - INFO - Avaliação Pairwise (todas-contra-todas):
+2026-02-01 15:01:02,751 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-01 15:01:02,752 - Experiment_exp0_baseline - INFO - Avaliação pairwise com 30 amostras
+2026-02-01 15:01:02,752 - Experiment_exp0_baseline - INFO - Total de comparações: 465
+2026-02-01 15:01:02,752 - Experiment_exp0_baseline - INFO - Carregando qualidades NFIQ2...
+2026-02-01 15:01:02,802 - Experiment_exp0_baseline - INFO - Qualidades carregadas: 960 arquivos
+2026-02-01 15:01:02,802 - Experiment_exp0_baseline - INFO - Qualidade média: 44.5
+2026-02-01 15:01:02,815 - Experiment_exp0_baseline - INFO - Extraindo embeddings...
+Extraindo embeddings:   0%|          | 0/4 [00:00<?, ?it/s]Extraindo embeddings:  25%|██▌       | 1/4 [00:00<00:00,  4.57it/s]Extraindo embeddings:  75%|███████▌  | 3/4 [00:00<00:00,  8.15it/s]Extraindo embeddings: 100%|██████████| 4/4 [00:00<00:00,  7.50it/s]
+2026-02-01 15:01:03,352 - Experiment_exp0_baseline - INFO - Embeddings extraídos: (30, 192)
+2026-02-01 15:01:03,352 - Experiment_exp0_baseline - INFO - Realizando comparações todas-contra-todas...
+2026-02-01 15:01:03,352 - Experiment_exp0_baseline - INFO - Iniciando 465 comparações (30 amostras)
+Comparações:   0%|          | 0/30 [00:00<?, ?it/s]Comparações: 100%|██████████| 30/30 [00:00<00:00, 301.01it/s]
+2026-02-01 15:01:03,953 - Experiment_exp0_baseline - INFO - Comparações concluídas em 0.10s
+2026-02-01 15:01:03,954 - Experiment_exp0_baseline - INFO - Pares genuínos: 135, Pares impostores: 300
+2026-02-01 15:01:03,954 - Experiment_exp0_baseline - INFO - Memória pico: 1656.1 MB
+2026-02-01 15:01:03,954 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/pairwise_comparisons_debug.csv
+2026-02-01 15:01:03,955 - Experiment_exp0_baseline - INFO - Estatísticas salvas em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/pairwise_stats_debug.json
+2026-02-01 15:01:03,955 - Experiment_exp0_baseline - INFO - Comparações realizadas: 465
+2026-02-01 15:01:03,955 - Experiment_exp0_baseline - INFO - Pares genuínos: 135
+2026-02-01 15:01:03,955 - Experiment_exp0_baseline - INFO - Pares impostores: 300
+2026-02-01 15:01:03,955 - Experiment_exp0_baseline - INFO - Tempo total: 0.10s
+2026-02-01 15:01:03,955 - Experiment_exp0_baseline - INFO - Memória pico: 1656.1 MB
+2026-02-01 15:01:03,955 - Experiment_exp0_baseline - INFO - CSV salvo em: /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/pairwise_comparisons_debug.csv
+2026-02-01 15:01:03,955 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-01 15:01:03,956 - Experiment_exp0_baseline - INFO - Experimento concluído com sucesso!
