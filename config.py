@@ -153,7 +153,17 @@ MODEL_CONFIG = {
 # - Paper usa 0.00125 para ~6000 classes (60k amostras treinamento)
 # - Com menos classes, o peso deve ser MENOR para evitar convergência prematura
 # - Fórmula: weight_adaptativo = base_weight × (num_classes / 6000)^expoente
+#
+# ARCFACE: Opção alternativa ao Center Loss
+# - ArcFace (Deng et al., 2019) usa margem angular aditiva no espaço angular
+# - Superior ao Center Loss em face recognition (LFW: 99.53% vs 99.28%)
+# - Escala melhor para muitas classes (testado até 85K classes)
+# - Embora desenvolvido para faces, os princípios são domain-agnostic
 LOSS_CONFIG = {
+    # Tipo de loss: "center" (original DeepPrint) ou "arcface" (superior)
+    "loss_type": "arcface",  # Opções: "center" | "arcface"
+
+    # Center Loss (original DeepPrint)
     "center_loss_base_weight": 0.00250,  # Peso base do paper (para 6000 classes)
     "center_loss_num_classes_reference": 6000,  # Número de classes do paper
     "center_loss_adaptive_exponent": 0.7,  # Expoente de escala (0.7 = BALANCEADO, 0.5 = muito fraco, 1.0 = linear)
@@ -161,8 +171,15 @@ LOSS_CONFIG = {
     "center_loss_min_weight": 1e-7,  # Peso mínimo (proteção contra zero)
     "center_loss_max_weight": 0.01,  # Peso máximo (proteção contra explosão)
 
+    # ArcFace Loss (alternativa superior)
+    # Valores do paper "ArcFace: Additive Angular Margin Loss" (CVPR 2019)
+    "arcface_margin": 0.5,  # m: Angular margin em radianos (~28.6°) - controla separação inter-classe
+    "arcface_scale": 64.0,  # s: Feature scale - controla magnitude dos logits
+    "arcface_easy_margin": False,  # Se True, usa easy margin (mais permissivo); False = hard margin (padrão)
+
+    # Outras losses
     "triplet_loss_weight": 0.0,   # DESABILITADO (não existe no original)
-    "softmax_loss_weight": 1.0,   # λ1 = 1.0
+    "softmax_loss_weight": 1.0,   # λ1 = 1.0 (apenas usado com center loss)
     "minutia_map_loss_weight": 0.3,  # Implementação original: 0.3
 }
 

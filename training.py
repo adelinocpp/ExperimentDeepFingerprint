@@ -21,6 +21,7 @@ import gc
 
 from models_base import create_model
 from config import TRAINING_CONFIG, OPTIMIZER_CONFIG, LOSS_CONFIG, LOGGING_CONFIG, get_center_loss_weight
+from losses import get_loss_function, CenterLoss as CenterLossNew
 
 
 class CenterLoss(nn.Module):
@@ -212,8 +213,10 @@ class DeepPrintTrainer:
             self.logger.info(f"Scheduler ativado: Cosine Annealing com {self.warmup_epochs} épocas de warmup")
         
         # Funções de perda
-        self.criterion_center_texture = None  # Para texture embedding
-        self.criterion_center_minutia = None  # Para minutiae embedding
+        self.loss_type = LOSS_CONFIG.get("loss_type", "center").lower()  # "center" ou "arcface"
+        self.criterion_center_texture = None  # Para texture embedding (center loss)
+        self.criterion_center_minutia = None  # Para minutiae embedding (center loss)
+        self.arcface_criterion = None  # Para ArcFace loss (se configurado)
         self.criterion_triplet = TripletLoss(margin=1.0)
         self.center_loss_weight = LOSS_CONFIG["center_loss_base_weight"]  # Será atualizado em train()
         
@@ -509,75 +512,102 @@ class DeepPrintTrainer:
         return {"loss": avg_loss}
     
     def _compute_loss(
-        self, 
-        outputs: Dict, 
+        self,
+        outputs: Dict,
         labels: torch.Tensor,
         minutia_maps: torch.Tensor = None,
         minutia_map_weights: torch.Tensor = None,
         training_mode: bool = True
     ) -> torch.Tensor:
         """Computar perda total para DeepPrint (LocTexMinu)
-        
+
         Args:
-            training_mode: Se False, desabilita Center Loss (para validação open-set)
-        
-        Baseado na implementação original do DeepPrint:
-        - Texture: CrossEntropy + Center Loss (apenas treino)
-        - Minutiae: CrossEntropy + Center Loss (apenas treino) + Minutia Map Loss
-        - Pesos: W_CROSS_ENTROPY = 1.0, W_CENTER_LOSS = 0.125, W_MINUTIA_MAP_LOSS = 0.3
+            training_mode: Se False, desabilita Center/ArcFace Loss (para validação open-set)
+
+        Suporta dois modos:
+        1. CENTER LOSS (original): Softmax + Center Loss por branch
+        2. ARCFACE LOSS: ArcFace no embedding combinado final
         """
         total_loss = torch.tensor(0.0, device=self.device)
-        
-        # Texture branch loss
-        if "texture_logits" in outputs and "texture_embedding" in outputs:
-            texture_logits = outputs["texture_logits"]
-            texture_embedding = outputs["texture_embedding"]
-            
-            # CrossEntropy
-            ce_loss_texture = F.cross_entropy(texture_logits, labels)
-            total_loss = total_loss + LOSS_CONFIG["softmax_loss_weight"] * ce_loss_texture
-            
-            # Center Loss (apenas em treino, não em validação open-set)
-            if training_mode and self.criterion_center_texture is not None:
-                center_loss_texture = self.criterion_center_texture(texture_embedding, labels)
-                total_loss = total_loss + self.center_loss_weight * center_loss_texture
-        
-        # Minutiae branch loss
-        if "minutia_logits" in outputs and "minutia_embedding" in outputs:
-            minutia_logits = outputs["minutia_logits"]
-            minutia_embedding = outputs["minutia_embedding"]
-            
-            # CrossEntropy
-            ce_loss_minutia = F.cross_entropy(minutia_logits, labels)
-            total_loss = total_loss + LOSS_CONFIG["softmax_loss_weight"] * ce_loss_minutia
-            
-            # Center Loss (apenas em treino, não em validação open-set)
-            if training_mode and self.criterion_center_minutia is not None:
-                center_loss_minutia = self.criterion_center_minutia(minutia_embedding, labels)
-                total_loss = total_loss + self.center_loss_weight * center_loss_minutia
-            
-            # Minutia Map Loss (supervisionado)
+
+        # Obter loss type (center ou arcface)
+        loss_type = getattr(self, 'loss_type', 'center')
+
+        if loss_type == "arcface" and training_mode:
+            # ARCFACE MODE: Aplicar ArcFace no embedding combinado final
+            # ArcFace já inclui classificação (softmax interno), então não precisa de CrossEntropy separado
+
+            if "embedding" in outputs:
+                # Embedding final combinado (texture + minutiae = 192-dim para baseline)
+                embedding = outputs["embedding"]
+
+                # ArcFace loss (inclui softmax interno)
+                arcface_loss_dict = self.arcface_criterion(
+                    features=embedding,
+                    logits=None,  # Não usado (ArcFace calcula internamente)
+                    labels=labels
+                )
+                total_loss = total_loss + arcface_loss_dict['total_loss']
+
+            # Minutia Map Loss (ainda supervisionado, mesmo com ArcFace)
             if "minutia_maps" in outputs and minutia_maps is not None:
                 predicted_maps = outputs["minutia_maps"]
-                # MSE loss entre mapa predito e ground truth, ponderado por amostra
                 mm_squared_diff = (predicted_maps - minutia_maps) ** 2
                 mm_mse = mm_squared_diff.reshape(minutia_map_weights.shape[0], -1).mean(dim=1)
                 mm_loss = (mm_mse * minutia_map_weights).mean()
                 total_loss = total_loss + LOSS_CONFIG["minutia_map_loss_weight"] * mm_loss
-        
-        # Fallback para modelos texture-only (exp1-exp3)
-        if "logits" in outputs and "embedding" in outputs:
-            if "texture_logits" not in outputs:  # Só se não for LocTexMinu
-                logits = outputs["logits"]
-                embedding = outputs["embedding"]
-                
-                ce_loss = F.cross_entropy(logits, labels)
-                total_loss = total_loss + LOSS_CONFIG["softmax_loss_weight"] * ce_loss
-                
-                if self.criterion_center_texture is not None:
-                    center_loss = self.criterion_center_texture(embedding, labels)
-                    total_loss = total_loss + self.center_loss_weight * center_loss
-        
+
+        else:
+            # CENTER LOSS MODE (original DeepPrint)
+            # Texture branch loss
+            if "texture_logits" in outputs and "texture_embedding" in outputs:
+                texture_logits = outputs["texture_logits"]
+                texture_embedding = outputs["texture_embedding"]
+
+                # CrossEntropy
+                ce_loss_texture = F.cross_entropy(texture_logits, labels)
+                total_loss = total_loss + LOSS_CONFIG["softmax_loss_weight"] * ce_loss_texture
+
+                # Center Loss (apenas em treino, não em validação open-set)
+                if training_mode and self.criterion_center_texture is not None:
+                    center_loss_texture = self.criterion_center_texture(texture_embedding, labels)
+                    total_loss = total_loss + self.center_loss_weight * center_loss_texture
+
+            # Minutiae branch loss
+            if "minutia_logits" in outputs and "minutia_embedding" in outputs:
+                minutia_logits = outputs["minutia_logits"]
+                minutia_embedding = outputs["minutia_embedding"]
+
+                # CrossEntropy
+                ce_loss_minutia = F.cross_entropy(minutia_logits, labels)
+                total_loss = total_loss + LOSS_CONFIG["softmax_loss_weight"] * ce_loss_minutia
+
+                # Center Loss (apenas em treino, não em validação open-set)
+                if training_mode and self.criterion_center_minutia is not None:
+                    center_loss_minutia = self.criterion_center_minutia(minutia_embedding, labels)
+                    total_loss = total_loss + self.center_loss_weight * center_loss_minutia
+
+                # Minutia Map Loss (supervisionado)
+                if "minutia_maps" in outputs and minutia_maps is not None:
+                    predicted_maps = outputs["minutia_maps"]
+                    mm_squared_diff = (predicted_maps - minutia_maps) ** 2
+                    mm_mse = mm_squared_diff.reshape(minutia_map_weights.shape[0], -1).mean(dim=1)
+                    mm_loss = (mm_mse * minutia_map_weights).mean()
+                    total_loss = total_loss + LOSS_CONFIG["minutia_map_loss_weight"] * mm_loss
+
+            # Fallback para modelos texture-only (exp1-exp3)
+            if "logits" in outputs and "embedding" in outputs:
+                if "texture_logits" not in outputs:  # Só se não for LocTexMinu
+                    logits = outputs["logits"]
+                    embedding = outputs["embedding"]
+
+                    ce_loss = F.cross_entropy(logits, labels)
+                    total_loss = total_loss + LOSS_CONFIG["softmax_loss_weight"] * ce_loss
+
+                    if training_mode and self.criterion_center_texture is not None:
+                        center_loss = self.criterion_center_texture(embedding, labels)
+                        total_loss = total_loss + self.center_loss_weight * center_loss
+
         return total_loss
     
     def train(
@@ -653,31 +683,64 @@ class DeepPrintTrainer:
             
             self.logger.info(f"Classificador configurado com {num_classes} classes")
         
-        # Inicializar Center Loss para texture e minutiae branches (fora do bloco anterior)
-        if self.criterion_center_texture is None:
-            self.logger.info(f"Inicializando Center Loss (Texture) com {num_classes} classes e {self.texture_embedding_dims} dims")
-            self.criterion_center_texture = CenterLoss(
+        # Inicializar loss function baseada no tipo configurado
+        loss_type = LOSS_CONFIG.get("loss_type", "center").lower()
+        self.loss_type = loss_type
+
+        if loss_type == "center":
+            # CENTER LOSS (original DeepPrint): separado por branch
+            if self.criterion_center_texture is None:
+                self.logger.info(f"Inicializando Center Loss (Texture) com {num_classes} classes e {self.texture_embedding_dims} dims")
+                self.criterion_center_texture = CenterLoss(
+                    num_classes=num_classes,
+                    feat_dim=self.texture_embedding_dims,
+                    alpha=0.01
+                ).to(self.device)
+
+                # Adicionar ao optimizer se necessário
+                if need_recreate_optimizer or resume:
+                    self.optimizer.add_param_group({'params': self.criterion_center_texture.parameters()})
+
+            if self.criterion_center_minutia is None and hasattr(self.model, 'minutia_embedding_dims'):
+                self.logger.info(f"Inicializando Center Loss (Minutiae) com {num_classes} classes e {self.minutia_embedding_dims} dims")
+                self.criterion_center_minutia = CenterLoss(
+                    num_classes=num_classes,
+                    feat_dim=self.minutia_embedding_dims,
+                    alpha=0.01
+                ).to(self.device)
+                self.logger.info(f"Center Loss inicializado com {num_classes} classes")
+
+                # Adicionar ao optimizer se necessário
+                if need_recreate_optimizer or resume:
+                    self.optimizer.add_param_group({'params': self.criterion_center_minutia.parameters()})
+
+        elif loss_type == "arcface":
+            # ARCFACE LOSS: aplicada no embedding combinado final
+            # Para DeepPrint LocTexMinu: texture (96) + minutiae (96) = 192-dim
+            total_embedding_dim = self.texture_embedding_dims + self.minutia_embedding_dims
+
+            self.logger.info("=" * 80)
+            self.logger.info("ARCFACE LOSS CONFIGURADA")
+            self.logger.info(f"  Número de classes: {num_classes}")
+            self.logger.info(f"  Dimensão embedding: {total_embedding_dim} (texture {self.texture_embedding_dims} + minutiae {self.minutia_embedding_dims})")
+            self.logger.info(f"  Angular margin (m): {LOSS_CONFIG['arcface_margin']:.3f} rad (~{LOSS_CONFIG['arcface_margin'] * 57.3:.1f}°)")
+            self.logger.info(f"  Feature scale (s): {LOSS_CONFIG['arcface_scale']:.1f}")
+            self.logger.info(f"  Easy margin: {LOSS_CONFIG['arcface_easy_margin']}")
+            self.logger.info("=" * 80)
+
+            # Criar loss combinada usando factory function
+            self.arcface_criterion = get_loss_function(
+                loss_type="arcface",
                 num_classes=num_classes,
-                feat_dim=self.texture_embedding_dims,
-                alpha=0.01
-            ).to(self.device)
+                feat_dim=total_embedding_dim,
+                arcface_margin=LOSS_CONFIG["arcface_margin"],
+                arcface_scale=LOSS_CONFIG["arcface_scale"],
+                device=self.device
+            )
 
-            # Adicionar ao optimizer se necessário
+            # Adicionar parâmetros da ArcFace ao optimizer (weight matrix)
             if need_recreate_optimizer or resume:
-                self.optimizer.add_param_group({'params': self.criterion_center_texture.parameters()})
-
-        if self.criterion_center_minutia is None and hasattr(self.model, 'minutia_embedding_dims'):
-            self.logger.info(f"Inicializando Center Loss (Minutiae) com {num_classes} classes e {self.minutia_embedding_dims} dims")
-            self.criterion_center_minutia = CenterLoss(
-                num_classes=num_classes,
-                feat_dim=self.minutia_embedding_dims,
-                alpha=0.01
-            ).to(self.device)
-            self.logger.info(f"Center Loss inicializado com {num_classes} classes")
-
-            # Adicionar ao optimizer se necessário
-            if need_recreate_optimizer or resume:
-                self.optimizer.add_param_group({'params': self.criterion_center_minutia.parameters()})
+                self.optimizer.add_param_group({'params': self.arcface_criterion.parameters()})
 
         # Calcular peso ADAPTATIVO do Center Loss baseado no número de classes
         self.center_loss_weight = get_center_loss_weight(num_classes)
