@@ -78,7 +78,7 @@ TRAINING_CONFIG = {
     },
     "prod": {
         "batch_size": 20,  # Ajustado para RTX 2070 8GB (paper usa 30)
-        "num_epochs": 256,  # RESTAURADO: Paper original usa 256 épocas (ou 140K steps)
+        "num_epochs": 300,  # RESTAURADO: Paper original usa 256 épocas (ou 140K steps)
         "num_workers": NUM_CPUS,  # Usa número de CPUs da máquina
         "sample_size": None,  # Usar todas as amostras (84k)
         "use_gpu": True,
@@ -104,7 +104,7 @@ METRICS_CONFIG = {
 OPTIMIZER_CONFIG = {
     "optimizer": "rmsprop",  # TESTE: trocar para "adam" se RMSprop não funcionar
     "rmsprop": {
-        "lr": 0.0001,  # Mesmo LR base que Adam
+        "lr": 0.00005,  # Mesmo LR base que Adam
         "alpha": 0.99,  # RMSprop decay (default PyTorch)
         "eps": 1e-8,
         "weight_decay": 0,  # Testar sem weight decay primeiro
@@ -154,10 +154,10 @@ MODEL_CONFIG = {
 # - Com menos classes, o peso deve ser MENOR para evitar convergência prematura
 # - Fórmula: weight_adaptativo = base_weight × (num_classes / 6000)^expoente
 LOSS_CONFIG = {
-    "center_loss_base_weight": 0.00125,  # Peso base do paper (para 6000 classes)
+    "center_loss_base_weight": 0.00250,  # Peso base do paper (para 6000 classes)
     "center_loss_num_classes_reference": 6000,  # Número de classes do paper
     "center_loss_adaptive_exponent": 0.7,  # Expoente de escala (0.7 = BALANCEADO, 0.5 = muito fraco, 1.0 = linear)
-    "center_loss_use_adaptive": False,  # DESABILITADO: peso adaptativo muito baixo para datasets pequenos (14 classes → 0.000018)
+    "center_loss_use_adaptive": True,  # DESABILITADO: peso adaptativo muito baixo para datasets pequenos (14 classes → 0.000018)
     "center_loss_min_weight": 1e-7,  # Peso mínimo (proteção contra zero)
     "center_loss_max_weight": 0.01,  # Peso máximo (proteção contra explosão)
 
