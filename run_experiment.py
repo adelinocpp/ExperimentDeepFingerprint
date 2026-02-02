@@ -279,6 +279,11 @@ class ExperimentRunner:
             datasets_to_use = ["SFinge"]
             sample_size = config.get("sample_size", 200)  # Amostra pequena para teste rápido
             self.logger.info(f"Modo DEBUG: usando {sample_size} amostras do SFinge (com minutiae)")
+        elif self.mode == "medium":
+            # Medium: teste intermediário - validar hipótese dataset/épocas
+            datasets_to_use = ["SFinge"]
+            sample_size = config.get("sample_size", 5000)  # Dataset intermediário
+            self.logger.info(f"Modo MEDIUM: usando {sample_size} amostras do SFinge (~500 classes, 30 épocas)")
         elif sfinge_fvc:
             datasets_to_use = ["FVC2000", "FVC2002", "FVC2004", "SFinge"]  # SFinge + FVC
             sample_size = None
@@ -465,9 +470,9 @@ def main():
     parser.add_argument(
         "--mode",
         type=str,
-        choices=["debug_minimal", "debug", "prod"],  # ADICIONADO: debug_minimal para testes rápidos
+        choices=["debug_minimal", "debug", "medium", "prod"],  # ADICIONADO: medium para testes intermediários
         default="debug",
-        help="Modo de execução: debug_minimal (30 amostras, 3 épocas), debug (200 amostras, 5 épocas), ou prod (completo)"
+        help="Modo de execução: debug_minimal (30 amostras, 3 épocas), debug (200 amostras, 5 épocas), medium (5000 amostras, 30 épocas), ou prod (completo)"
     )
     parser.add_argument(
         "--resume",

@@ -3,7 +3,7 @@
   "num_classes": 3,
   "num_genuine_pairs": 135,
   "num_impostor_pairs": 60,
-  "eer": 0.1648148148148148,
-  "far_at_frr_0.1": 0.25,
-  "far_at_frr_0.01": 0.6833333333333333
+  "eer": 0.36851851851851847,
+  "far_at_frr_0.1": 0.8,
+  "far_at_frr_0.01": 1.0
 }

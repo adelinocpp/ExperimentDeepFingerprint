@@ -1,0 +1,474 @@
+2026-02-01 21:55:55,216 - Experiment_exp0_baseline - INFO - Iniciando experimento: DeepPrint Baseline
+2026-02-01 21:55:55,216 - Experiment_exp0_baseline - INFO - Modo: medium
+2026-02-01 21:55:55,216 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-01 21:55:55,216 - Experiment_exp0_baseline - INFO - Experimento: DeepPrint Baseline
+2026-02-01 21:55:55,216 - Experiment_exp0_baseline - INFO - Descrição: DeepPrint original completo (LocTexMinu): STN + 2 branches, 192 dims total
+2026-02-01 21:55:55,216 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-01 21:55:55,216 - Experiment_exp0_baseline - INFO - Carregando bases de dados...
+2026-02-01 21:55:55,216 - Experiment_exp0_baseline - INFO - Modo MEDIUM: usando 5000 amostras do SFinge (~500 classes, 30 épocas)
+2026-02-01 21:55:56,502 - Experiment_exp0_baseline - INFO - === SFinge ===
+2026-02-01 21:55:56,502 - Experiment_exp0_baseline - INFO - Total de imagens: 84000
+2026-02-01 21:55:56,503 - Experiment_exp0_baseline - INFO - Total de origens únicas: 8000
+2026-02-01 21:55:56,503 - Experiment_exp0_baseline - INFO - Versões por origem: min=10, max=12, média=10.5
+2026-02-01 21:55:56,503 - Experiment_exp0_baseline - INFO - Dataset dividido: train=3500, val=750, test=750
+2026-02-01 21:55:56,503 - Experiment_exp0_baseline - INFO - Criando modelo: baseline com 96+96=192 dimensões
+2026-02-01 21:55:56,503 - DeepPrint_medium - INFO - Iniciando treinamento em modo medium
+2026-02-01 21:55:56,584 - DeepPrint_medium - INFO - GPU disponível: NVIDIA GeForce RTX 2070
+2026-02-01 21:55:56,584 - DeepPrint_medium - INFO - Dispositivo: cuda:0
+2026-02-01 21:55:57,266 - DeepPrint_medium - INFO - Otimizador: RMSPROP
+2026-02-01 21:55:57,266 - DeepPrint_medium - INFO -   Base LR: 0.0001
+2026-02-01 21:55:57,266 - DeepPrint_medium - INFO -   STN LR: 0.000004 (3.5% do base)
+2026-02-01 21:55:57,266 - DeepPrint_medium - INFO -   Weight decay: 0
+2026-02-01 21:55:57,266 - DeepPrint_medium - INFO -   STN params: 12, Other params: 593
+2026-02-01 21:55:57,266 - Experiment_exp0_baseline - INFO - Iniciando treinamento...
+2026-02-01 21:55:57,266 - DeepPrint_medium - INFO - Número total de classes (origens únicas): 350
+2026-02-01 21:55:57,268 - DeepPrint_medium - INFO - Classificador configurado com 350 classes
+2026-02-01 21:55:57,268 - DeepPrint_medium - INFO - Inicializando Center Loss (Texture) com 350 classes e 96 dims
+2026-02-01 21:55:57,272 - DeepPrint_medium - INFO - Inicializando Center Loss (Minutiae) com 350 classes e 96 dims
+2026-02-01 21:55:57,273 - DeepPrint_medium - INFO - Center Loss inicializado com 350 classes
+2026-02-01 21:55:57,273 - DeepPrint_medium - INFO - Center Loss peso fixo: 0.001250
+2026-02-01 21:55:57,278 - DeepPrint_medium - INFO - Modelo configurado e pronto para treinamento
+2026-02-01 21:55:57,641 - DeepPrint_medium - INFO - Minutia maps carregados: 8/8 amostras com minutiae
+2026-02-01 21:56:47,428 - DeepPrint_medium - INFO - Epoch 1 Batch 100/438 - Loss: 11.7771 - Mem: 1594.5MB
+2026-02-01 21:57:37,715 - DeepPrint_medium - INFO - Epoch 1 Batch 200/438 - Loss: 11.7763 - Mem: 1594.5MB
+2026-02-01 21:58:25,952 - DeepPrint_medium - INFO - Epoch 1 Batch 300/438 - Loss: 11.7784 - Mem: 1594.5MB
+2026-02-01 21:59:13,170 - DeepPrint_medium - INFO - Epoch 1 Batch 400/438 - Loss: 11.7770 - Mem: 1594.5MB
+2026-02-01 22:00:06,953 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-01 22:00:06,953 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.9905, max=1.0000, mean=0.9995, std=0.0011
+2026-02-01 22:00:06,953 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=0.9858, max=1.0000, mean=0.9993, std=0.0014
+2026-02-01 22:00:06,954 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.9858: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-01 22:00:06,955 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.9929: FAR=0.9900, FRR=0.0080, diff=0.9820
+2026-02-01 22:00:06,956 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9980, diff=0.9980
+2026-02-01 22:00:06,956 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.4110, threshold=0.9998, diff=0.0020
+2026-02-01 22:00:12,820 - DeepPrint_medium - INFO - Melhor modelo salvo: época 1, val_loss=11.7313
+2026-02-01 22:00:12,821 - DeepPrint_medium - INFO - ✅ Melhor modelo salvo: época 1, EER=0.4110
+2026-02-01 22:00:12,821 - DeepPrint_medium - INFO - Epoch 1 - Train Loss: 11.7752 - Val Loss: 11.7313 - EER: 0.4110
+2026-02-01 22:01:17,489 - DeepPrint_medium - INFO - Epoch 2 Batch 100/438 - Loss: 11.7715 - Mem: 1652.1MB
+2026-02-01 22:02:24,899 - DeepPrint_medium - INFO - Epoch 2 Batch 200/438 - Loss: 11.7659 - Mem: 1652.1MB
+2026-02-01 22:03:33,290 - DeepPrint_medium - INFO - Epoch 2 Batch 300/438 - Loss: 11.7671 - Mem: 1652.1MB
+2026-02-01 22:04:45,176 - DeepPrint_medium - INFO - Epoch 2 Batch 400/438 - Loss: 11.7698 - Mem: 1652.1MB
+2026-02-01 22:05:49,156 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-01 22:05:49,156 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.6131, max=1.0000, mean=0.8879, std=0.1290
+2026-02-01 22:05:49,156 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=0.6011, max=1.0000, mean=0.8606, std=0.1339
+2026-02-01 22:05:49,156 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.6011: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-01 22:05:49,158 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.8016: FAR=0.6787, FRR=0.2780, diff=0.4007
+2026-02-01 22:05:49,159 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9980, diff=0.9980
+2026-02-01 22:05:49,159 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.4380, threshold=0.9339, diff=0.0000
+2026-02-01 22:05:49,162 - DeepPrint_medium - INFO - Epoch 2 - Train Loss: 11.7710 - Val Loss: 11.7213 - EER: 0.4380
+2026-02-01 22:06:55,700 - DeepPrint_medium - INFO - Epoch 3 Batch 100/438 - Loss: 11.7573 - Mem: 1652.2MB
+2026-02-01 22:08:02,676 - DeepPrint_medium - INFO - Epoch 3 Batch 200/438 - Loss: 11.7621 - Mem: 1652.2MB
+2026-02-01 22:09:10,206 - DeepPrint_medium - INFO - Epoch 3 Batch 300/438 - Loss: 11.7645 - Mem: 1652.2MB
+2026-02-01 22:10:23,554 - DeepPrint_medium - INFO - Epoch 3 Batch 400/438 - Loss: 11.7648 - Mem: 1652.2MB
+2026-02-01 22:11:23,152 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-01 22:11:23,152 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.9956, max=1.0000, mean=0.9999, std=0.0004
+2026-02-01 22:11:23,153 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=0.9957, max=1.0000, mean=0.9997, std=0.0005
+2026-02-01 22:11:23,153 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.9956: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-01 22:11:23,154 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.9978: FAR=0.9813, FRR=0.0100, diff=0.9713
+2026-02-01 22:11:23,155 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9980, diff=0.9980
+2026-02-01 22:11:23,156 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.2843, threshold=0.9999, diff=0.0513
+2026-02-01 22:11:27,094 - DeepPrint_medium - INFO - Melhor modelo salvo: época 3, val_loss=11.7096
+2026-02-01 22:11:27,095 - DeepPrint_medium - INFO - ✅ Melhor modelo salvo: época 3, EER=0.2843
+2026-02-01 22:11:27,095 - DeepPrint_medium - INFO - Epoch 3 - Train Loss: 11.7645 - Val Loss: 11.7096 - EER: 0.2843
+2026-02-01 22:12:36,570 - DeepPrint_medium - INFO - Epoch 4 Batch 100/438 - Loss: 11.7489 - Mem: 1654.2MB
+2026-02-01 22:13:46,266 - DeepPrint_medium - INFO - Epoch 4 Batch 200/438 - Loss: 11.7526 - Mem: 1654.2MB
+2026-02-01 22:14:55,608 - DeepPrint_medium - INFO - Epoch 4 Batch 300/438 - Loss: 11.7558 - Mem: 1654.2MB
+2026-02-01 22:16:11,134 - DeepPrint_medium - INFO - Epoch 4 Batch 400/438 - Loss: 11.7561 - Mem: 1654.2MB
+2026-02-01 22:17:12,538 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-01 22:17:12,538 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.9993, max=1.0000, mean=1.0000, std=0.0001
+2026-02-01 22:17:12,538 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=0.9986, max=1.0000, mean=0.9999, std=0.0002
+2026-02-01 22:17:12,538 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.9986: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-01 22:17:12,540 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.9993: FAR=0.9767, FRR=0.0020, diff=0.9747
+2026-02-01 22:17:12,541 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0020, FRR=0.9700, diff=0.9680
+2026-02-01 22:17:12,541 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.3380, threshold=1.0000, diff=0.0600
+2026-02-01 22:17:12,545 - DeepPrint_medium - INFO - Epoch 4 - Train Loss: 11.7562 - Val Loss: 11.7225 - EER: 0.3380
+2026-02-01 22:18:33,043 - DeepPrint_medium - INFO - Epoch 5 Batch 100/438 - Loss: 11.7492 - Mem: 1654.2MB
+2026-02-01 22:20:03,696 - DeepPrint_medium - INFO - Epoch 5 Batch 200/438 - Loss: 11.7477 - Mem: 1654.2MB
+2026-02-01 22:21:34,021 - DeepPrint_medium - INFO - Epoch 5 Batch 300/438 - Loss: 11.7504 - Mem: 1654.2MB
+2026-02-01 22:22:56,175 - DeepPrint_medium - INFO - Epoch 5 Batch 400/438 - Loss: 11.7516 - Mem: 1654.2MB
+2026-02-01 22:23:57,321 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-01 22:23:57,321 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=1.0000, max=1.0000, mean=1.0000, std=0.0000
+2026-02-01 22:23:57,321 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=0.9999, max=1.0000, mean=1.0000, std=0.0000
+2026-02-01 22:23:57,321 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.9999: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-01 22:23:57,323 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.9913, FRR=0.0060, diff=0.9853
+2026-02-01 22:23:57,324 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9980, diff=0.9980
+2026-02-01 22:23:57,324 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.3293, threshold=1.0000, diff=0.0027
+2026-02-01 22:23:57,327 - DeepPrint_medium - INFO - Epoch 5 - Train Loss: 11.7533 - Val Loss: 11.7313 - EER: 0.3293
+2026-02-01 22:25:24,649 - DeepPrint_medium - INFO - Epoch 6 Batch 100/438 - Loss: 11.7527 - Mem: 1654.2MB
+2026-02-01 22:26:38,737 - DeepPrint_medium - INFO - Epoch 6 Batch 200/438 - Loss: 11.7521 - Mem: 1654.2MB
+2026-02-01 22:27:52,115 - DeepPrint_medium - INFO - Epoch 6 Batch 300/438 - Loss: 11.7529 - Mem: 1654.2MB
+2026-02-01 22:29:09,673 - DeepPrint_medium - INFO - Epoch 6 Batch 400/438 - Loss: 11.7528 - Mem: 1654.2MB
+2026-02-01 22:30:12,767 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-01 22:30:12,767 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.6873, max=1.0000, mean=0.9715, std=0.0609
+2026-02-01 22:30:12,767 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=0.6963, max=1.0000, mean=0.9390, std=0.0935
+2026-02-01 22:30:12,767 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.6873: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-01 22:30:12,769 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.8444: FAR=0.8380, FRR=0.0640, diff=0.7740
+2026-02-01 22:30:12,770 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9960, diff=0.9960
+2026-02-01 22:30:12,770 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.4040, threshold=0.9906, diff=0.0040
+2026-02-01 22:30:12,774 - DeepPrint_medium - INFO - Epoch 6 - Train Loss: 11.7525 - Val Loss: 11.7189 - EER: 0.4040
+2026-02-01 22:31:25,740 - DeepPrint_medium - INFO - Epoch 7 Batch 100/438 - Loss: 11.7418 - Mem: 1654.2MB
+2026-02-01 22:32:37,292 - DeepPrint_medium - INFO - Epoch 7 Batch 200/438 - Loss: 11.7455 - Mem: 1654.2MB
+2026-02-01 22:33:50,285 - DeepPrint_medium - INFO - Epoch 7 Batch 300/438 - Loss: 11.7455 - Mem: 1654.2MB
+2026-02-01 22:35:05,762 - DeepPrint_medium - INFO - Epoch 7 Batch 400/438 - Loss: 11.7472 - Mem: 1654.2MB
+2026-02-01 22:36:08,755 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-01 22:36:08,756 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.9094, max=1.0000, mean=0.9910, std=0.0206
+2026-02-01 22:36:08,756 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=0.9027, max=1.0000, mean=0.9868, std=0.0232
+2026-02-01 22:36:08,756 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.9027: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-01 22:36:08,757 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.9516: FAR=0.8560, FRR=0.1200, diff=0.7360
+2026-02-01 22:36:08,758 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9980, diff=0.9980
+2026-02-01 22:36:08,758 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.3983, threshold=0.9995, diff=0.1927
+2026-02-01 22:36:08,762 - DeepPrint_medium - INFO - Epoch 7 - Train Loss: 11.7473 - Val Loss: 11.7130 - EER: 0.3983
+2026-02-01 22:37:25,863 - DeepPrint_medium - INFO - Epoch 8 Batch 100/438 - Loss: 11.7420 - Mem: 1654.2MB
+2026-02-01 22:38:39,509 - DeepPrint_medium - INFO - Epoch 8 Batch 200/438 - Loss: 11.7409 - Mem: 1654.2MB
+2026-02-01 22:40:04,492 - DeepPrint_medium - INFO - Epoch 8 Batch 300/438 - Loss: 11.7432 - Mem: 1654.2MB
+2026-02-01 22:41:28,132 - DeepPrint_medium - INFO - Epoch 8 Batch 400/438 - Loss: 11.7442 - Mem: 1654.2MB
+2026-02-01 22:42:37,442 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-01 22:42:37,442 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.9532, max=1.0000, mean=0.9962, std=0.0067
+2026-02-01 22:42:37,443 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=0.9491, max=1.0000, mean=0.9922, std=0.0086
+2026-02-01 22:42:37,443 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.9491: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-01 22:42:37,444 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.9747: FAR=0.9507, FRR=0.0180, diff=0.9327
+2026-02-01 22:42:37,445 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9980, diff=0.9980
+2026-02-01 22:42:37,445 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.3463, threshold=0.9974, diff=0.0033
+2026-02-01 22:42:37,449 - DeepPrint_medium - INFO - Epoch 8 - Train Loss: 11.7443 - Val Loss: 11.7127 - EER: 0.3463
+2026-02-01 22:44:08,793 - DeepPrint_medium - INFO - Epoch 9 Batch 100/438 - Loss: 11.7320 - Mem: 1654.2MB
+2026-02-01 22:45:40,196 - DeepPrint_medium - INFO - Epoch 9 Batch 200/438 - Loss: 11.7367 - Mem: 1654.2MB
+2026-02-01 22:47:12,099 - DeepPrint_medium - INFO - Epoch 9 Batch 300/438 - Loss: 11.7408 - Mem: 1654.2MB
+2026-02-01 22:48:38,719 - DeepPrint_medium - INFO - Epoch 9 Batch 400/438 - Loss: 11.7427 - Mem: 1654.2MB
+2026-02-01 22:49:47,589 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-01 22:49:47,590 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.7491, max=1.0000, mean=0.9825, std=0.0370
+2026-02-01 22:49:47,590 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=0.7478, max=1.0000, mean=0.9705, std=0.0534
+2026-02-01 22:49:47,590 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.7478: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-01 22:49:47,591 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.8745: FAR=0.9400, FRR=0.0240, diff=0.9160
+2026-02-01 22:49:47,593 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9980, diff=0.9980
+2026-02-01 22:49:47,593 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.4353, threshold=0.9949, diff=0.0667
+2026-02-01 22:49:47,596 - DeepPrint_medium - INFO - Epoch 9 - Train Loss: 11.7436 - Val Loss: 11.7139 - EER: 0.4353
+2026-02-01 22:51:05,375 - DeepPrint_medium - INFO - Epoch 10 Batch 100/438 - Loss: 11.7342 - Mem: 1654.2MB
+2026-02-01 22:52:21,847 - DeepPrint_medium - INFO - Epoch 10 Batch 200/438 - Loss: 11.7369 - Mem: 1654.2MB
+2026-02-01 22:53:35,504 - DeepPrint_medium - INFO - Epoch 10 Batch 300/438 - Loss: 11.7389 - Mem: 1654.2MB
+2026-02-01 22:54:56,864 - DeepPrint_medium - INFO - Epoch 10 Batch 400/438 - Loss: 11.7404 - Mem: 1654.2MB
+2026-02-01 22:55:58,541 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-01 22:55:58,541 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.4604, max=1.0000, mean=0.9548, std=0.1106
+2026-02-01 22:55:58,541 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=0.1779, max=1.0000, mean=0.8214, std=0.2366
+2026-02-01 22:55:58,542 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.1779: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-01 22:55:58,543 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.5910: FAR=0.7740, FRR=0.0420, diff=0.7320
+2026-02-01 22:55:58,544 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9920, diff=0.9920
+2026-02-01 22:55:58,544 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.3340, threshold=0.9917, diff=0.0400
+2026-02-01 22:55:58,547 - DeepPrint_medium - INFO - Epoch 10 - Train Loss: 11.7405 - Val Loss: 11.7113 - EER: 0.3340
+2026-02-01 22:56:00,494 - DeepPrint_medium - INFO - Checkpoint salvo: época 10
+2026-02-01 22:57:11,268 - DeepPrint_medium - INFO - Epoch 11 Batch 100/438 - Loss: 11.7346 - Mem: 1654.2MB
+2026-02-01 22:58:22,125 - DeepPrint_medium - INFO - Epoch 11 Batch 200/438 - Loss: 11.7343 - Mem: 1654.2MB
+2026-02-01 22:59:36,486 - DeepPrint_medium - INFO - Epoch 11 Batch 300/438 - Loss: 11.7340 - Mem: 1654.2MB
+2026-02-01 23:00:51,921 - DeepPrint_medium - INFO - Epoch 11 Batch 400/438 - Loss: 11.7323 - Mem: 1654.2MB
+2026-02-01 23:01:53,454 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-01 23:01:53,454 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.7517, max=1.0000, mean=0.9918, std=0.0301
+2026-02-01 23:01:53,454 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=0.5112, max=1.0000, mean=0.8216, std=0.2171
+2026-02-01 23:01:53,454 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.5112: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-01 23:01:53,456 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.7568: FAR=0.6233, FRR=0.0020, diff=0.6213
+2026-02-01 23:01:53,457 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9940, diff=0.9940
+2026-02-01 23:01:53,457 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.3173, threshold=0.9975, diff=0.2267
+2026-02-01 23:01:53,460 - DeepPrint_medium - INFO - Epoch 11 - Train Loss: 11.7314 - Val Loss: 11.7129 - EER: 0.3173
+2026-02-01 23:03:06,745 - DeepPrint_medium - INFO - Epoch 12 Batch 100/438 - Loss: 11.7117 - Mem: 1654.2MB
+2026-02-01 23:04:18,400 - DeepPrint_medium - INFO - Epoch 12 Batch 200/438 - Loss: 11.7048 - Mem: 1654.2MB
+2026-02-01 23:05:31,051 - DeepPrint_medium - INFO - Epoch 12 Batch 300/438 - Loss: 11.7155 - Mem: 1654.2MB
+2026-02-01 23:06:45,362 - DeepPrint_medium - INFO - Epoch 12 Batch 400/438 - Loss: 11.7203 - Mem: 1654.2MB
+2026-02-01 23:07:54,416 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-01 23:07:54,416 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.9983, max=1.0000, mean=0.9999, std=0.0002
+2026-02-01 23:07:54,416 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=0.9981, max=1.0000, mean=0.9998, std=0.0003
+2026-02-01 23:07:54,416 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.9981: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-01 23:07:54,418 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.9991: FAR=0.9733, FRR=0.0100, diff=0.9633
+2026-02-01 23:07:54,419 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9980, diff=0.9980
+2026-02-01 23:07:54,419 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.3963, threshold=0.9999, diff=0.0193
+2026-02-01 23:07:54,422 - DeepPrint_medium - INFO - Epoch 12 - Train Loss: 11.7217 - Val Loss: 11.7169 - EER: 0.3963
+2026-02-01 23:09:26,321 - DeepPrint_medium - INFO - Epoch 13 Batch 100/438 - Loss: 11.7188 - Mem: 1654.2MB
+2026-02-01 23:10:57,388 - DeepPrint_medium - INFO - Epoch 13 Batch 200/438 - Loss: 11.7130 - Mem: 1654.2MB
+2026-02-01 23:12:26,200 - DeepPrint_medium - INFO - Epoch 13 Batch 300/438 - Loss: 11.7081 - Mem: 1650.5MB
+2026-02-01 23:13:41,684 - DeepPrint_medium - INFO - Epoch 13 Batch 400/438 - Loss: 11.7035 - Mem: 1650.5MB
+2026-02-01 23:14:47,465 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-01 23:14:47,466 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.1528, max=1.0000, mean=0.9882, std=0.0763
+2026-02-01 23:14:47,466 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=0.1104, max=1.0000, mean=0.6537, std=0.4175
+2026-02-01 23:14:47,466 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.1104: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-01 23:14:47,467 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.5575: FAR=0.6020, FRR=0.0120, diff=0.5900
+2026-02-01 23:14:47,468 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9980, diff=0.9980
+2026-02-01 23:14:47,469 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.2437, threshold=0.9955, diff=0.2513
+2026-02-01 23:14:51,475 - DeepPrint_medium - INFO - Melhor modelo salvo: época 13, val_loss=11.7122
+2026-02-01 23:14:51,476 - DeepPrint_medium - INFO - ✅ Melhor modelo salvo: época 13, EER=0.2437
+2026-02-01 23:14:51,476 - DeepPrint_medium - INFO - Epoch 13 - Train Loss: 11.7018 - Val Loss: 11.7122 - EER: 0.2437
+2026-02-01 23:16:01,134 - DeepPrint_medium - INFO - Epoch 14 Batch 100/438 - Loss: 11.6768 - Mem: 1659.8MB
+2026-02-01 23:17:14,784 - DeepPrint_medium - INFO - Epoch 14 Batch 200/438 - Loss: 11.6729 - Mem: 1659.8MB
+2026-02-01 23:18:25,347 - DeepPrint_medium - INFO - Epoch 14 Batch 300/438 - Loss: 11.6687 - Mem: 1659.8MB
+2026-02-01 23:19:42,550 - DeepPrint_medium - INFO - Epoch 14 Batch 400/438 - Loss: 11.6667 - Mem: 1659.8MB
+2026-02-01 23:20:43,264 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-01 23:20:43,264 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.0336, max=1.0000, mean=0.8769, std=0.3042
+2026-02-01 23:20:43,264 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=0.0269, max=1.0000, mean=0.5435, std=0.4690
+2026-02-01 23:20:43,264 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.0269: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-01 23:20:43,266 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.5159: FAR=0.5253, FRR=0.1320, diff=0.3933
+2026-02-01 23:20:43,267 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9980, diff=0.9980
+2026-02-01 23:20:43,267 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.3110, threshold=0.9951, diff=0.2220
+2026-02-01 23:20:43,270 - DeepPrint_medium - INFO - Epoch 14 - Train Loss: 11.6666 - Val Loss: 11.7135 - EER: 0.3110
+2026-02-01 23:21:57,426 - DeepPrint_medium - INFO - Epoch 15 Batch 100/438 - Loss: 11.6481 - Mem: 1659.8MB
+2026-02-01 23:23:09,691 - DeepPrint_medium - INFO - Epoch 15 Batch 200/438 - Loss: 11.6470 - Mem: 1659.8MB
+2026-02-01 23:24:22,006 - DeepPrint_medium - INFO - Epoch 15 Batch 300/438 - Loss: 11.6439 - Mem: 1659.8MB
+2026-02-01 23:25:39,207 - DeepPrint_medium - INFO - Epoch 15 Batch 400/438 - Loss: 11.6434 - Mem: 1659.8MB
+2026-02-01 23:26:41,759 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-01 23:26:41,759 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.0223, max=1.0000, mean=0.9756, std=0.1456
+2026-02-01 23:26:41,760 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=0.0140, max=1.0000, mean=0.5989, std=0.4802
+2026-02-01 23:26:41,760 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.0140: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-01 23:26:41,761 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.5095: FAR=0.5920, FRR=0.0240, diff=0.5680
+2026-02-01 23:26:41,762 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9980, diff=0.9980
+2026-02-01 23:26:41,762 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.2933, threshold=0.9950, diff=0.4387
+2026-02-01 23:26:41,765 - DeepPrint_medium - INFO - Epoch 15 - Train Loss: 11.6427 - Val Loss: 11.7142 - EER: 0.2933
+2026-02-01 23:28:13,564 - DeepPrint_medium - INFO - Epoch 16 Batch 100/438 - Loss: 11.6223 - Mem: 1659.8MB
+2026-02-01 23:29:45,234 - DeepPrint_medium - INFO - Epoch 16 Batch 200/438 - Loss: 11.6237 - Mem: 1659.8MB
+2026-02-01 23:31:06,030 - DeepPrint_medium - INFO - Epoch 16 Batch 300/438 - Loss: 11.6203 - Mem: 1659.8MB
+2026-02-01 23:32:21,784 - DeepPrint_medium - INFO - Epoch 16 Batch 400/438 - Loss: 11.6160 - Mem: 1659.8MB
+2026-02-01 23:33:22,874 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-01 23:33:22,874 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.9821, max=1.0000, mean=0.9995, std=0.0013
+2026-02-01 23:33:22,874 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=0.0120, max=1.0000, mean=0.6017, std=0.4809
+2026-02-01 23:33:22,874 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.0120: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-01 23:33:22,876 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.5085: FAR=0.5960, FRR=0.0000, diff=0.5960
+2026-02-01 23:33:22,877 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9920, diff=0.9920
+2026-02-01 23:33:22,877 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.2610, threshold=0.9950, diff=0.4900
+2026-02-01 23:33:22,880 - DeepPrint_medium - INFO - Epoch 16 - Train Loss: 11.6146 - Val Loss: 11.7263 - EER: 0.2610
+2026-02-01 23:34:35,580 - DeepPrint_medium - INFO - Epoch 17 Batch 100/438 - Loss: 11.6021 - Mem: 1659.8MB
+2026-02-01 23:35:47,632 - DeepPrint_medium - INFO - Epoch 17 Batch 200/438 - Loss: 11.5931 - Mem: 1659.8MB
+2026-02-01 23:36:57,420 - DeepPrint_medium - INFO - Epoch 17 Batch 300/438 - Loss: 11.5897 - Mem: 1659.8MB
+2026-02-01 23:38:12,051 - DeepPrint_medium - INFO - Epoch 17 Batch 400/438 - Loss: 11.5908 - Mem: 1659.8MB
+2026-02-01 23:39:16,136 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-01 23:39:16,136 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.3749, max=1.0000, mean=0.9959, std=0.0478
+2026-02-01 23:39:16,136 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=0.0071, max=1.0000, mean=0.6183, std=0.4807
+2026-02-01 23:39:16,136 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.0071: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-01 23:39:16,137 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.5061: FAR=0.6153, FRR=0.0060, diff=0.6093
+2026-02-01 23:39:16,139 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0007, FRR=1.0000, diff=0.9993
+2026-02-01 23:39:16,139 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.2947, threshold=0.9950, diff=0.5653
+2026-02-01 23:39:16,142 - DeepPrint_medium - INFO - Epoch 17 - Train Loss: 11.5904 - Val Loss: 11.7288 - EER: 0.2947
+2026-02-01 23:40:32,706 - DeepPrint_medium - INFO - Epoch 18 Batch 100/438 - Loss: 11.5817 - Mem: 1659.8MB
+2026-02-01 23:41:44,784 - DeepPrint_medium - INFO - Epoch 18 Batch 200/438 - Loss: 11.5728 - Mem: 1659.8MB
+2026-02-01 23:42:54,114 - DeepPrint_medium - INFO - Epoch 18 Batch 300/438 - Loss: 11.5719 - Mem: 1659.8MB
+2026-02-01 23:44:07,511 - DeepPrint_medium - INFO - Epoch 18 Batch 400/438 - Loss: 11.5672 - Mem: 1659.8MB
+2026-02-01 23:45:13,364 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-01 23:45:13,365 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.9767, max=1.0000, mean=0.9998, std=0.0012
+2026-02-01 23:45:13,365 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=0.0101, max=1.0000, mean=0.6299, std=0.4781
+2026-02-01 23:45:13,365 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.0101: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-01 23:45:13,367 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.5075: FAR=0.6260, FRR=0.0000, diff=0.6260
+2026-02-01 23:45:13,368 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9980, diff=0.9980
+2026-02-01 23:45:13,368 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.3057, threshold=0.9950, diff=0.5993
+2026-02-01 23:45:13,372 - DeepPrint_medium - INFO - Epoch 18 - Train Loss: 11.5687 - Val Loss: 11.7328 - EER: 0.3057
+2026-02-01 23:46:25,813 - DeepPrint_medium - INFO - Epoch 19 Batch 100/438 - Loss: 11.5566 - Mem: 1659.8MB
+2026-02-01 23:47:37,682 - DeepPrint_medium - INFO - Epoch 19 Batch 200/438 - Loss: 11.5538 - Mem: 1659.8MB
+2026-02-01 23:48:51,222 - DeepPrint_medium - INFO - Epoch 19 Batch 300/438 - Loss: 11.5536 - Mem: 1659.8MB
+2026-02-01 23:50:06,460 - DeepPrint_medium - INFO - Epoch 19 Batch 400/438 - Loss: 11.5514 - Mem: 1659.8MB
+2026-02-01 23:51:10,584 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-01 23:51:10,584 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.0326, max=1.0000, mean=0.9792, std=0.1267
+2026-02-01 23:51:10,585 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=0.0093, max=1.0000, mean=0.6335, std=0.4717
+2026-02-01 23:51:10,585 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.0093: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-01 23:51:10,586 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.5072: FAR=0.6300, FRR=0.0220, diff=0.6080
+2026-02-01 23:51:10,587 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9980, diff=0.9980
+2026-02-01 23:51:10,587 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.3190, threshold=0.9950, diff=0.5540
+2026-02-01 23:51:10,590 - DeepPrint_medium - INFO - Epoch 19 - Train Loss: 11.5532 - Val Loss: 11.7319 - EER: 0.3190
+2026-02-01 23:52:24,098 - DeepPrint_medium - INFO - Epoch 20 Batch 100/438 - Loss: 11.5309 - Mem: 1659.8MB
+2026-02-01 23:53:36,677 - DeepPrint_medium - INFO - Epoch 20 Batch 200/438 - Loss: 11.5282 - Mem: 1659.8MB
+2026-02-01 23:54:48,204 - DeepPrint_medium - INFO - Epoch 20 Batch 300/438 - Loss: 11.5312 - Mem: 1659.8MB
+2026-02-01 23:56:03,514 - DeepPrint_medium - INFO - Epoch 20 Batch 400/438 - Loss: 11.5329 - Mem: 1659.8MB
+2026-02-01 23:57:08,138 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-01 23:57:08,139 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.2206, max=1.0000, mean=0.9948, std=0.0518
+2026-02-01 23:57:08,139 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=0.0019, max=1.0000, mean=0.6309, std=0.4704
+2026-02-01 23:57:08,139 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.0019: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-01 23:57:08,140 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.5034: FAR=0.6300, FRR=0.0040, diff=0.6260
+2026-02-01 23:57:08,141 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9960, diff=0.9960
+2026-02-01 23:57:08,141 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.2653, threshold=0.9950, diff=0.4587
+2026-02-01 23:57:08,145 - DeepPrint_medium - INFO - Epoch 20 - Train Loss: 11.5332 - Val Loss: 11.7430 - EER: 0.2653
+2026-02-01 23:57:10,056 - DeepPrint_medium - INFO - Checkpoint salvo: época 20
+2026-02-01 23:58:24,988 - DeepPrint_medium - INFO - Epoch 21 Batch 100/438 - Loss: 11.5183 - Mem: 1660.0MB
+2026-02-01 23:59:56,651 - DeepPrint_medium - INFO - Epoch 21 Batch 200/438 - Loss: 11.5183 - Mem: 1660.0MB
+2026-02-02 00:01:16,758 - DeepPrint_medium - INFO - Epoch 21 Batch 300/438 - Loss: 11.5174 - Mem: 1660.0MB
+2026-02-02 00:02:32,278 - DeepPrint_medium - INFO - Epoch 21 Batch 400/438 - Loss: 11.5185 - Mem: 1660.0MB
+2026-02-02 00:03:36,951 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-02 00:03:36,952 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.0451, max=1.0000, mean=0.9764, std=0.0884
+2026-02-02 00:03:36,952 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=-0.0931, max=1.0000, mean=0.5940, std=0.4513
+2026-02-02 00:03:36,952 - DeepPrint_medium - INFO -   DEBUG - Threshold=-0.0931: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-02 00:03:36,953 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.4562: FAR=0.5967, FRR=0.0120, diff=0.5847
+2026-02-02 00:03:36,954 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9980, diff=0.9980
+2026-02-02 00:03:36,955 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.2993, threshold=0.9945, diff=0.0347
+2026-02-02 00:03:36,958 - DeepPrint_medium - INFO - Epoch 21 - Train Loss: 11.5177 - Val Loss: 11.7358 - EER: 0.2993
+2026-02-02 00:04:48,144 - DeepPrint_medium - INFO - Epoch 22 Batch 100/438 - Loss: 11.5074 - Mem: 1660.0MB
+2026-02-02 00:05:59,547 - DeepPrint_medium - INFO - Epoch 22 Batch 200/438 - Loss: 11.4942 - Mem: 1660.0MB
+2026-02-02 00:07:13,333 - DeepPrint_medium - INFO - Epoch 22 Batch 300/438 - Loss: 11.4934 - Mem: 1660.0MB
+2026-02-02 00:08:25,657 - DeepPrint_medium - INFO - Epoch 22 Batch 400/438 - Loss: 11.4849 - Mem: 1660.0MB
+2026-02-02 00:09:30,091 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-02 00:09:30,091 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.2108, max=1.0000, mean=0.9773, std=0.0837
+2026-02-02 00:09:30,091 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=-0.8534, max=1.0000, mean=0.5054, std=0.5287
+2026-02-02 00:09:30,091 - DeepPrint_medium - INFO -   DEBUG - Threshold=-0.8534: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-02 00:09:30,093 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.0780: FAR=0.6880, FRR=0.0000, diff=0.6880
+2026-02-02 00:09:30,094 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9920, diff=0.9920
+2026-02-02 00:09:30,094 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.2037, threshold=0.9814, diff=0.1193
+2026-02-02 00:09:34,269 - DeepPrint_medium - INFO - Melhor modelo salvo: época 22, val_loss=11.7383
+2026-02-02 00:09:34,270 - DeepPrint_medium - INFO - ✅ Melhor modelo salvo: época 22, EER=0.2037
+2026-02-02 00:09:34,270 - DeepPrint_medium - INFO - Epoch 22 - Train Loss: 11.4838 - Val Loss: 11.7383 - EER: 0.2037
+2026-02-02 00:10:53,800 - DeepPrint_medium - INFO - Epoch 23 Batch 100/438 - Loss: 11.4577 - Mem: 1660.0MB
+2026-02-02 00:12:06,995 - DeepPrint_medium - INFO - Epoch 23 Batch 200/438 - Loss: 11.4458 - Mem: 1660.0MB
+2026-02-02 00:13:20,734 - DeepPrint_medium - INFO - Epoch 23 Batch 300/438 - Loss: 11.4410 - Mem: 1660.0MB
+2026-02-02 00:14:36,132 - DeepPrint_medium - INFO - Epoch 23 Batch 400/438 - Loss: 11.4363 - Mem: 1660.0MB
+2026-02-02 00:15:41,518 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-02 00:15:41,518 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.2747, max=1.0000, mean=0.9830, std=0.0736
+2026-02-02 00:15:41,518 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=-0.9605, max=1.0000, mean=0.1881, std=0.8309
+2026-02-02 00:15:41,518 - DeepPrint_medium - INFO -   DEBUG - Threshold=-0.9605: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-02 00:15:41,520 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.0247: FAR=0.5820, FRR=0.0000, diff=0.5820
+2026-02-02 00:15:41,521 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9880, diff=0.9880
+2026-02-02 00:15:41,521 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.1837, threshold=0.9901, diff=0.0127
+2026-02-02 00:15:45,507 - DeepPrint_medium - INFO - Melhor modelo salvo: época 23, val_loss=11.7704
+2026-02-02 00:15:45,508 - DeepPrint_medium - INFO - ✅ Melhor modelo salvo: época 23, EER=0.1837
+2026-02-02 00:15:45,508 - DeepPrint_medium - INFO - Epoch 23 - Train Loss: 11.4330 - Val Loss: 11.7704 - EER: 0.1837
+2026-02-02 00:16:57,929 - DeepPrint_medium - INFO - Epoch 24 Batch 100/438 - Loss: 11.4033 - Mem: 1660.0MB
+2026-02-02 00:18:10,825 - DeepPrint_medium - INFO - Epoch 24 Batch 200/438 - Loss: 11.4087 - Mem: 1660.0MB
+2026-02-02 00:19:23,164 - DeepPrint_medium - INFO - Epoch 24 Batch 300/438 - Loss: 11.4047 - Mem: 1660.0MB
+2026-02-02 00:20:37,780 - DeepPrint_medium - INFO - Epoch 24 Batch 400/438 - Loss: 11.3995 - Mem: 1660.0MB
+2026-02-02 00:21:40,539 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-02 00:21:40,539 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.5548, max=1.0000, mean=0.9873, std=0.0386
+2026-02-02 00:21:40,540 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=-0.9641, max=1.0000, mean=0.1819, std=0.8445
+2026-02-02 00:21:40,540 - DeepPrint_medium - INFO -   DEBUG - Threshold=-0.9641: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-02 00:21:40,541 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.0229: FAR=0.6033, FRR=0.0000, diff=0.6033
+2026-02-02 00:21:40,542 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9980, diff=0.9980
+2026-02-02 00:21:40,542 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.2213, threshold=0.9901, diff=0.0187
+2026-02-02 00:21:40,546 - DeepPrint_medium - INFO - Epoch 24 - Train Loss: 11.3972 - Val Loss: 11.7730 - EER: 0.2213
+2026-02-02 00:22:54,870 - DeepPrint_medium - INFO - Epoch 25 Batch 100/438 - Loss: 11.3686 - Mem: 1660.0MB
+2026-02-02 00:24:05,718 - DeepPrint_medium - INFO - Epoch 25 Batch 200/438 - Loss: 11.3615 - Mem: 1660.0MB
+2026-02-02 00:25:18,106 - DeepPrint_medium - INFO - Epoch 25 Batch 300/438 - Loss: 11.3501 - Mem: 1660.0MB
+2026-02-02 00:26:33,056 - DeepPrint_medium - INFO - Epoch 25 Batch 400/438 - Loss: 11.3488 - Mem: 1660.0MB
+2026-02-02 00:27:36,689 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-02 00:27:36,689 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.3446, max=1.0000, mean=0.9810, std=0.0784
+2026-02-02 00:27:36,689 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=-0.9709, max=1.0000, mean=0.1717, std=0.8194
+2026-02-02 00:27:36,690 - DeepPrint_medium - INFO -   DEBUG - Threshold=-0.9709: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-02 00:27:36,691 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.0195: FAR=0.5780, FRR=0.0000, diff=0.5780
+2026-02-02 00:27:36,692 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9980, diff=0.9980
+2026-02-02 00:27:36,692 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.1987, threshold=0.9901, diff=0.0507
+2026-02-02 00:27:36,695 - DeepPrint_medium - INFO - Epoch 25 - Train Loss: 11.3481 - Val Loss: 11.7803 - EER: 0.1987
+2026-02-02 00:28:59,728 - DeepPrint_medium - INFO - Epoch 26 Batch 100/438 - Loss: 11.3208 - Mem: 1660.0MB
+2026-02-02 00:30:11,979 - DeepPrint_medium - INFO - Epoch 26 Batch 200/438 - Loss: 11.3130 - Mem: 1660.0MB
+2026-02-02 00:31:24,654 - DeepPrint_medium - INFO - Epoch 26 Batch 300/438 - Loss: 11.3324 - Mem: 1660.0MB
+2026-02-02 00:32:39,461 - DeepPrint_medium - INFO - Epoch 26 Batch 400/438 - Loss: 11.3346 - Mem: 1660.0MB
+2026-02-02 00:33:42,476 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-02 00:33:42,476 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.0730, max=1.0000, mean=0.9610, std=0.1340
+2026-02-02 00:33:42,477 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=-0.9715, max=1.0000, mean=0.1798, std=0.7913
+2026-02-02 00:33:42,477 - DeepPrint_medium - INFO -   DEBUG - Threshold=-0.9715: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-02 00:33:42,478 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.0192: FAR=0.6160, FRR=0.0000, diff=0.6160
+2026-02-02 00:33:42,479 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9980, diff=0.9980
+2026-02-02 00:33:42,479 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.1917, threshold=0.9802, diff=0.0127
+2026-02-02 00:33:42,482 - DeepPrint_medium - INFO - Epoch 26 - Train Loss: 11.3337 - Val Loss: 11.7690 - EER: 0.1917
+2026-02-02 00:34:53,476 - DeepPrint_medium - INFO - Epoch 27 Batch 100/438 - Loss: 11.2722 - Mem: 1660.0MB
+2026-02-02 00:36:05,415 - DeepPrint_medium - INFO - Epoch 27 Batch 200/438 - Loss: 11.2741 - Mem: 1660.0MB
+2026-02-02 00:37:16,411 - DeepPrint_medium - INFO - Epoch 27 Batch 300/438 - Loss: 11.2706 - Mem: 1660.0MB
+2026-02-02 00:38:31,848 - DeepPrint_medium - INFO - Epoch 27 Batch 400/438 - Loss: 11.2742 - Mem: 1660.0MB
+2026-02-02 00:39:40,107 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-02 00:39:40,107 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.0037, max=1.0000, mean=0.9160, std=0.2331
+2026-02-02 00:39:40,107 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=-0.9876, max=1.0000, mean=0.0335, std=0.6957
+2026-02-02 00:39:40,108 - DeepPrint_medium - INFO -   DEBUG - Threshold=-0.9876: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-02 00:39:40,109 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.0112: FAR=0.5113, FRR=0.0180, diff=0.4933
+2026-02-02 00:39:40,110 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9980, diff=0.9980
+2026-02-02 00:39:40,110 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.2010, threshold=0.9501, diff=0.0020
+2026-02-02 00:39:40,114 - DeepPrint_medium - INFO - Epoch 27 - Train Loss: 11.2725 - Val Loss: 11.7756 - EER: 0.2010
+2026-02-02 00:40:50,554 - DeepPrint_medium - INFO - Epoch 28 Batch 100/438 - Loss: 11.2424 - Mem: 1660.0MB
+2026-02-02 00:42:05,527 - DeepPrint_medium - INFO - Epoch 28 Batch 200/438 - Loss: 11.2507 - Mem: 1660.0MB
+2026-02-02 00:43:17,885 - DeepPrint_medium - INFO - Epoch 28 Batch 300/438 - Loss: 11.2397 - Mem: 1660.0MB
+2026-02-02 00:44:32,986 - DeepPrint_medium - INFO - Epoch 28 Batch 400/438 - Loss: 11.2372 - Mem: 1660.0MB
+2026-02-02 00:45:34,921 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-02 00:45:34,921 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.9303, max=1.0000, mean=0.9964, std=0.0088
+2026-02-02 00:45:34,922 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=-0.9630, max=1.0000, mean=0.1253, std=0.7999
+2026-02-02 00:45:34,922 - DeepPrint_medium - INFO -   DEBUG - Threshold=-0.9630: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-02 00:45:34,923 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.0234: FAR=0.5740, FRR=0.0000, diff=0.5740
+2026-02-02 00:45:34,924 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9980, diff=0.9980
+2026-02-02 00:45:34,924 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.1513, threshold=0.9901, diff=0.1347
+2026-02-02 00:45:39,230 - DeepPrint_medium - INFO - Melhor modelo salvo: época 28, val_loss=11.7962
+2026-02-02 00:45:39,231 - DeepPrint_medium - INFO - ✅ Melhor modelo salvo: época 28, EER=0.1513
+2026-02-02 00:45:39,231 - DeepPrint_medium - INFO - Epoch 28 - Train Loss: 11.2382 - Val Loss: 11.7962 - EER: 0.1513
+2026-02-02 00:47:05,492 - DeepPrint_medium - INFO - Epoch 29 Batch 100/438 - Loss: 11.2310 - Mem: 1660.0MB
+2026-02-02 00:48:24,639 - DeepPrint_medium - INFO - Epoch 29 Batch 200/438 - Loss: 11.2162 - Mem: 1660.0MB
+2026-02-02 00:49:35,392 - DeepPrint_medium - INFO - Epoch 29 Batch 300/438 - Loss: 11.2051 - Mem: 1660.0MB
+2026-02-02 00:50:53,015 - DeepPrint_medium - INFO - Epoch 29 Batch 400/438 - Loss: 11.2005 - Mem: 1660.0MB
+2026-02-02 00:51:56,034 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-02 00:51:56,035 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.1525, max=1.0000, mean=0.9835, std=0.0860
+2026-02-02 00:51:56,035 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=-0.9811, max=1.0000, mean=0.1020, std=0.8063
+2026-02-02 00:51:56,036 - DeepPrint_medium - INFO -   DEBUG - Threshold=-0.9811: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-02 00:51:56,037 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.0144: FAR=0.5740, FRR=0.0000, diff=0.5740
+2026-02-02 00:51:56,039 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9980, diff=0.9980
+2026-02-02 00:51:56,039 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.1523, threshold=0.9900, diff=0.1127
+2026-02-02 00:51:56,042 - DeepPrint_medium - INFO - Epoch 29 - Train Loss: 11.1992 - Val Loss: 11.7963 - EER: 0.1523
+2026-02-02 00:53:06,518 - DeepPrint_medium - INFO - Epoch 30 Batch 100/438 - Loss: 11.1569 - Mem: 1660.0MB
+2026-02-02 00:54:21,621 - DeepPrint_medium - INFO - Epoch 30 Batch 200/438 - Loss: 11.1528 - Mem: 1660.0MB
+2026-02-02 00:55:36,450 - DeepPrint_medium - INFO - Epoch 30 Batch 300/438 - Loss: 11.1573 - Mem: 1660.0MB
+2026-02-02 00:56:53,036 - DeepPrint_medium - INFO - Epoch 30 Batch 400/438 - Loss: 11.1523 - Mem: 1660.0MB
+2026-02-02 00:58:02,526 - DeepPrint_medium - INFO -   DEBUG - Pares genuínos: 500, impostores: 1500
+2026-02-02 00:58:02,526 - DeepPrint_medium - INFO -   DEBUG - Genuínos: min=0.0527, max=1.0000, mean=0.9850, std=0.0874
+2026-02-02 00:58:02,526 - DeepPrint_medium - INFO -   DEBUG - Impostores: min=-0.9309, max=1.0000, mean=0.0948, std=0.7741
+2026-02-02 00:58:02,526 - DeepPrint_medium - INFO -   DEBUG - Threshold=-0.9309: FAR=1.0000, FRR=0.0000, diff=1.0000
+2026-02-02 00:58:02,527 - DeepPrint_medium - INFO -   DEBUG - Threshold=0.0394: FAR=0.5707, FRR=0.0000, diff=0.5707
+2026-02-02 00:58:02,529 - DeepPrint_medium - INFO -   DEBUG - Threshold=1.0000: FAR=0.0000, FRR=0.9980, diff=0.9980
+2026-02-02 00:58:02,529 - DeepPrint_medium - INFO -   DEBUG - RESULTADO: EER=0.1563, threshold=0.9903, diff=0.1607
+2026-02-02 00:58:02,532 - DeepPrint_medium - INFO - Epoch 30 - Train Loss: 11.1525 - Val Loss: 11.7970 - EER: 0.1563
+2026-02-02 00:58:04,511 - DeepPrint_medium - INFO - Checkpoint salvo: época 30
+2026-02-02 00:58:04,511 - DeepPrint_medium - INFO - Treinamento concluído
+2026-02-02 00:58:04,511 - DeepPrint_medium - INFO - Histórico salvo em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/training_history_medium.json
+2026-02-02 00:58:04,512 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-02 00:58:04,512 - Experiment_exp0_baseline - INFO - Avaliação no conjunto de teste:
+2026-02-02 00:58:04,512 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-02 00:58:21,322 - Experiment_exp0_baseline - INFO - Embeddings extraídos: (750, 192)
+2026-02-02 00:58:21,348 - Experiment_exp0_baseline - INFO - Pares genuínos: 3375
+2026-02-02 00:58:21,348 - Experiment_exp0_baseline - INFO - Pares impostores: 7500
+2026-02-02 00:58:21,514 - Experiment_exp0_baseline - INFO - EER: 0.2044
+2026-02-02 00:58:21,515 - Experiment_exp0_baseline - INFO - FAR@FRR=0.1: 0.2384
+2026-02-02 00:58:21,515 - Experiment_exp0_baseline - INFO - FAR@FRR=0.01: 0.4617
+2026-02-02 00:58:21,515 - Experiment_exp0_baseline - INFO - Scores genuínos: média=0.9841, std=0.0963
+2026-02-02 00:58:21,515 - Experiment_exp0_baseline - INFO - Scores impostores: média=0.0210, std=0.7904
+2026-02-02 00:58:21,515 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/test_results_medium.json
+2026-02-02 00:58:21,515 - Experiment_exp0_baseline - INFO - Iniciando validação cruzada...
+2026-02-02 00:58:26,257 - Experiment_exp0_baseline - INFO - Fold 1/5
+2026-02-02 00:58:43,371 - Experiment_exp0_baseline - INFO - Fold 1 - EER: 0.2171
+2026-02-02 00:58:43,374 - Experiment_exp0_baseline - INFO - Fold 1 - Rank-1: 0.2467
+2026-02-02 00:58:43,374 - Experiment_exp0_baseline - INFO - Fold 2/5
+2026-02-02 00:59:00,712 - Experiment_exp0_baseline - INFO - Fold 2 - EER: 0.2122
+2026-02-02 00:59:00,712 - Experiment_exp0_baseline - INFO - Fold 2 - Rank-1: 0.2267
+2026-02-02 00:59:00,712 - Experiment_exp0_baseline - INFO - Fold 3/5
+2026-02-02 00:59:18,184 - Experiment_exp0_baseline - INFO - Fold 3 - EER: 0.2157
+2026-02-02 00:59:18,184 - Experiment_exp0_baseline - INFO - Fold 3 - Rank-1: 0.2533
+2026-02-02 00:59:18,185 - Experiment_exp0_baseline - INFO - Fold 4/5
+2026-02-02 00:59:35,675 - Experiment_exp0_baseline - INFO - Fold 4 - EER: 0.2152
+2026-02-02 00:59:35,676 - Experiment_exp0_baseline - INFO - Fold 4 - Rank-1: 0.2000
+2026-02-02 00:59:35,676 - Experiment_exp0_baseline - INFO - Fold 5/5
+2026-02-02 00:59:52,980 - Experiment_exp0_baseline - INFO - Fold 5 - EER: 0.1972
+2026-02-02 00:59:52,980 - Experiment_exp0_baseline - INFO - Fold 5 - Rank-1: 0.2133
+2026-02-02 00:59:52,982 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/cv_results_medium.json
+2026-02-02 00:59:52,983 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-02 00:59:52,983 - Experiment_exp0_baseline - INFO - Resultados da Validação Cruzada:
+2026-02-02 00:59:52,983 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-02 00:59:52,983 - Experiment_exp0_baseline - INFO - rank_1: 0.2280 (CI: [0.2032, 0.2528])
+2026-02-02 00:59:52,983 - Experiment_exp0_baseline - INFO - rank_5: 0.4960 (CI: [0.4467, 0.5453])
+2026-02-02 00:59:52,983 - Experiment_exp0_baseline - INFO - rank_10: 0.6840 (CI: [0.6506, 0.7174])
+2026-02-02 00:59:52,983 - Experiment_exp0_baseline - INFO - rank_20: 0.9453 (CI: [0.9344, 0.9563])
+2026-02-02 00:59:52,983 - Experiment_exp0_baseline - INFO - eer: 0.2115 (CI: [0.2024, 0.2206])
+2026-02-02 00:59:52,983 - Experiment_exp0_baseline - INFO - far_at_frr_0.1: 0.2307 (CI: [0.2214, 0.2400])
+2026-02-02 00:59:52,983 - Experiment_exp0_baseline - INFO - far_at_frr_0.01: 0.3528 (CI: [0.2047, 0.5009])
+2026-02-02 00:59:52,983 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-02 00:59:52,983 - Experiment_exp0_baseline - INFO - Avaliação Pairwise (todas-contra-todas):
+2026-02-02 00:59:52,983 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-02 00:59:52,985 - Experiment_exp0_baseline - INFO - Avaliação pairwise com 750 amostras
+2026-02-02 00:59:52,985 - Experiment_exp0_baseline - INFO - Total de comparações: 281625
+2026-02-02 00:59:52,985 - Experiment_exp0_baseline - INFO - Carregando qualidades NFIQ2...
+2026-02-02 00:59:53,037 - Experiment_exp0_baseline - INFO - Qualidades carregadas: 960 arquivos
+2026-02-02 00:59:53,037 - Experiment_exp0_baseline - INFO - Qualidade média: 44.5
+2026-02-02 00:59:53,050 - Experiment_exp0_baseline - INFO - Extraindo embeddings...
+Extraindo embeddings:   0%|          | 0/94 [00:00<?, ?it/s]Extraindo embeddings:   1%|          | 1/94 [00:00<00:25,  3.59it/s]Extraindo embeddings:   2%|▏         | 2/94 [00:00<00:16,  5.66it/s]Extraindo embeddings:   3%|▎         | 3/94 [00:00<00:16,  5.47it/s]Extraindo embeddings:   4%|▍         | 4/94 [00:00<00:17,  5.04it/s]Extraindo embeddings:   5%|▌         | 5/94 [00:01<00:18,  4.83it/s]Extraindo embeddings:   6%|▋         | 6/94 [00:01<00:16,  5.19it/s]Extraindo embeddings:   7%|▋         | 7/94 [00:01<00:14,  6.13it/s]Extraindo embeddings:   9%|▊         | 8/94 [00:01<00:13,  6.32it/s]Extraindo embeddings:  10%|▉         | 9/94 [00:01<00:15,  5.64it/s]Extraindo embeddings:  11%|█         | 10/94 [00:01<00:16,  5.21it/s]Extraindo embeddings:  12%|█▏        | 11/94 [00:02<00:16,  5.07it/s]Extraindo embeddings:  13%|█▎        | 12/94 [00:02<00:13,  5.92it/s]Extraindo embeddings:  14%|█▍        | 13/94 [00:02<00:12,  6.72it/s]Extraindo embeddings:  15%|█▍        | 14/94 [00:02<00:13,  5.81it/s]Extraindo embeddings:  16%|█▌        | 15/94 [00:02<00:14,  5.34it/s]Extraindo embeddings:  17%|█▋        | 16/94 [00:02<00:15,  5.04it/s]Extraindo embeddings:  18%|█▊        | 17/94 [00:03<00:13,  5.63it/s]Extraindo embeddings:  19%|█▉        | 18/94 [00:03<00:11,  6.44it/s]Extraindo embeddings:  20%|██        | 19/94 [00:03<00:12,  6.07it/s]Extraindo embeddings:  21%|██▏       | 20/94 [00:03<00:13,  5.49it/s]Extraindo embeddings:  22%|██▏       | 21/94 [00:03<00:14,  5.14it/s]Extraindo embeddings:  23%|██▎       | 22/94 [00:03<00:13,  5.36it/s]Extraindo embeddings:  24%|██▍       | 23/94 [00:04<00:11,  6.20it/s]Extraindo embeddings:  26%|██▌       | 24/94 [00:04<00:11,  6.19it/s]Extraindo embeddings:  27%|██▋       | 25/94 [00:04<00:12,  5.57it/s]Extraindo embeddings:  28%|██▊       | 26/94 [00:04<00:13,  5.18it/s]Extraindo embeddings:  29%|██▊       | 27/94 [00:04<00:12,  5.20it/s]Extraindo embeddings:  30%|██▉       | 28/94 [00:05<00:10,  6.01it/s]Extraindo embeddings:  31%|███       | 29/94 [00:05<00:10,  6.42it/s]Extraindo embeddings:  32%|███▏      | 30/94 [00:05<00:11,  5.70it/s]Extraindo embeddings:  33%|███▎      | 31/94 [00:05<00:11,  5.26it/s]Extraindo embeddings:  34%|███▍      | 32/94 [00:05<00:12,  5.01it/s]Extraindo embeddings:  35%|███▌      | 33/94 [00:05<00:10,  5.86it/s]Extraindo embeddings:  36%|███▌      | 34/94 [00:06<00:09,  6.49it/s]Extraindo embeddings:  37%|███▋      | 35/94 [00:06<00:10,  5.73it/s]Extraindo embeddings:  38%|███▊      | 36/94 [00:06<00:10,  5.28it/s]Extraindo embeddings:  39%|███▉      | 37/94 [00:06<00:11,  5.01it/s]Extraindo embeddings:  40%|████      | 38/94 [00:06<00:09,  5.74it/s]Extraindo embeddings:  41%|████▏     | 39/94 [00:06<00:08,  6.46it/s]Extraindo embeddings:  43%|████▎     | 40/94 [00:07<00:09,  5.63it/s]Extraindo embeddings:  44%|████▎     | 41/94 [00:07<00:10,  5.22it/s]Extraindo embeddings:  45%|████▍     | 42/94 [00:07<00:10,  4.97it/s]Extraindo embeddings:  46%|████▌     | 43/94 [00:07<00:08,  5.68it/s]Extraindo embeddings:  47%|████▋     | 44/94 [00:07<00:08,  6.24it/s]Extraindo embeddings:  48%|████▊     | 45/94 [00:08<00:08,  5.58it/s]Extraindo embeddings:  49%|████▉     | 46/94 [00:08<00:09,  5.19it/s]Extraindo embeddings:  50%|█████     | 47/94 [00:08<00:09,  4.95it/s]Extraindo embeddings:  51%|█████     | 48/94 [00:08<00:07,  5.78it/s]Extraindo embeddings:  52%|█████▏    | 49/94 [00:08<00:07,  6.39it/s]Extraindo embeddings:  53%|█████▎    | 50/94 [00:08<00:07,  5.69it/s]Extraindo embeddings:  54%|█████▍    | 51/94 [00:09<00:08,  5.24it/s]Extraindo embeddings:  55%|█████▌    | 52/94 [00:09<00:08,  4.98it/s]Extraindo embeddings:  56%|█████▋    | 53/94 [00:09<00:07,  5.74it/s]Extraindo embeddings:  57%|█████▋    | 54/94 [00:09<00:06,  6.55it/s]Extraindo embeddings:  59%|█████▊    | 55/94 [00:09<00:06,  5.87it/s]Extraindo embeddings:  60%|█████▉    | 56/94 [00:10<00:07,  5.38it/s]Extraindo embeddings:  61%|██████    | 57/94 [00:10<00:07,  5.05it/s]Extraindo embeddings:  62%|██████▏   | 58/94 [00:10<00:06,  5.54it/s]Extraindo embeddings:  63%|██████▎   | 59/94 [00:10<00:05,  6.36it/s]Extraindo embeddings:  64%|██████▍   | 60/94 [00:10<00:05,  5.95it/s]Extraindo embeddings:  65%|██████▍   | 61/94 [00:10<00:06,  5.42it/s]Extraindo embeddings:  66%|██████▌   | 62/94 [00:11<00:06,  5.08it/s]Extraindo embeddings:  67%|██████▋   | 63/94 [00:11<00:05,  5.39it/s]Extraindo embeddings:  68%|██████▊   | 64/94 [00:11<00:04,  6.22it/s]Extraindo embeddings:  69%|██████▉   | 65/94 [00:11<00:04,  6.07it/s]Extraindo embeddings:  70%|███████   | 66/94 [00:11<00:05,  5.49it/s]Extraindo embeddings:  71%|███████▏  | 67/94 [00:12<00:05,  5.10it/s]Extraindo embeddings:  72%|███████▏  | 68/94 [00:12<00:04,  5.21it/s]Extraindo embeddings:  73%|███████▎  | 69/94 [00:12<00:04,  6.05it/s]Extraindo embeddings:  74%|███████▍  | 70/94 [00:12<00:03,  6.16it/s]Extraindo embeddings:  76%|███████▌  | 71/94 [00:12<00:04,  5.55it/s]Extraindo embeddings:  77%|███████▋  | 72/94 [00:12<00:04,  5.18it/s]Extraindo embeddings:  78%|███████▊  | 73/94 [00:13<00:04,  5.14it/s]Extraindo embeddings:  79%|███████▊  | 74/94 [00:13<00:03,  5.97it/s]Extraindo embeddings:  80%|███████▉  | 75/94 [00:13<00:02,  6.55it/s]Extraindo embeddings:  81%|████████  | 76/94 [00:13<00:03,  5.77it/s]Extraindo embeddings:  82%|████████▏ | 77/94 [00:13<00:03,  5.30it/s]Extraindo embeddings:  83%|████████▎ | 78/94 [00:14<00:03,  5.01it/s]Extraindo embeddings:  84%|████████▍ | 79/94 [00:14<00:02,  5.79it/s]Extraindo embeddings:  85%|████████▌ | 80/94 [00:14<00:02,  6.59it/s]Extraindo embeddings:  86%|████████▌ | 81/94 [00:14<00:02,  5.76it/s]Extraindo embeddings:  87%|████████▋ | 82/94 [00:14<00:02,  5.33it/s]Extraindo embeddings:  88%|████████▊ | 83/94 [00:14<00:02,  5.04it/s]Extraindo embeddings:  89%|████████▉ | 84/94 [00:15<00:01,  5.61it/s]Extraindo embeddings:  90%|█████████ | 85/94 [00:15<00:01,  6.43it/s]Extraindo embeddings:  91%|█████████▏| 86/94 [00:15<00:01,  6.02it/s]Extraindo embeddings:  93%|█████████▎| 87/94 [00:15<00:01,  5.47it/s]Extraindo embeddings:  94%|█████████▎| 88/94 [00:15<00:01,  5.12it/s]Extraindo embeddings:  95%|█████████▍| 89/94 [00:15<00:00,  5.39it/s]Extraindo embeddings:  96%|█████████▌| 90/94 [00:16<00:00,  6.20it/s]Extraindo embeddings:  97%|█████████▋| 91/94 [00:16<00:00,  5.90it/s]Extraindo embeddings:  98%|█████████▊| 92/94 [00:16<00:00,  5.41it/s]Extraindo embeddings:  99%|█████████▉| 93/94 [00:16<00:00,  5.09it/s]Extraindo embeddings: 100%|██████████| 94/94 [00:16<00:00,  5.49it/s]Extraindo embeddings: 100%|██████████| 94/94 [00:16<00:00,  5.57it/s]
+2026-02-02 01:00:09,945 - Experiment_exp0_baseline - INFO - Embeddings extraídos: (750, 192)
+2026-02-02 01:00:09,945 - Experiment_exp0_baseline - INFO - Realizando comparações todas-contra-todas...
+2026-02-02 01:00:09,946 - Experiment_exp0_baseline - INFO - Iniciando 281625 comparações (750 amostras)
+Comparações:   0%|          | 0/750 [00:00<?, ?it/s]Comparações:   0%|          | 1/750 [00:00<02:04,  6.03it/s]Comparações:   0%|          | 2/750 [00:00<02:00,  6.23it/s]Comparações:   0%|          | 3/750 [00:00<01:59,  6.24it/s]Comparações:   1%|          | 4/750 [00:00<02:00,  6.21it/s]Comparações:   1%|          | 5/750 [00:00<01:59,  6.25it/s]Comparações:   1%|          | 6/750 [00:00<01:58,  6.27it/s]Comparações:   1%|          | 7/750 [00:01<01:59,  6.22it/s]Comparações:   1%|          | 8/750 [00:01<01:59,  6.23it/s]Comparações:   1%|          | 9/750 [00:01<01:57,  6.30it/s]Comparações:   1%|▏         | 10/750 [00:01<01:57,  6.28it/s]Comparações:   1%|▏         | 11/750 [00:01<01:57,  6.28it/s]Comparações:   2%|▏         | 12/750 [00:01<01:57,  6.28it/s]Comparações:   2%|▏         | 13/750 [00:02<01:57,  6.27it/s]Comparações:   2%|▏         | 14/750 [00:02<01:57,  6.27it/s]Comparações:   2%|▏         | 15/750 [00:02<01:56,  6.29it/s]Comparações:   2%|▏         | 16/750 [00:02<01:55,  6.34it/s]Comparações:   2%|▏         | 17/750 [00:02<01:55,  6.37it/s]Comparações:   2%|▏         | 18/750 [00:02<01:54,  6.40it/s]Comparações:   3%|▎         | 19/750 [00:03<01:53,  6.44it/s]Comparações:   3%|▎         | 20/750 [00:03<01:52,  6.47it/s]Comparações:   3%|▎         | 21/750 [00:03<01:52,  6.49it/s]Comparações:   3%|▎         | 22/750 [00:03<01:52,  6.47it/s]Comparações:   3%|▎         | 23/750 [00:03<01:52,  6.48it/s]Comparações:   3%|▎         | 24/750 [00:03<01:52,  6.48it/s]Comparações:   3%|▎         | 25/750 [00:03<01:51,  6.48it/s]Comparações:   3%|▎         | 26/750 [00:04<01:51,  6.49it/s]Comparações:   4%|▎         | 27/750 [00:04<01:51,  6.50it/s]Comparações:   4%|▎         | 28/750 [00:04<01:51,  6.49it/s]Comparações:   4%|▍         | 29/750 [00:04<01:50,  6.50it/s]Comparações:   4%|▍         | 30/750 [00:04<01:51,  6.46it/s]Comparações:   4%|▍         | 31/750 [00:04<01:50,  6.48it/s]Comparações:   4%|▍         | 32/750 [00:05<01:50,  6.50it/s]Comparações:   4%|▍         | 33/750 [00:05<01:49,  6.52it/s]Comparações:   5%|▍         | 34/750 [00:05<01:49,  6.56it/s]Comparações:   5%|▍         | 35/750 [00:05<01:48,  6.58it/s]Comparações:   5%|▍         | 36/750 [00:05<01:48,  6.60it/s]Comparações:   5%|▍         | 37/750 [00:05<01:48,  6.57it/s]Comparações:   5%|▌         | 38/750 [00:05<01:47,  6.61it/s]Comparações:   5%|▌         | 39/750 [00:06<01:47,  6.60it/s]Comparações:   5%|▌         | 40/750 [00:06<01:56,  6.10it/s]Comparações:   5%|▌         | 41/750 [00:06<01:54,  6.21it/s]Comparações:   6%|▌         | 42/750 [00:06<01:52,  6.29it/s]Comparações:   6%|▌         | 43/750 [00:06<01:50,  6.40it/s]Comparações:   6%|▌         | 44/750 [00:06<01:48,  6.48it/s]Comparações:   6%|▌         | 45/750 [00:07<01:47,  6.54it/s]Comparações:   6%|▌         | 46/750 [00:07<01:46,  6.60it/s]Comparações:   6%|▋         | 47/750 [00:07<01:46,  6.62it/s]Comparações:   6%|▋         | 48/750 [00:07<01:49,  6.43it/s]Comparações:   7%|▋         | 49/750 [00:07<01:48,  6.47it/s]Comparações:   7%|▋         | 50/750 [00:07<01:47,  6.50it/s]Comparações:   7%|▋         | 51/750 [00:07<01:46,  6.56it/s]Comparações:   7%|▋         | 52/750 [00:08<01:45,  6.62it/s]Comparações:   7%|▋         | 53/750 [00:08<01:44,  6.67it/s]Comparações:   7%|▋         | 54/750 [00:08<01:44,  6.66it/s]Comparações:   7%|▋         | 55/750 [00:08<01:43,  6.71it/s]Comparações:   7%|▋         | 56/750 [00:08<01:43,  6.72it/s]Comparações:   8%|▊         | 57/750 [00:08<01:42,  6.73it/s]Comparações:   8%|▊         | 58/750 [00:08<01:42,  6.74it/s]Comparações:   8%|▊         | 59/750 [00:09<01:42,  6.72it/s]Comparações:   8%|▊         | 60/750 [00:09<01:42,  6.76it/s]Comparações:   8%|▊         | 61/750 [00:09<01:43,  6.66it/s]Comparações:   8%|▊         | 62/750 [00:09<01:42,  6.70it/s]Comparações:   8%|▊         | 63/750 [00:09<01:42,  6.70it/s]Comparações:   9%|▊         | 64/750 [00:09<01:41,  6.74it/s]Comparações:   9%|▊         | 65/750 [00:10<01:41,  6.78it/s]Comparações:   9%|▉         | 66/750 [00:10<01:40,  6.82it/s]Comparações:   9%|▉         | 67/750 [00:10<01:42,  6.69it/s]Comparações:   9%|▉         | 68/750 [00:10<01:44,  6.51it/s]Comparações:   9%|▉         | 69/750 [00:10<01:42,  6.62it/s]Comparações:   9%|▉         | 70/750 [00:10<01:42,  6.65it/s]Comparações:   9%|▉         | 71/750 [00:10<01:40,  6.73it/s]Comparações:  10%|▉         | 72/750 [00:11<01:40,  6.76it/s]Comparações:  10%|▉         | 73/750 [00:11<01:39,  6.81it/s]Comparações:  10%|▉         | 74/750 [00:11<01:38,  6.85it/s]Comparações:  10%|█         | 75/750 [00:11<01:38,  6.86it/s]Comparações:  10%|█         | 76/750 [00:11<01:37,  6.90it/s]Comparações:  10%|█         | 77/750 [00:11<01:37,  6.93it/s]Comparações:  10%|█         | 78/750 [00:11<01:36,  6.96it/s]Comparações:  11%|█         | 79/750 [00:12<01:36,  6.97it/s]Comparações:  11%|█         | 80/750 [00:12<01:36,  6.97it/s]Comparações:  11%|█         | 81/750 [00:12<01:35,  6.98it/s]Comparações:  11%|█         | 82/750 [00:12<01:36,  6.90it/s]Comparações:  11%|█         | 83/750 [00:12<01:35,  6.95it/s]Comparações:  11%|█         | 84/750 [00:12<01:35,  6.97it/s]Comparações:  11%|█▏        | 85/750 [00:12<01:34,  7.00it/s]Comparações:  11%|█▏        | 86/750 [00:13<01:34,  6.99it/s]Comparações:  12%|█▏        | 87/750 [00:13<01:34,  7.01it/s]Comparações:  12%|█▏        | 88/750 [00:13<01:34,  7.04it/s]Comparações:  12%|█▏        | 89/750 [00:13<01:33,  7.04it/s]Comparações:  12%|█▏        | 90/750 [00:13<01:33,  7.09it/s]Comparações:  12%|█▏        | 91/750 [00:13<01:32,  7.10it/s]Comparações:  12%|█▏        | 92/750 [00:13<01:32,  7.14it/s]Comparações:  12%|█▏        | 93/750 [00:14<01:31,  7.17it/s]Comparações:  13%|█▎        | 94/750 [00:14<01:31,  7.18it/s]Comparações:  13%|█▎        | 95/750 [00:14<01:30,  7.20it/s]Comparações:  13%|█▎        | 96/750 [00:14<01:30,  7.21it/s]Comparações:  13%|█▎        | 97/750 [00:14<01:31,  7.17it/s]Comparações:  13%|█▎        | 98/750 [00:14<01:30,  7.20it/s]Comparações:  13%|█▎        | 99/750 [00:14<01:30,  7.22it/s]Comparações:  13%|█▎        | 100/750 [00:15<01:30,  7.21it/s]Comparações:  13%|█▎        | 101/750 [00:15<01:31,  7.06it/s]Comparações:  14%|█▎        | 102/750 [00:15<01:32,  6.99it/s]Comparações:  14%|█▎        | 103/750 [00:15<01:31,  7.05it/s]Comparações:  14%|█▍        | 104/750 [00:15<01:31,  7.10it/s]Comparações:  14%|█▍        | 105/750 [00:15<01:29,  7.17it/s]Comparações:  14%|█▍        | 106/750 [00:15<01:29,  7.22it/s]Comparações:  14%|█▍        | 107/750 [00:16<01:28,  7.27it/s]Comparações:  14%|█▍        | 108/750 [00:16<01:28,  7.29it/s]Comparações:  15%|█▍        | 109/750 [00:16<01:27,  7.32it/s]Comparações:  15%|█▍        | 110/750 [00:16<01:27,  7.33it/s]Comparações:  15%|█▍        | 111/750 [00:16<01:27,  7.27it/s]Comparações:  15%|█▍        | 112/750 [00:16<01:27,  7.31it/s]Comparações:  15%|█▌        | 113/750 [00:16<01:27,  7.32it/s]Comparações:  15%|█▌        | 114/750 [00:16<01:26,  7.34it/s]Comparações:  15%|█▌        | 115/750 [00:17<01:26,  7.38it/s]Comparações:  15%|█▌        | 116/750 [00:17<01:25,  7.38it/s]Comparações:  16%|█▌        | 117/750 [00:17<01:25,  7.39it/s]Comparações:  16%|█▌        | 118/750 [00:17<01:25,  7.41it/s]Comparações:  16%|█▌        | 119/750 [00:17<01:24,  7.44it/s]Comparações:  16%|█▌        | 120/750 [00:17<01:24,  7.47it/s]Comparações:  16%|█▌        | 121/750 [00:17<01:23,  7.50it/s]Comparações:  16%|█▋        | 122/750 [00:18<01:23,  7.50it/s]Comparações:  16%|█▋        | 123/750 [00:18<01:23,  7.48it/s]Comparações:  17%|█▋        | 124/750 [00:18<01:23,  7.49it/s]Comparações:  17%|█▋        | 125/750 [00:18<01:23,  7.53it/s]Comparações:  17%|█▋        | 126/750 [00:18<01:22,  7.56it/s]Comparações:  17%|█▋        | 127/750 [00:18<01:22,  7.59it/s]Comparações:  17%|█▋        | 128/750 [00:18<01:21,  7.60it/s]Comparações:  17%|█▋        | 129/750 [00:18<01:21,  7.60it/s]Comparações:  17%|█▋        | 130/750 [00:19<01:21,  7.59it/s]Comparações:  17%|█▋        | 131/750 [00:19<01:21,  7.61it/s]Comparações:  18%|█▊        | 132/750 [00:19<01:21,  7.61it/s]Comparações:  18%|█▊        | 133/750 [00:19<01:20,  7.62it/s]Comparações:  18%|█▊        | 134/750 [00:19<01:20,  7.63it/s]Comparações:  18%|█▊        | 135/750 [00:19<01:20,  7.61it/s]Comparações:  18%|█▊        | 136/750 [00:19<01:20,  7.64it/s]Comparações:  18%|█▊        | 137/750 [00:20<01:20,  7.61it/s]Comparações:  18%|█▊        | 138/750 [00:20<01:20,  7.61it/s]Comparações:  19%|█▊        | 139/750 [00:20<01:19,  7.65it/s]Comparações:  19%|█▊        | 140/750 [00:20<01:19,  7.69it/s]Comparações:  19%|█▉        | 141/750 [00:20<01:19,  7.71it/s]Comparações:  19%|█▉        | 142/750 [00:20<01:19,  7.69it/s]Comparações:  19%|█▉        | 143/750 [00:20<01:19,  7.67it/s]Comparações:  19%|█▉        | 144/750 [00:20<01:19,  7.66it/s]Comparações:  19%|█▉        | 145/750 [00:21<01:18,  7.70it/s]Comparações:  19%|█▉        | 146/750 [00:21<01:18,  7.74it/s]Comparações:  20%|█▉        | 147/750 [00:21<01:17,  7.79it/s]Comparações:  20%|█▉        | 148/750 [00:21<01:17,  7.79it/s]Comparações:  20%|█▉        | 149/750 [00:21<01:17,  7.76it/s]Comparações:  20%|██        | 150/750 [00:21<01:17,  7.75it/s]Comparações:  20%|██        | 151/750 [00:21<01:16,  7.78it/s]Comparações:  20%|██        | 152/750 [00:21<01:16,  7.77it/s]Comparações:  20%|██        | 153/750 [00:22<01:16,  7.80it/s]Comparações:  21%|██        | 154/750 [00:22<01:16,  7.83it/s]Comparações:  21%|██        | 155/750 [00:22<01:15,  7.88it/s]Comparações:  21%|██        | 156/750 [00:22<01:14,  7.93it/s]Comparações:  21%|██        | 157/750 [00:22<01:14,  7.94it/s]Comparações:  21%|██        | 158/750 [00:22<01:14,  7.96it/s]Comparações:  21%|██        | 159/750 [00:22<01:13,  8.00it/s]Comparações:  21%|██▏       | 160/750 [00:22<01:13,  8.02it/s]Comparações:  21%|██▏       | 161/750 [00:23<01:13,  8.05it/s]Comparações:  22%|██▏       | 162/750 [00:23<01:12,  8.07it/s]Comparações:  22%|██▏       | 163/750 [00:23<01:12,  8.06it/s]Comparações:  22%|██▏       | 164/750 [00:23<01:12,  8.10it/s]Comparações:  22%|██▏       | 165/750 [00:23<01:11,  8.13it/s]Comparações:  22%|██▏       | 166/750 [00:23<01:11,  8.16it/s]Comparações:  22%|██▏       | 167/750 [00:23<01:11,  8.15it/s]Comparações:  22%|██▏       | 168/750 [00:23<01:11,  8.15it/s]Comparações:  23%|██▎       | 169/750 [00:24<01:10,  8.18it/s]Comparações:  23%|██▎       | 170/750 [00:24<01:10,  8.21it/s]Comparações:  23%|██▎       | 171/750 [00:24<01:10,  8.19it/s]Comparações:  23%|██▎       | 172/750 [00:24<01:10,  8.21it/s]Comparações:  23%|██▎       | 173/750 [00:24<01:10,  8.23it/s]Comparações:  23%|██▎       | 174/750 [00:24<01:09,  8.27it/s]Comparações:  23%|██▎       | 175/750 [00:24<01:09,  8.30it/s]Comparações:  23%|██▎       | 176/750 [00:24<01:09,  8.29it/s]Comparações:  24%|██▎       | 177/750 [00:25<01:09,  8.29it/s]Comparações:  24%|██▎       | 178/750 [00:25<01:08,  8.32it/s]Comparações:  24%|██▍       | 179/750 [00:25<01:08,  8.32it/s]Comparações:  24%|██▍       | 180/750 [00:25<01:08,  8.33it/s]Comparações:  24%|██▍       | 181/750 [00:25<01:08,  8.33it/s]Comparações:  24%|██▍       | 182/750 [00:25<01:08,  8.31it/s]Comparações:  24%|██▍       | 183/750 [00:25<01:07,  8.37it/s]Comparações:  25%|██▍       | 184/750 [00:25<01:07,  8.40it/s]Comparações:  25%|██▍       | 185/750 [00:25<01:07,  8.40it/s]Comparações:  25%|██▍       | 186/750 [00:26<01:06,  8.42it/s]Comparações:  25%|██▍       | 187/750 [00:26<01:06,  8.44it/s]Comparações:  25%|██▌       | 188/750 [00:26<01:06,  8.44it/s]Comparações:  25%|██▌       | 189/750 [00:26<01:06,  8.43it/s]Comparações:  25%|██▌       | 190/750 [00:26<01:06,  8.45it/s]Comparações:  25%|██▌       | 191/750 [00:26<01:06,  8.46it/s]Comparações:  26%|██▌       | 192/750 [00:26<01:05,  8.49it/s]Comparações:  26%|██▌       | 193/750 [00:26<01:05,  8.52it/s]Comparações:  26%|██▌       | 194/750 [00:27<01:05,  8.52it/s]Comparações:  26%|██▌       | 195/750 [00:27<01:05,  8.53it/s]Comparações:  26%|██▌       | 196/750 [00:27<01:04,  8.57it/s]Comparações:  26%|██▋       | 197/750 [00:27<01:04,  8.57it/s]Comparações:  26%|██▋       | 198/750 [00:27<01:04,  8.56it/s]Comparações:  27%|██▋       | 199/750 [00:27<01:04,  8.59it/s]Comparações:  27%|██▋       | 200/750 [00:27<01:04,  8.55it/s]Comparações:  27%|██▋       | 201/750 [00:27<01:03,  8.59it/s]Comparações:  27%|██▋       | 202/750 [00:27<01:03,  8.62it/s]Comparações:  27%|██▋       | 203/750 [00:28<01:03,  8.64it/s]Comparações:  27%|██▋       | 204/750 [00:28<01:03,  8.67it/s]Comparações:  27%|██▋       | 205/750 [00:28<01:02,  8.69it/s]Comparações:  27%|██▋       | 206/750 [00:28<01:02,  8.71it/s]Comparações:  28%|██▊       | 207/750 [00:28<01:02,  8.71it/s]Comparações:  28%|██▊       | 208/750 [00:28<01:02,  8.71it/s]Comparações:  28%|██▊       | 209/750 [00:28<01:02,  8.72it/s]Comparações:  28%|██▊       | 210/750 [00:28<01:01,  8.77it/s]Comparações:  28%|██▊       | 211/750 [00:28<01:01,  8.79it/s]Comparações:  28%|██▊       | 212/750 [00:29<01:01,  8.78it/s]Comparações:  28%|██▊       | 213/750 [00:29<01:00,  8.80it/s]Comparações:  29%|██▊       | 214/750 [00:29<01:00,  8.83it/s]Comparações:  29%|██▊       | 215/750 [00:29<01:00,  8.86it/s]Comparações:  29%|██▉       | 216/750 [00:29<01:00,  8.88it/s]Comparações:  29%|██▉       | 217/750 [00:29<01:00,  8.85it/s]Comparações:  29%|██▉       | 218/750 [00:29<00:59,  8.87it/s]Comparações:  29%|██▉       | 219/750 [00:29<00:59,  8.89it/s]Comparações:  29%|██▉       | 220/750 [00:29<00:59,  8.94it/s]Comparações:  29%|██▉       | 221/750 [00:30<00:59,  8.96it/s]Comparações:  30%|██▉       | 222/750 [00:30<00:58,  8.96it/s]Comparações:  30%|██▉       | 223/750 [00:30<00:58,  8.96it/s]Comparações:  30%|██▉       | 224/750 [00:30<00:58,  8.96it/s]Comparações:  30%|███       | 225/750 [00:30<00:58,  8.99it/s]Comparações:  30%|███       | 226/750 [00:30<00:58,  9.01it/s]Comparações:  30%|███       | 227/750 [00:30<00:58,  9.01it/s]Comparações:  30%|███       | 228/750 [00:30<00:57,  9.03it/s]Comparações:  31%|███       | 229/750 [00:30<00:57,  9.08it/s]Comparações:  31%|███       | 230/750 [00:31<00:57,  9.11it/s]Comparações:  31%|███       | 231/750 [00:31<00:56,  9.12it/s]Comparações:  31%|███       | 232/750 [00:31<00:56,  9.14it/s]Comparações:  31%|███       | 233/750 [00:31<00:56,  9.14it/s]Comparações:  31%|███       | 234/750 [00:31<00:56,  9.19it/s]Comparações:  31%|███▏      | 235/750 [00:31<00:55,  9.22it/s]Comparações:  31%|███▏      | 236/750 [00:31<00:55,  9.23it/s]Comparações:  32%|███▏      | 237/750 [00:31<00:55,  9.23it/s]Comparações:  32%|███▏      | 238/750 [00:31<00:55,  9.18it/s]Comparações:  32%|███▏      | 239/750 [00:32<00:55,  9.24it/s]Comparações:  32%|███▏      | 240/750 [00:32<00:55,  9.27it/s]Comparações:  32%|███▏      | 241/750 [00:32<00:54,  9.29it/s]Comparações:  32%|███▏      | 242/750 [00:32<00:54,  9.31it/s]Comparações:  32%|███▏      | 243/750 [00:32<00:54,  9.31it/s]Comparações:  33%|███▎      | 244/750 [00:32<00:54,  9.36it/s]Comparações:  33%|███▎      | 245/750 [00:32<00:53,  9.38it/s]Comparações:  33%|███▎      | 246/750 [00:32<00:53,  9.38it/s]Comparações:  33%|███▎      | 247/750 [00:32<00:53,  9.40it/s]Comparações:  33%|███▎      | 248/750 [00:33<00:53,  9.45it/s]Comparações:  33%|███▎      | 249/750 [00:33<00:52,  9.50it/s]Comparações:  33%|███▎      | 250/750 [00:33<00:52,  9.52it/s]Comparações:  33%|███▎      | 251/750 [00:33<00:52,  9.54it/s]Comparações:  34%|███▎      | 252/750 [00:33<00:52,  9.53it/s]Comparações:  34%|███▎      | 253/750 [00:33<00:51,  9.56it/s]Comparações:  34%|███▍      | 254/750 [00:33<00:51,  9.60it/s]Comparações:  34%|███▍      | 255/750 [00:33<00:51,  9.62it/s]Comparações:  34%|███▍      | 256/750 [00:33<00:51,  9.64it/s]Comparações:  34%|███▍      | 257/750 [00:33<00:51,  9.63it/s]Comparações:  34%|███▍      | 258/750 [00:34<00:51,  9.62it/s]Comparações:  35%|███▍      | 259/750 [00:34<00:50,  9.66it/s]Comparações:  35%|███▍      | 260/750 [00:34<00:50,  9.70it/s]Comparações:  35%|███▍      | 261/750 [00:34<00:50,  9.70it/s]Comparações:  35%|███▍      | 262/750 [00:34<00:50,  9.67it/s]Comparações:  35%|███▌      | 263/750 [00:34<00:50,  9.68it/s]Comparações:  35%|███▌      | 264/750 [00:34<00:49,  9.73it/s]Comparações:  35%|███▌      | 265/750 [00:34<00:49,  9.78it/s]Comparações:  35%|███▌      | 266/750 [00:34<00:49,  9.83it/s]Comparações:  36%|███▌      | 267/750 [00:34<00:49,  9.74it/s]Comparações:  36%|███▌      | 268/750 [00:35<00:49,  9.78it/s]Comparações:  36%|███▌      | 269/750 [00:35<00:49,  9.77it/s]Comparações:  36%|███▌      | 270/750 [00:35<00:48,  9.80it/s]Comparações:  36%|███▌      | 271/750 [00:35<00:48,  9.83it/s]Comparações:  36%|███▋      | 272/750 [00:35<00:48,  9.77it/s]Comparações:  36%|███▋      | 273/750 [00:35<00:48,  9.84it/s]Comparações:  37%|███▋      | 274/750 [00:35<00:48,  9.87it/s]Comparações:  37%|███▋      | 275/750 [00:35<00:48,  9.84it/s]Comparações:  37%|███▋      | 276/750 [00:35<00:47,  9.88it/s]Comparações:  37%|███▋      | 278/750 [00:36<00:47,  9.95it/s]Comparações:  37%|███▋      | 279/750 [00:36<00:47,  9.95it/s]Comparações:  37%|███▋      | 281/750 [00:36<00:46,  9.98it/s]Comparações:  38%|███▊      | 283/750 [00:36<00:46, 10.00it/s]Comparações:  38%|███▊      | 285/750 [00:36<00:45, 10.12it/s]Comparações:  38%|███▊      | 287/750 [00:36<00:45, 10.19it/s]Comparações:  39%|███▊      | 289/750 [00:37<00:45, 10.24it/s]Comparações:  39%|███▉      | 291/750 [00:37<00:44, 10.28it/s]Comparações:  39%|███▉      | 293/750 [00:37<00:44, 10.29it/s]Comparações:  39%|███▉      | 295/750 [00:37<00:44, 10.32it/s]Comparações:  40%|███▉      | 297/750 [00:37<00:43, 10.35it/s]Comparações:  40%|███▉      | 299/750 [00:38<00:43, 10.38it/s]Comparações:  40%|████      | 301/750 [00:38<00:43, 10.44it/s]Comparações:  40%|████      | 303/750 [00:38<00:42, 10.44it/s]Comparações:  41%|████      | 305/750 [00:38<00:42, 10.54it/s]Comparações:  41%|████      | 307/750 [00:38<00:42, 10.33it/s]Comparações:  41%|████      | 309/750 [00:39<00:44,  9.95it/s]Comparações:  41%|████▏     | 311/750 [00:39<00:43, 10.14it/s]Comparações:  42%|████▏     | 313/750 [00:39<00:42, 10.35it/s]Comparações:  42%|████▏     | 315/750 [00:39<00:41, 10.50it/s]Comparações:  42%|████▏     | 317/750 [00:39<00:40, 10.59it/s]Comparações:  43%|████▎     | 319/750 [00:40<00:40, 10.72it/s]Comparações:  43%|████▎     | 321/750 [00:40<00:39, 10.83it/s]Comparações:  43%|████▎     | 323/750 [00:40<00:39, 10.85it/s]Comparações:  43%|████▎     | 325/750 [00:40<00:38, 10.90it/s]Comparações:  44%|████▎     | 327/750 [00:40<00:38, 10.87it/s]Comparações:  44%|████▍     | 329/750 [00:40<00:38, 10.94it/s]Comparações:  44%|████▍     | 331/750 [00:41<00:37, 11.11it/s]Comparações:  44%|████▍     | 333/750 [00:41<00:37, 11.23it/s]Comparações:  45%|████▍     | 335/750 [00:41<00:36, 11.32it/s]Comparações:  45%|████▍     | 337/750 [00:41<00:36, 11.39it/s]Comparações:  45%|████▌     | 339/750 [00:41<00:35, 11.44it/s]Comparações:  45%|████▌     | 341/750 [00:42<00:35, 11.45it/s]Comparações:  46%|████▌     | 343/750 [00:42<00:35, 11.53it/s]Comparações:  46%|████▌     | 345/750 [00:42<00:34, 11.57it/s]Comparações:  46%|████▋     | 347/750 [00:42<00:34, 11.61it/s]Comparações:  47%|████▋     | 349/750 [00:42<00:34, 11.70it/s]Comparações:  47%|████▋     | 351/750 [00:42<00:34, 11.73it/s]Comparações:  47%|████▋     | 353/750 [00:43<00:33, 11.75it/s]Comparações:  47%|████▋     | 355/750 [00:43<00:33, 11.81it/s]Comparações:  48%|████▊     | 357/750 [00:43<00:33, 11.85it/s]Comparações:  48%|████▊     | 359/750 [00:43<00:32, 11.93it/s]Comparações:  48%|████▊     | 361/750 [00:43<00:32, 12.03it/s]Comparações:  48%|████▊     | 363/750 [00:43<00:31, 12.12it/s]Comparações:  49%|████▊     | 365/750 [00:44<00:31, 12.05it/s]Comparações:  49%|████▉     | 367/750 [00:44<00:31, 12.06it/s]Comparações:  49%|████▉     | 369/750 [00:44<00:31, 12.02it/s]Comparações:  49%|████▉     | 371/750 [00:44<00:31, 12.14it/s]Comparações:  50%|████▉     | 373/750 [00:44<00:30, 12.20it/s]Comparações:  50%|█████     | 375/750 [00:44<00:30, 12.33it/s]Comparações:  50%|█████     | 377/750 [00:44<00:30, 12.43it/s]Comparações:  51%|█████     | 379/750 [00:45<00:29, 12.42it/s]Comparações:  51%|█████     | 381/750 [00:45<00:29, 12.55it/s]Comparações:  51%|█████     | 383/750 [00:45<00:29, 12.63it/s]Comparações:  51%|█████▏    | 385/750 [00:45<00:28, 12.60it/s]Comparações:  52%|█████▏    | 387/750 [00:45<00:28, 12.69it/s]Comparações:  52%|█████▏    | 389/750 [00:45<00:28, 12.83it/s]Comparações:  52%|█████▏    | 391/750 [00:46<00:27, 12.92it/s]Comparações:  52%|█████▏    | 393/750 [00:46<00:27, 13.06it/s]Comparações:  53%|█████▎    | 395/750 [00:46<00:26, 13.17it/s]Comparações:  53%|█████▎    | 397/750 [00:46<00:26, 13.23it/s]Comparações:  53%|█████▎    | 399/750 [00:46<00:26, 13.28it/s]Comparações:  53%|█████▎    | 401/750 [00:46<00:26, 13.32it/s]Comparações:  54%|█████▎    | 403/750 [00:46<00:26, 13.32it/s]Comparações:  54%|█████▍    | 405/750 [00:47<00:25, 13.33it/s]Comparações:  54%|█████▍    | 407/750 [00:47<00:25, 13.43it/s]Comparações:  55%|█████▍    | 409/750 [00:47<00:25, 13.57it/s]Comparações:  55%|█████▍    | 411/750 [00:47<00:24, 13.66it/s]Comparações:  55%|█████▌    | 413/750 [00:47<00:24, 13.73it/s]Comparações:  55%|█████▌    | 415/750 [00:47<00:24, 13.77it/s]Comparações:  56%|█████▌    | 417/750 [00:47<00:24, 13.85it/s]Comparações:  56%|█████▌    | 419/750 [00:48<00:23, 13.86it/s]Comparações:  56%|█████▌    | 421/750 [00:48<00:23, 13.92it/s]Comparações:  56%|█████▋    | 423/750 [00:48<00:23, 14.04it/s]Comparações:  57%|█████▋    | 425/750 [00:48<00:22, 14.23it/s]Comparações:  57%|█████▋    | 427/750 [00:48<00:22, 14.25it/s]Comparações:  57%|█████▋    | 429/750 [00:48<00:22, 14.32it/s]Comparações:  57%|█████▋    | 431/750 [00:48<00:22, 14.44it/s]Comparações:  58%|█████▊    | 433/750 [00:49<00:21, 14.57it/s]Comparações:  58%|█████▊    | 435/750 [00:49<00:21, 14.70it/s]Comparações:  58%|█████▊    | 437/750 [00:49<00:21, 14.76it/s]Comparações:  59%|█████▊    | 439/750 [00:49<00:20, 14.84it/s]Comparações:  59%|█████▉    | 441/750 [00:49<00:20, 14.94it/s]Comparações:  59%|█████▉    | 443/750 [00:49<00:20, 14.86it/s]Comparações:  59%|█████▉    | 445/750 [00:49<00:20, 14.85it/s]Comparações:  60%|█████▉    | 447/750 [00:50<00:20, 14.95it/s]Comparações:  60%|█████▉    | 449/750 [00:50<00:19, 15.12it/s]Comparações:  60%|██████    | 451/750 [00:50<00:19, 15.30it/s]Comparações:  60%|██████    | 453/750 [00:50<00:19, 15.46it/s]Comparações:  61%|██████    | 455/750 [00:50<00:18, 15.56it/s]Comparações:  61%|██████    | 457/750 [00:50<00:18, 15.66it/s]Comparações:  61%|██████    | 459/750 [00:50<00:18, 15.70it/s]Comparações:  61%|██████▏   | 461/750 [00:50<00:18, 15.76it/s]Comparações:  62%|██████▏   | 463/750 [00:51<00:18, 15.81it/s]Comparações:  62%|██████▏   | 465/750 [00:51<00:17, 16.05it/s]Comparações:  62%|██████▏   | 467/750 [00:51<00:17, 16.12it/s]Comparações:  63%|██████▎   | 469/750 [00:51<00:17, 16.33it/s]Comparações:  63%|██████▎   | 471/750 [00:51<00:17, 16.40it/s]Comparações:  63%|██████▎   | 473/750 [00:51<00:16, 16.61it/s]Comparações:  63%|██████▎   | 475/750 [00:51<00:16, 16.76it/s]Comparações:  64%|██████▎   | 477/750 [00:51<00:16, 16.92it/s]Comparações:  64%|██████▍   | 479/750 [00:52<00:15, 16.95it/s]Comparações:  64%|██████▍   | 481/750 [00:52<00:15, 17.03it/s]Comparações:  64%|██████▍   | 483/750 [00:52<00:15, 17.22it/s]Comparações:  65%|██████▍   | 485/750 [00:52<00:15, 17.34it/s]Comparações:  65%|██████▍   | 487/750 [00:52<00:15, 17.45it/s]Comparações:  65%|██████▌   | 489/750 [00:52<00:14, 17.55it/s]Comparações:  65%|██████▌   | 491/750 [00:52<00:14, 17.61it/s]Comparações:  66%|██████▌   | 493/750 [00:52<00:14, 17.69it/s]Comparações:  66%|██████▌   | 495/750 [00:52<00:15, 16.93it/s]Comparações:  66%|██████▋   | 497/750 [00:53<00:14, 17.16it/s]Comparações:  67%|██████▋   | 499/750 [00:53<00:14, 17.62it/s]Comparações:  67%|██████▋   | 501/750 [00:53<00:13, 17.81it/s]Comparações:  67%|██████▋   | 503/750 [00:53<00:13, 18.05it/s]Comparações:  67%|██████▋   | 505/750 [00:53<00:13, 18.34it/s]Comparações:  68%|██████▊   | 507/750 [00:53<00:13, 18.56it/s]Comparações:  68%|██████▊   | 509/750 [00:53<00:12, 18.78it/s]Comparações:  68%|██████▊   | 511/750 [00:53<00:12, 18.93it/s]Comparações:  68%|██████▊   | 513/750 [00:53<00:12, 19.22it/s]Comparações:  69%|██████▊   | 515/750 [00:53<00:12, 19.41it/s]Comparações:  69%|██████▉   | 517/750 [00:54<00:11, 19.54it/s]Comparações:  69%|██████▉   | 519/750 [00:54<00:11, 19.48it/s]Comparações:  69%|██████▉   | 521/750 [00:54<00:11, 19.50it/s]Comparações:  70%|██████▉   | 524/750 [00:54<00:11, 19.67it/s]Comparações:  70%|███████   | 526/750 [00:54<00:11, 19.75it/s]Comparações:  71%|███████   | 529/750 [00:54<00:10, 20.25it/s]Comparações:  71%|███████   | 532/750 [00:54<00:10, 20.59it/s]Comparações:  71%|███████▏  | 535/750 [00:54<00:10, 20.93it/s]Comparações:  72%|███████▏  | 538/750 [00:55<00:10, 21.08it/s]Comparações:  72%|███████▏  | 541/750 [00:55<00:09, 21.34it/s]Comparações:  73%|███████▎  | 544/750 [00:55<00:09, 21.46it/s]Comparações:  73%|███████▎  | 547/750 [00:55<00:09, 21.96it/s]Comparações:  73%|███████▎  | 550/750 [00:55<00:09, 22.13it/s]Comparações:  74%|███████▎  | 553/750 [00:55<00:08, 22.60it/s]Comparações:  74%|███████▍  | 556/750 [00:55<00:08, 22.80it/s]Comparações:  75%|███████▍  | 559/750 [00:56<00:08, 23.31it/s]Comparações:  75%|███████▍  | 562/750 [00:56<00:07, 23.81it/s]Comparações:  75%|███████▌  | 565/750 [00:56<00:07, 24.22it/s]Comparações:  76%|███████▌  | 568/750 [00:56<00:07, 24.68it/s]Comparações:  76%|███████▌  | 571/750 [00:56<00:07, 25.19it/s]Comparações:  77%|███████▋  | 574/750 [00:56<00:06, 25.63it/s]Comparações:  77%|███████▋  | 577/750 [00:56<00:06, 25.91it/s]Comparações:  77%|███████▋  | 580/750 [00:56<00:06, 26.39it/s]Comparações:  78%|███████▊  | 583/750 [00:56<00:06, 26.82it/s]Comparações:  78%|███████▊  | 586/750 [00:57<00:06, 27.30it/s]Comparações:  79%|███████▊  | 589/750 [00:57<00:05, 27.42it/s]Comparações:  79%|███████▉  | 592/750 [00:57<00:05, 27.89it/s]Comparações:  79%|███████▉  | 595/750 [00:57<00:05, 28.39it/s]Comparações:  80%|███████▉  | 599/750 [00:57<00:05, 28.89it/s]Comparações:  80%|████████  | 603/750 [00:57<00:04, 29.47it/s]Comparações:  81%|████████  | 607/750 [00:57<00:04, 30.15it/s]Comparações:  81%|████████▏ | 611/750 [00:57<00:04, 31.10it/s]Comparações:  82%|████████▏ | 615/750 [00:57<00:04, 31.82it/s]Comparações:  83%|████████▎ | 619/750 [00:58<00:04, 32.62it/s]Comparações:  83%|████████▎ | 623/750 [00:58<00:03, 33.47it/s]Comparações:  84%|████████▎ | 627/750 [00:58<00:03, 34.52it/s]Comparações:  84%|████████▍ | 631/750 [00:58<00:03, 35.82it/s]Comparações:  85%|████████▍ | 636/750 [00:58<00:03, 37.36it/s]Comparações:  85%|████████▌ | 641/750 [00:58<00:02, 38.68it/s]Comparações:  86%|████████▌ | 646/750 [00:58<00:02, 40.35it/s]Comparações:  87%|████████▋ | 651/750 [00:58<00:02, 41.96it/s]Comparações:  87%|████████▋ | 656/750 [00:58<00:02, 43.77it/s]Comparações:  88%|████████▊ | 662/750 [00:59<00:01, 46.02it/s]Comparações:  89%|████████▉ | 668/750 [00:59<00:01, 48.74it/s]Comparações:  90%|████████▉ | 674/750 [00:59<00:01, 51.73it/s]Comparações:  91%|█████████ | 681/750 [00:59<00:01, 55.72it/s]Comparações:  92%|█████████▏| 689/750 [00:59<00:01, 60.68it/s]Comparações:  93%|█████████▎| 698/750 [00:59<00:00, 67.00it/s]Comparações:  94%|█████████▍| 708/750 [00:59<00:00, 76.22it/s]Comparações:  96%|█████████▋| 722/750 [00:59<00:00, 93.29it/s]Comparações: 100%|██████████| 750/750 [00:59<00:00, 12.52it/s]
+2026-02-02 01:01:10,025 - Experiment_exp0_baseline - INFO - Comparações concluídas em 59.93s
+2026-02-02 01:01:10,025 - Experiment_exp0_baseline - INFO - Pares genuínos: 3375, Pares impostores: 277500
+2026-02-02 01:01:10,025 - Experiment_exp0_baseline - INFO - Memória pico: 1662.5 MB
+2026-02-02 01:01:10,025 - Experiment_exp0_baseline - INFO - Resultados salvos em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/pairwise_comparisons_medium.csv
+2026-02-02 01:01:10,029 - Experiment_exp0_baseline - INFO - Estatísticas salvas em /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/pairwise_stats_medium.json
+2026-02-02 01:01:10,029 - Experiment_exp0_baseline - INFO - Comparações realizadas: 281625
+2026-02-02 01:01:10,030 - Experiment_exp0_baseline - INFO - Pares genuínos: 3375
+2026-02-02 01:01:10,030 - Experiment_exp0_baseline - INFO - Pares impostores: 277500
+2026-02-02 01:01:10,030 - Experiment_exp0_baseline - INFO - Tempo total: 59.93s
+2026-02-02 01:01:10,030 - Experiment_exp0_baseline - INFO - Memória pico: 1662.5 MB
+2026-02-02 01:01:10,030 - Experiment_exp0_baseline - INFO - CSV salvo em: /media/DRAGONSTONE/MEGAsync/Forense/Papiloscopia/Compara_Metodos_Automaticos/Plataformas/Experimento/exp0_baseline/results/pairwise_comparisons_medium.csv
+2026-02-02 01:01:10,030 - Experiment_exp0_baseline - INFO - ================================================================================
+2026-02-02 01:01:10,030 - Experiment_exp0_baseline - INFO - Experimento concluído com sucesso!

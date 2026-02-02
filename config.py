@@ -52,11 +52,11 @@ EXPERIMENTS = {
 
 # Configuração de treinamento
 TRAINING_CONFIG = {
-    "debug_minimal": {  # NOVO: Modo para testes ultra-rápidos
-        "batch_size": 4,
-        "num_epochs": 3,
+    "debug_minimal": {  # TESTE: Encontrar mínimo de classes para funcionar
+        "batch_size": 8,
+        "num_epochs": 10,
         "num_workers": 2,
-        "sample_size": 30,  # 3 classes × 10 amostras cada - TESTE RÁPIDO
+        "sample_size": 200,  # ~14 classes (mesmo que debug que funcionou)
         "use_gpu": True,
         "mixed_precision": False,
     },
@@ -67,6 +67,14 @@ TRAINING_CONFIG = {
         "sample_size": 200,  # ~20 classes x 10 amostras (SFinge tem minutiae)
         "use_gpu": True,  # Usar GPU para ser rápido
         "mixed_precision": False,  # Desabilitado (problemas de compatibilidade)
+    },
+    "medium": {  # NOVO: Teste intermediário - validar hipótese dataset/épocas
+        "batch_size": 8,  # REDUZIDO: 16→8 para evitar CUDA OOM (RTX 2070 8GB)
+        "num_epochs": 30,  # Mais épocas para convergência adequada
+        "num_workers": min(4, NUM_CPUS),
+        "sample_size": 5000,  # ~500 classes × 10 amostras - dataset significativo
+        "use_gpu": True,
+        "mixed_precision": False,
     },
     "prod": {
         "batch_size": 20,  # Ajustado para RTX 2070 8GB (paper usa 30)
@@ -92,20 +100,28 @@ METRICS_CONFIG = {
 }
 
 # Configuração de otimizador
-# SEGUINDO IMPLEMENTAÇÃO ORIGINAL: Adam (código funciona, paper reporta RMSprop mas não bate)
+# TESTE: RMSprop (paper) vs Adam (implementação original)
 OPTIMIZER_CONFIG = {
-    "adam": {  # Implementação original usa Adam
-        "lr": 0.0001,  # Learning rate base (implementação original)
-        "beta1": 0.9,  # Adam beta1
-        "beta2": 0.999,  # Adam beta2
-        "eps": 1e-8,  # default
-        "weight_decay": 0,  # Implementação original não usa weight decay
+    "optimizer": "rmsprop",  # TESTE: trocar para "adam" se RMSprop não funcionar
+    "rmsprop": {
+        "lr": 0.0001,  # Mesmo LR base que Adam
+        "alpha": 0.99,  # RMSprop decay (default PyTorch)
+        "eps": 1e-8,
+        "weight_decay": 0,  # Testar sem weight decay primeiro
+        "momentum": 0,
+    },
+    "adam": {
+        "lr": 0.0001,
+        "beta1": 0.9,
+        "beta2": 0.999,
+        "eps": 1e-8,
+        "weight_decay": 0,
     },
     "localization_network_lr_scale": 0.035,  # STN usa 3.5% do LR base
-    "use_lr_scheduler": False,  # Não usa scheduler
-    "scheduler_type": "cosine",  # Mantido para compatibilidade
-    "warmup_epochs": 5,  # Mantido para compatibilidade
-    "min_lr": 5e-5,  # Mantido para compatibilidade
+    "use_lr_scheduler": False,
+    "scheduler_type": "cosine",
+    "warmup_epochs": 5,
+    "min_lr": 5e-5,
 }
 
 # Configuração de modelo
@@ -132,12 +148,81 @@ MODEL_CONFIG = {
 # Configuração de perda
 # CORRIGIDO: Center Loss com peso do PAPER ORIGINAL (0.00125, NÃO 0.125!)
 # O peso estava 100x MAIOR causando colapso prematuro dos embeddings
+#
+# CENTER LOSS ADAPTATIVO: O peso é ajustado baseado no número de classes
+# - Paper usa 0.00125 para ~6000 classes (60k amostras treinamento)
+# - Com menos classes, o peso deve ser MENOR para evitar convergência prematura
+# - Fórmula: weight_adaptativo = base_weight × (num_classes / 6000)^expoente
 LOSS_CONFIG = {
-    "center_loss_weight": 0.00125,  # CORRIGIDO: Paper usa 0.00125 (λ2), era 0.125 (100x maior!)
+    "center_loss_base_weight": 0.00125,  # Peso base do paper (para 6000 classes)
+    "center_loss_num_classes_reference": 6000,  # Número de classes do paper
+    "center_loss_adaptive_exponent": 0.7,  # Expoente de escala (0.7 = BALANCEADO, 0.5 = muito fraco, 1.0 = linear)
+    "center_loss_use_adaptive": False,  # DESABILITADO: peso adaptativo muito baixo para datasets pequenos (14 classes → 0.000018)
+    "center_loss_min_weight": 1e-7,  # Peso mínimo (proteção contra zero)
+    "center_loss_max_weight": 0.01,  # Peso máximo (proteção contra explosão)
+
     "triplet_loss_weight": 0.0,   # DESABILITADO (não existe no original)
     "softmax_loss_weight": 1.0,   # λ1 = 1.0
     "minutia_map_loss_weight": 0.3,  # Implementação original: 0.3
 }
+
+
+def get_center_loss_weight(num_classes: int) -> float:
+    """
+    Calcula peso adaptativo do Center Loss baseado no número de classes.
+
+    PROTEÇÕES:
+    - Valida entrada (num_classes >= 1)
+    - Clamp em [min_weight, max_weight] para evitar valores extremos
+    - Usa expoente SUBLINEAR (0.5) por padrão para crescimento controlado
+
+    Rationale:
+    - Center Loss força embeddings de mesma classe a convergirem para centros
+    - Com POUCAS classes: centros ficam próximos → Center Loss forte causa colapso prematuro
+    - Com MUITAS classes: centros podem se espalhar → Center Loss precisa ser mais forte
+    - Expoente 0.5 (raiz quadrada): crescimento SUBLINEAR mais seguro que linear
+
+    Args:
+        num_classes: Número de classes no treinamento atual (>= 1)
+
+    Returns:
+        Peso do Center Loss ajustado, garantido em [min_weight, max_weight]
+
+    Examples:
+        >>> get_center_loss_weight(6000)  # Paper original (exponent=0.5)
+        0.00125
+        >>> get_center_loss_weight(14)    # Debug mode (exponent=0.5)
+        0.0000060  # ~208x menor (mais conservador que linear)
+        >>> get_center_loss_weight(200)   # Teste intermediário (exponent=0.5)
+        0.0000722  # ~17x menor
+        >>> get_center_loss_weight(100000)  # Muitas classes (exponent=0.5)
+        0.0051 (clamped to max=0.01)  # PROTEGIDO!
+
+    Raises:
+        ValueError: Se num_classes < 1
+    """
+    # Validação de entrada
+    if num_classes < 1:
+        raise ValueError(f"num_classes deve ser >= 1, recebido: {num_classes}")
+
+    if not LOSS_CONFIG["center_loss_use_adaptive"]:
+        # Modo fixo: usa valor base do paper
+        return LOSS_CONFIG["center_loss_base_weight"]
+
+    base_weight = LOSS_CONFIG["center_loss_base_weight"]
+    num_classes_ref = LOSS_CONFIG["center_loss_num_classes_reference"]
+    exponent = LOSS_CONFIG["center_loss_adaptive_exponent"]
+    min_weight = LOSS_CONFIG["center_loss_min_weight"]
+    max_weight = LOSS_CONFIG["center_loss_max_weight"]
+
+    # Escala: weight = base × (N_atual / N_ref)^exponent
+    scale_factor = (num_classes / num_classes_ref) ** exponent
+    adaptive_weight = base_weight * scale_factor
+
+    # CLAMP: garantir limites seguros
+    adaptive_weight = max(min_weight, min(adaptive_weight, max_weight))
+
+    return adaptive_weight
 
 # Configuração de data augmentation (normal)
 # CORRIGIDO: Paper usa augmentation mais agressivo (±60° rotation, ±80px translation)

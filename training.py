@@ -20,7 +20,7 @@ import psutil
 import gc
 
 from models_base import create_model
-from config import TRAINING_CONFIG, OPTIMIZER_CONFIG, LOSS_CONFIG, LOGGING_CONFIG
+from config import TRAINING_CONFIG, OPTIMIZER_CONFIG, LOSS_CONFIG, LOGGING_CONFIG, get_center_loss_weight
 
 
 class CenterLoss(nn.Module):
@@ -215,6 +215,7 @@ class DeepPrintTrainer:
         self.criterion_center_texture = None  # Para texture embedding
         self.criterion_center_minutia = None  # Para minutiae embedding
         self.criterion_triplet = TripletLoss(margin=1.0)
+        self.center_loss_weight = LOSS_CONFIG["center_loss_base_weight"]  # Será atualizado em train()
         
         # Mixed precision
         self.scaler = GradScaler(device='cuda') if self.config["use_gpu"] and self.config["mixed_precision"] else None
@@ -229,14 +230,11 @@ class DeepPrintTrainer:
         
     def _create_optimizer(self):
         """
-        Cria otimizador Adam com learning rate diferenciado para STN.
-
-        Seguindo implementação original:
-        - Adam (não RMSprop como paper reporta)
-        - LR do Localization Network (STN) = 3.5% do LR base
-        - Weight decay = 0 (implementação original)
+        Cria otimizador (Adam ou RMSprop) com learning rate diferenciado para STN.
         """
-        base_lr = OPTIMIZER_CONFIG["adam"]["lr"]
+        optimizer_type = OPTIMIZER_CONFIG.get("optimizer", "adam")
+        opt_config = OPTIMIZER_CONFIG[optimizer_type]
+        base_lr = opt_config["lr"]
         loc_lr_scale = OPTIMIZER_CONFIG.get("localization_network_lr_scale", 0.035)
 
         # Separar parâmetros do Localization Network (STN)
@@ -244,7 +242,6 @@ class DeepPrintTrainer:
         other_params = []
 
         for name, param in self.model.named_parameters():
-            # STN pode estar como "localization_network" ou nomes variantes
             if "localization" in name.lower() or "stn" in name.lower() or "_loc" in name.lower():
                 loc_params.append(param)
                 self.logger.debug(f"  STN param: {name}")
@@ -254,21 +251,31 @@ class DeepPrintTrainer:
         # Criar grupos de parâmetros com LRs diferentes
         param_groups = [
             {"params": other_params, "lr": base_lr},
-            {"params": loc_params, "lr": base_lr * loc_lr_scale},  # STN: 3.5% do LR base
+            {"params": loc_params, "lr": base_lr * loc_lr_scale},
         ]
 
-        optimizer = optim.Adam(
-            param_groups,
-            lr=base_lr,  # LR base
-            betas=(OPTIMIZER_CONFIG["adam"]["beta1"], OPTIMIZER_CONFIG["adam"]["beta2"]),
-            eps=OPTIMIZER_CONFIG["adam"]["eps"],
-            weight_decay=OPTIMIZER_CONFIG["adam"]["weight_decay"],
-        )
+        if optimizer_type == "rmsprop":
+            optimizer = optim.RMSprop(
+                param_groups,
+                lr=base_lr,
+                alpha=opt_config["alpha"],
+                eps=opt_config["eps"],
+                weight_decay=opt_config["weight_decay"],
+                momentum=opt_config["momentum"],
+            )
+        else:  # adam
+            optimizer = optim.Adam(
+                param_groups,
+                lr=base_lr,
+                betas=(opt_config["beta1"], opt_config["beta2"]),
+                eps=opt_config["eps"],
+                weight_decay=opt_config["weight_decay"],
+            )
 
-        self.logger.info(f"Otimizador: Adam (implementação original)")
+        self.logger.info(f"Otimizador: {optimizer_type.upper()}")
         self.logger.info(f"  Base LR: {base_lr}")
         self.logger.info(f"  STN LR: {base_lr * loc_lr_scale:.6f} ({loc_lr_scale*100:.1f}% do base)")
-        self.logger.info(f"  Weight decay: {OPTIMIZER_CONFIG['adam']['weight_decay']}")
+        self.logger.info(f"  Weight decay: {opt_config['weight_decay']}")
         self.logger.info(f"  STN params: {len(loc_params)}, Other params: {len(other_params)}")
 
         return optimizer
@@ -533,7 +540,7 @@ class DeepPrintTrainer:
             # Center Loss (apenas em treino, não em validação open-set)
             if training_mode and self.criterion_center_texture is not None:
                 center_loss_texture = self.criterion_center_texture(texture_embedding, labels)
-                total_loss = total_loss + LOSS_CONFIG["center_loss_weight"] * center_loss_texture
+                total_loss = total_loss + self.center_loss_weight * center_loss_texture
         
         # Minutiae branch loss
         if "minutia_logits" in outputs and "minutia_embedding" in outputs:
@@ -547,7 +554,7 @@ class DeepPrintTrainer:
             # Center Loss (apenas em treino, não em validação open-set)
             if training_mode and self.criterion_center_minutia is not None:
                 center_loss_minutia = self.criterion_center_minutia(minutia_embedding, labels)
-                total_loss = total_loss + LOSS_CONFIG["center_loss_weight"] * center_loss_minutia
+                total_loss = total_loss + self.center_loss_weight * center_loss_minutia
             
             # Minutia Map Loss (supervisionado)
             if "minutia_maps" in outputs and minutia_maps is not None:
@@ -569,7 +576,7 @@ class DeepPrintTrainer:
                 
                 if self.criterion_center_texture is not None:
                     center_loss = self.criterion_center_texture(embedding, labels)
-                    total_loss = total_loss + LOSS_CONFIG["center_loss_weight"] * center_loss
+                    total_loss = total_loss + self.center_loss_weight * center_loss
         
         return total_loss
     
@@ -633,10 +640,7 @@ class DeepPrintTrainer:
             # Se precisar recriar optimizer (após resume com falha), recriar completamente
             if need_recreate_optimizer:
                 self.logger.info("Recriando optimizer com todos os parâmetros do modelo")
-                self.optimizer = optim.Adam(
-                    self.model.parameters(),
-                    **OPTIMIZER_CONFIG["adam"]
-                )
+                self.optimizer = self._create_optimizer()
                 need_recreate_optimizer = False
             else:
                 # Adicionar parâmetros dos classificadores ao optimizer (treino do zero)
@@ -657,11 +661,11 @@ class DeepPrintTrainer:
                 feat_dim=self.texture_embedding_dims,
                 alpha=0.01
             ).to(self.device)
-            
+
             # Adicionar ao optimizer se necessário
             if need_recreate_optimizer or resume:
                 self.optimizer.add_param_group({'params': self.criterion_center_texture.parameters()})
-    
+
         if self.criterion_center_minutia is None and hasattr(self.model, 'minutia_embedding_dims'):
             self.logger.info(f"Inicializando Center Loss (Minutiae) com {num_classes} classes e {self.minutia_embedding_dims} dims")
             self.criterion_center_minutia = CenterLoss(
@@ -670,10 +674,23 @@ class DeepPrintTrainer:
                 alpha=0.01
             ).to(self.device)
             self.logger.info(f"Center Loss inicializado com {num_classes} classes")
-            
+
             # Adicionar ao optimizer se necessário
             if need_recreate_optimizer or resume:
                 self.optimizer.add_param_group({'params': self.criterion_center_minutia.parameters()})
+
+        # Calcular peso ADAPTATIVO do Center Loss baseado no número de classes
+        self.center_loss_weight = get_center_loss_weight(num_classes)
+        if LOSS_CONFIG["center_loss_use_adaptive"]:
+            self.logger.info("=" * 80)
+            self.logger.info("CENTER LOSS ADAPTATIVO")
+            self.logger.info(f"  Número de classes: {num_classes}")
+            self.logger.info(f"  Peso base (paper, 6000 classes): {LOSS_CONFIG['center_loss_base_weight']:.6f}")
+            self.logger.info(f"  Peso adaptativo: {self.center_loss_weight:.8f}")
+            self.logger.info(f"  Fator de escala: {self.center_loss_weight / LOSS_CONFIG['center_loss_base_weight']:.4f}x")
+            self.logger.info("=" * 80)
+        else:
+            self.logger.info(f"Center Loss peso fixo: {self.center_loss_weight:.6f}")
         
         # CRÍTICO: Garantir que modelo esteja em training mode após todas as modificações
         self.model.train()
@@ -690,47 +707,51 @@ class DeepPrintTrainer:
         
         self.logger.info("Modelo configurado e pronto para treinamento")
         
-        # Paper DeepPrint: treina épocas fixas, SEM early stopping
-        # Val_loss em open-set não é métrica confiável (classes disjuntas)
-        # Avaliação final: EER no teste após treinamento completo
-        
+        # CORREÇÃO: Salvar melhor modelo baseado em EER, não val_loss
+        # Val_loss otimiza classificação, mas EER mede embeddings discriminativos
+        best_eer = float('inf')
+
         for epoch in range(start_epoch, num_epochs + 1):
             # Treinar
             train_metrics = self.train_epoch(train_loader, epoch)
-            
+
             # Validar
             val_metrics = self.validate(val_loader, epoch)
-            
+
+            # Calcular EER TODA época (não só cada 5)
+            eer_result = self._compute_quick_eer(val_loader)
+            current_eer = eer_result['eer'] if eer_result is not None else float('inf')
+
+            # Retornar modelo para modo de treinamento após EER
+            self.model.train()
+
+            # Limpar memória após cálculo de EER
+            if self.device.type == 'cuda':
+                torch.cuda.empty_cache()
+
             # Atualizar histórico
             self.history["train_loss"].append(train_metrics["loss"])
             self.history["val_loss"].append(val_metrics["loss"])
-            
+            if "val_eer" not in self.history:
+                self.history["val_eer"] = []
+            self.history["val_eer"].append(current_eer)
+
+            # Salvar melhor modelo baseado em EER (não loss!)
+            if current_eer < best_eer:
+                best_eer = current_eer
+                self._save_checkpoint(epoch, val_metrics["loss"], is_best=True)
+                self.logger.info(f"✅ Melhor modelo salvo: época {epoch}, EER={current_eer:.4f}")
+
+            # Log
+            self.logger.info(
+                f"Epoch {epoch} - Train Loss: {train_metrics['loss']:.4f} - "
+                f"Val Loss: {val_metrics['loss']:.4f} - EER: {current_eer:.4f}"
+            )
+
             # Salvar checkpoint periódico (a cada 10 épocas)
             if epoch % 10 == 0:
                 self._save_checkpoint(epoch, val_metrics["loss"], is_best=False)
                 self.logger.info(f"Checkpoint salvo: época {epoch}")
-            
-            # Salvar melhor modelo baseado em train_loss (não val_loss)
-            if train_metrics["loss"] < best_val_loss:
-                best_val_loss = train_metrics["loss"]
-                self._save_checkpoint(epoch, train_metrics["loss"], is_best=True)
-                self.logger.info(f"Melhor modelo salvo: época {epoch}, train_loss={train_metrics['loss']:.4f}")
-            
-            # Log
-            self.logger.info(
-                f"Epoch {epoch} - Train Loss: {train_metrics['loss']:.4f} - "
-                f"Val Loss: {val_metrics['loss']:.4f}"
-            )
-            
-            # Calcular EER a cada 5 épocas para monitorar progresso
-            if epoch % 5 == 0:
-                self.logger.info(f"Calculando EER na validação (época {epoch})...")
-                eer_result = self._compute_quick_eer(val_loader)
-                if eer_result is not None:
-                    self.logger.info(
-                        f"  EER (época {epoch}): {eer_result['eer']:.4f} "
-                        f"(FAR@FRR=0.1: {eer_result.get('far_at_frr_01', 0):.4f})"
-                    )
         
         self.logger.info("Treinamento concluído")
         self._save_history()
@@ -878,8 +899,8 @@ class DeepPrintTrainer:
             
             # DEBUG: Resultado final
             self.logger.info(f"  DEBUG - RESULTADO: EER={best_eer:.4f}, threshold={best_threshold:.4f}, diff={best_diff:.4f}")
-            
-            return {
+
+            result = {
                 "eer": best_eer,
                 "threshold": best_threshold,
                 "far_at_frr_01": far_at_frr_01,
@@ -887,9 +908,19 @@ class DeepPrintTrainer:
                 "num_impostor": len(impostor_scores),
                 "num_classes": len(embeddings_by_label),
             }
-            
+
+            # Limpar memória antes de retornar
+            del embeddings_by_label, genuine_scores, impostor_scores, all_scores, thresholds
+            if self.device.type == 'cuda':
+                torch.cuda.empty_cache()
+
+            return result
+
         except Exception as e:
             self.logger.warning(f"Erro ao calcular EER: {e}")
+            # Limpar memória em caso de erro também
+            if self.device.type == 'cuda':
+                torch.cuda.empty_cache()
             return None
     
     def _save_checkpoint(self, epoch: int, val_loss: float, is_best: bool = False):
