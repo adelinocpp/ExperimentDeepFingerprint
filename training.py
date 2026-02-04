@@ -154,11 +154,32 @@ class DeepPrintTrainer:
         self.minutia_embedding_dims = minutia_embedding_dims
         
         # Configuração
-        self.config = TRAINING_CONFIG[mode]
-        
+        self.config = TRAINING_CONFIG[mode].copy()  # Copiar para poder modificar
+
+        # AJUSTE AUTOMÁTICO: Reduzir batch size para modelos grandes
+        # Modelos com embeddings > 512-D requerem ~3x mais GPU memory
+        total_embedding_dims = texture_embedding_dims + minutia_embedding_dims
+        if total_embedding_dims > 512:
+            original_batch_size = self.config["batch_size"]
+            # Reduzir batch size em 50% para modelos grandes
+            self.config["batch_size"] = max(4, original_batch_size // 2)
+            adjustment_msg = (
+                f"⚠️  AJUSTE AUTOMÁTICO: Batch size reduzido para modelo {total_embedding_dims}-D\n"
+                f"   Original: {original_batch_size} → Ajustado: {self.config['batch_size']}\n"
+                f"   Razão: Modelos >512-D requerem ~3x mais GPU memory"
+            )
+            # Guardar para log posterior
+            self._batch_size_adjustment = adjustment_msg
+        else:
+            self._batch_size_adjustment = None
+
         # Logging (deve ser configurado antes de _setup_device)
         self.logger = self._setup_logging()
         self.logger.info(f"Iniciando treinamento em modo {mode}")
+
+        # Log do ajuste de batch size se houver
+        if self._batch_size_adjustment:
+            self.logger.warning(self._batch_size_adjustment)
         
         # Dispositivo
         self.device = self._setup_device()
@@ -533,9 +554,12 @@ class DeepPrintTrainer:
         # Obter loss type (center ou arcface)
         loss_type = getattr(self, 'loss_type', 'center')
 
-        if loss_type == "arcface" and training_mode:
+        if loss_type == "arcface":
             # ARCFACE MODE: Aplicar ArcFace no embedding combinado final
             # ArcFace já inclui classificação (softmax interno), então não precisa de CrossEntropy separado
+            #
+            # IMPORTANTE: Usar em TREINO E VALIDAÇÃO para losses comparáveis
+            # Validação ainda será sem gradientes (model.eval()), mas a loss será calculada
 
             if "embedding" in outputs:
                 # Embedding final combinado (texture + minutiae = 192-dim para baseline)

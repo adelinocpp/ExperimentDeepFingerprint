@@ -161,7 +161,7 @@ MODEL_CONFIG = {
 # - Embora desenvolvido para faces, os princípios são domain-agnostic
 LOSS_CONFIG = {
     # Tipo de loss: "center" (original DeepPrint) ou "arcface" (superior)
-    "loss_type": "arcface",  # Opções: "center" | "arcface"
+    "loss_type": "center",  # Opções: "center" | "arcface"
 
     # Center Loss (original DeepPrint)
     "center_loss_base_weight": 0.00250,  # Peso base do paper (para 6000 classes)
