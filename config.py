@@ -107,7 +107,7 @@ OPTIMIZER_CONFIG = {
         "lr": 0.00005,  # Mesmo LR base que Adam
         "alpha": 0.99,  # RMSprop decay (default PyTorch)
         "eps": 1e-8,
-        "weight_decay": 0,  # Testar sem weight decay primeiro
+        "weight_decay": 0.00004,  # Testar sem weight decay primeiro
         "momentum": 0,
     },
     "adam": {
